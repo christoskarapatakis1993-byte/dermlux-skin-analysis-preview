@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-nFtP5MQncW56k3XQUhkFiUyLc4/MCxjVkhDW1/7jIyQ=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Online Skin Analysis — DermLux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+
+
+
+
+*{box-sizing:border-box}
+:root{
+  --blue:#1a1a1a; --blue-d:#000; --pale:#f4f2ed; --gold:#cebd63; --gold-d:#ad9d49; --gold-ink:#85762d;
+  --ink:#1a1a1a; --mut:#6f6a60; --hair:#e6e1d6; --bg:#fff; --wash:#faf8f4;
+  
+  --ok:#1a7f4b; --mid:#9a6b12; --hi:#b4461f;
+  
+  --serif:'Ubuntu',Helvetica,Arial,sans-serif;
+  --sans:'Ubuntu',Helvetica,Arial,sans-serif;
+  --bold:'Ubuntu',Helvetica,Arial,sans-serif;
+  --num:'Ubuntu',Helvetica,Arial,sans-serif;
+}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.62 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:600px;margin:0 auto;padding:26px 22px 72px}
+
+.mast{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--hair);padding-bottom:12px;margin-bottom:22px}
+.mast .z{display:flex;align-items:center;gap:10px;font:400 18px/1 var(--sans);letter-spacing:.02em;color:var(--ink);text-decoration:none}.mast .z img{height:24px;width:24px;display:block}
+.mast .z sup{font-size:8px;letter-spacing:0}
+.mast .by{font:400 11px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+
+.rail{display:flex;align-items:center;gap:9px;margin:0 0 26px}
+.rail i{flex:1;height:1px;background:var(--hair);position:relative}
+.rail i.on{background:var(--blue)}
+.rail .no{font:500 10px/1 var(--bold);letter-spacing:.2em;color:var(--mut);white-space:nowrap}
+
+.inl{display:inline;font:inherit;letter-spacing:0;text-transform:none;color:inherit}
+.consent a,.dis a,.warn a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+h1{font:300 34px/1.12 var(--serif);letter-spacing:-.015em;margin:0 0 10px}
+h2{font:300 24px/1.22 var(--serif);letter-spacing:-.01em;margin:38px 0 12px}
+.eyebrow{font:400 12px/1.4 var(--bold);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 9px}
+.lede{color:var(--mut);font-size:15px;line-height:1.66;margin:0 0 26px}
+.wl-img{display:block;width:100%;height:236px;object-fit:cover;object-position:50% 58%;border-radius:10px;margin:2px 0 26px;background:#efe6d4}
+.wl-steps{list-style:none;margin:0 0 24px;padding:0}
+.wl-steps li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--hair)}
+.wl-steps li:last-child{border-bottom:1px solid var(--hair)}
+.wl-steps .n{flex:0 0 auto;font:500 10px/1.9 var(--bold);letter-spacing:.22em;color:var(--blue);padding-top:2px}
+.wl-steps b{display:block;font:500 14.5px/1.4 var(--bold);color:var(--ink);margin-bottom:2px}
+.wl-steps span{display:block;color:var(--mut);font-size:14px;line-height:1.55}
+.wl-note{background:var(--wash);border:1px solid var(--hair);border-radius:10px;padding:15px 17px;font-size:14px;line-height:1.6;color:var(--mut);margin:0 0 24px}
+.wl-note b{display:block;font:500 10px/1.8 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.wl-note a{color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(10,15,158,.35)}
+.wl-auth{font-size:13.5px;line-height:1.6;color:var(--mut);margin:-12px 0 24px;padding-left:14px;border-left:2px solid var(--blue)}
+.wl-who{font-size:13px;color:var(--mut);text-align:center;margin:14px 0 0}
+p{margin:10px 0}
+
+.q{border-top:1px solid var(--hair);padding:20px 0 4px}
+.q:last-of-type{border-bottom:1px solid var(--hair);margin-bottom:26px}
+.q h3{font:300 19px/1.3 var(--serif);margin:0 0 3px;letter-spacing:-.008em}
+.q .hint{color:var(--mut);font-size:13px;margin:0 0 13px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px}
+.opt{border:1px solid var(--hair);border-radius:10px;padding:9px 15px;font-size:14px;cursor:pointer;user-select:none;background:#fff;transition:.18s;color:#2b2d3a}
+.opt:hover{border-color:#b9bcd0}
+.opt.on{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.opts.big{flex-direction:column;gap:9px;margin-bottom:24px}
+.opts.big .opt{width:100%;padding:16px 18px;font-size:15.5px;display:flex;align-items:center}
+.opts.big .opt.on{box-shadow:inset 3px 0 0 rgba(255,255,255,.55)}
+.free{width:100%;border:1px solid var(--hair);border-radius:10px;padding:14px 16px;font:400 15px/1.55 var(--sans);color:var(--ink);resize:vertical;margin-bottom:22px;background:var(--wash)}
+.free:focus{outline:none;border-color:var(--blue);background:#fff}
+.flag{border-left:3px solid var(--blue);background:var(--wash);padding:14px 16px;margin:0 0 20px;font-size:13.6px;line-height:1.6}
+.flag b{display:block;font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:7px}
+
+button.go{width:100%;border:0;border-radius:8px;min-height:54px;padding:18px;font:400 13px/1 var(--bold);letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--ink);cursor:pointer;transition:.18s}
+button.go:hover:not(:disabled){background:var(--gold-d)}
+button.go:disabled{background:#ece8dd;color:#a39d90;cursor:not-allowed}
+button.gh{width:100%;border:0;background:none;color:var(--mut);padding:16px 0 0;font:500 11px/1 var(--bold);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+
+.consent{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:20px 0;margin:6px 0 20px}
+.consent dl{margin:0}
+.consent dt{font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin:16px 0 5px}
+.consent dt:first-child{margin-top:0}
+.consent dd{margin:0;font-size:14.2px;line-height:1.6;color:#33353f}
+
+.promise{border:1px solid var(--blue);padding:20px 20px 18px;margin:0 0 22px}
+.promise>b{display:block;font:300 19px/1.28 var(--serif);letter-spacing:-.012em;margin-bottom:9px}
+.promise p{font-size:13.6px;line-height:1.6;color:var(--mut);margin:0 0 13px}
+.promise .sm{margin:13px 0 0;font-size:12.6px}
+.pw{display:flex;gap:13px;padding:12px 0;border-top:1px solid var(--hair);font-size:13.8px;line-height:1.56}
+.pw i{font:500 9.5px/1.72 var(--bold);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);flex:0 0 50px}
+.shots3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 22px}
+.shots3 div{text-align:center}
+.shots3 svg{width:100%;height:auto;display:block;margin-bottom:8px}
+.shots3 .n{font:500 9.5px/1 var(--bold);letter-spacing:.18em;color:var(--blue);display:block;margin-bottom:3px}
+.shots3 .t{font-size:12.4px;color:var(--mut);line-height:1.4;display:block;min-height:2.8em}
+label.ck{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;margin:0 0 22px;color:#33353f}
+label.ck input{margin-top:4px;width:17px;height:17px;flex:0 0 17px;accent-color:var(--blue)}
+
+body.cam{overflow:hidden;position:fixed;inset:0;width:100%;background:#08080c}
+body.cam .wrap{height:100dvh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(env(safe-area-inset-bottom,0px) + 14px);max-width:540px}
+body.cam .mast{border-bottom-color:rgba(255,255,255,.12);padding-bottom:10px;margin-bottom:14px}
+body.cam .mast .z{color:#fff}body.cam .mast .by{color:rgba(255,255,255,.5)}
+body.cam .rail{margin-bottom:14px}
+body.cam .rail i{background:rgba(255,255,255,.18)}body.cam .rail i.on{background:#fff}
+body.cam .rail .no{color:rgba(255,255,255,.55)}
+body.cam #footnote{display:none}
+body.cam #app{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.camhead{flex:0 0 auto;margin-bottom:12px}
+.camhead .eyebrow{color:#cebd63;margin-bottom:6px}
+.camhead h1{font-size:24px;color:#fff;margin:0 0 5px;letter-spacing:-.028em}
+.camhead .lede{font-size:13.4px;margin:0;color:rgba(255,255,255,.62);line-height:1.5}
+.stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:#000;border-radius:10px}
+video{width:100%;height:100%;object-fit:cover;display:block}
+.stage video{transform:scaleX(-1)}
+.guide{position:absolute;inset:0;pointer-events:none}.guide svg{width:100%;height:100%}
+.checks{position:absolute;top:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:7px 14px;pointer-events:none}
+.chk{display:flex;gap:6px;align-items:center;font:500 9.5px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.44);text-shadow:0 1px 5px rgba(0,0,0,.85)}
+.chk .d{width:5px;height:5px;border-radius:99px;background:rgba(255,255,255,.34);flex:0 0 5px;transition:.2s}
+.chk.ok{color:#fff}.chk.ok .d{background:#ad9d49;box-shadow:0 0 7px #ad9d49}
+.chk.no .d{background:#ff7a72}
+.overtip{position:absolute;left:0;right:0;bottom:0;padding:44px 112px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,.86));text-align:left}
+
+.hint{font:500 18px/1.3 var(--sans);color:#fff;letter-spacing:-.006em;min-height:1.3em;transition:.2s}
+.hint.good{color:#cebd63}
+.hintsub{font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:9px}
+
+.ring{position:absolute;top:14px;right:14px;width:46px;height:46px}
+.ring circle{fill:none;stroke-width:2.5;transform:rotate(-90deg);transform-origin:50% 50%}
+.ring .bg{stroke:rgba(255,255,255,.18)}
+.ring .fg{stroke:#fff;stroke-linecap:round;transition:stroke-dasharray .22s linear}
+.ring.ok .fg{stroke:#cebd63}
+.ring text{font:500 11px var(--bold);fill:#fff;text-anchor:middle}
+
+.cambtn{position:absolute;right:14px;bottom:14px;z-index:3;display:flex;align-items:center;justify-content:center}
+.shutter{width:84px;height:84px;border-radius:99px;border:0;padding:0;background:rgba(0,0,0,.28);cursor:pointer;position:relative;flex:0 0 84px;-webkit-tap-highlight-color:transparent}
+.shutter:after{content:'';position:absolute;inset:0;border-radius:99px;border:2.5px solid rgba(255,255,255,.55)}
+.shutter i{position:absolute;inset:7px;border-radius:99px;background:#fff;transition:.12s;display:block}
+.shutter:active i{inset:11px}
+.shutter.ready:after{border-color:#cebd63}
+.shutter.ready i{background:#cebd63}
+.camwhy{font-size:11.5px;color:rgba(255,255,255,.45);text-align:left;line-height:1.45;margin:10px 0 0;flex:0 0 auto}
+
+.dial{width:268px;height:268px;margin:10px auto 26px;position:relative}
+.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dial circle{fill:none;stroke-width:1.5}
+.dial .tr{stroke:var(--hair)}
+.dial .pg{stroke:var(--blue);stroke-linecap:round;transition:stroke-dasharray .25s linear}
+.dial .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 26px}
+
+.dial .pc{font:500 44px/1 var(--num);letter-spacing:-.022em;font-variant-numeric:tabular-nums}
+.dial .pc s{text-decoration:none;font-size:16px;opacity:.42;margin-left:2px}
+.dial .ph{font-size:12.8px;line-height:1.45;color:var(--mut);margin-top:10px;min-height:4.35em;display:flex;align-items:center;justify-content:center}
+
+.dial .st{font:500 8.5px/1.5 var(--bold);letter-spacing:.17em;text-transform:uppercase;color:#b9bcca;margin-top:7px}
+.dial .st b{color:var(--blue);font-weight:600}
+.scanbox{position:relative;aspect-ratio:3/4;overflow:hidden;background:#000;border-radius:10px;margin-bottom:26px}
+.scanbox img{width:100%;height:100%;object-fit:cover;display:block;opacity:.88}
+.scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);box-shadow:0 0 22px rgba(255,255,255,.65);animation:sc 3s ease-in-out infinite}
+@keyframes sc{0%{top:3%}50%{top:97%}100%{top:3%}}
+.zone{position:absolute;border:1px solid rgba(255,255,255,.9);opacity:0;transition:opacity .5s}
+.zone.on{opacity:1}
+
+.bigp{font-size:12.5px;color:var(--mut);text-align:center;margin:20px 0 0;letter-spacing:.02em}
+
+.hero{background:#1a1a1a;border-radius:14px;color:#fff;margin:0 -22px 34px;padding:34px 22px 30px;text-align:center}
+.hero .eyebrow{color:var(--gold);margin-bottom:14px}
+.hero .gauge{width:186px;height:104px;margin:0 auto 4px;display:block}
+.hero .num{font:300 54px/1 var(--serif);letter-spacing:-.026em}
+.hero .num s{text-decoration:none;font-size:20px;opacity:.5;margin-left:3px}
+.hero .cap{font:500 9.5px/1 var(--bold);letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.52);margin:12px 0 0}
+.hero .verdict{font:300 21px/1.44 var(--serif);margin:22px auto 0;max-width:26em;letter-spacing:-.012em}
+.hero .note{font-size:12.4px;color:rgba(255,255,255,.5);margin:16px auto 0;max-width:30em;line-height:1.55}
+
+.map{position:relative;margin:0 0 10px;background:#f2f2f6;overflow:hidden}
+.map img{width:100%;display:block}
+.map .pin{position:absolute;width:9px;height:9px;border-radius:99px;background:#fff;box-shadow:0 0 0 1.5px var(--blue),0 1px 7px rgba(0,0,0,.45);transform:translate(-50%,-50%)}
+.map .lb{position:absolute;transform:translateY(-50%);background:rgba(255,255,255,.94);border-left:2px solid var(--blue);padding:5px 9px;font:500 9.5px/1.35 var(--bold);letter-spacing:.11em;text-transform:uppercase;color:var(--ink);white-space:nowrap;box-shadow:0 1px 10px rgba(0,0,0,.14)}
+.map .lb b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:0;text-transform:none;color:var(--mut);font-weight:400;margin-top:2px}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.st{border:1px solid var(--hair);background:var(--wash);padding:14px 14px 12px;border-radius:10px;display:flex;flex-direction:column;gap:4px}
+.st span{font:500 9.5px/1.3 var(--bold);letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.st b{font:300 18px/1.2 var(--serif);letter-spacing:-.01em}
+.st i{font:500 13px/1 var(--num);font-style:normal;color:var(--mut);margin-top:2px}.st i small{font-size:10px;margin-left:1px}
+.st.ok b{color:var(--ok)}.st.mid b{color:var(--mid)}.st.hi b{color:var(--hi)}
+.fx2{padding-top:22px}
+.fxsc{font:400 12px/1 var(--num);color:var(--mut);white-space:nowrap}.fxsc em{font:300 24px/1 var(--serif);font-style:normal;color:var(--ink);margin-right:2px}
+.fxv{position:relative;margin:4px 0 12px;background:#f2f2f6;overflow:hidden;border-radius:10px}
+.fxv img{width:100%;display:block;max-height:300px;object-fit:cover}
+.fxv .fxb{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.94);padding:7px 10px;border-radius:10px;box-shadow:0 1px 8px rgba(0,0,0,.18)}
+.fxt{display:flex;gap:6px;margin:0 0 14px;flex-wrap:wrap}
+.fxt button{border:1px solid var(--hair);background:#fff;color:var(--mut);border-radius:99px;padding:8px 13px;font:500 10.5px/1 var(--bold);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.fxt button.on{border-color:var(--blue);color:var(--blue);background:var(--wash)}
+.rng{position:relative;padding:22px 0 26px;margin:0 0 6px}
+.rngb{height:3px;background:var(--hair);border-radius:3px}
+.rngt{position:absolute;top:22px;height:3px;background:var(--blue);opacity:.28;border-radius:3px}
+.rngk{position:absolute;top:23.5px;width:12px;height:12px;border-radius:99px;background:var(--blue);border:2.5px solid #fff;box-shadow:0 0 0 1px var(--blue);transform:translate(-50%,-50%)}
+.rngk i{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font:500 12px/1 var(--num);font-style:normal;color:var(--ink);background:#fff;padding:3px 6px;border:1px solid var(--hair);border-radius:10px;white-space:nowrap}
+.rngl{position:relative;display:flex;justify-content:space-between;margin-top:10px;font:500 9px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.rngm{color:var(--blue);font:500 9px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase}
+.fxx{border:1px solid var(--hair);background:var(--wash);padding:14px 16px;border-radius:10px;margin:6px 0 14px}
+.fxx b{display:block;font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.fxx p{font-size:15px;line-height:1.56;margin:0}
+.fxx .fxw,.obs .fxw{font-size:13.6px;color:var(--mut);margin-top:8px;line-height:1.6}
+.al i{font:500 13px/1 var(--num);font-style:normal;color:var(--ink)}.al i small{font-size:10px;color:var(--mut);margin-left:1px}
+.cn{border-left:2px solid var(--blue);padding:4px 0 4px 18px;margin:34px 0 30px}
+.cn b{display:block;font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:9px}
+.cn p{font-size:16px;line-height:1.62;margin:0}
+.fb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--hair);padding:18px 0 4px;margin-top:10px;font-size:14px;color:var(--mut)}
+.fb button{border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:99px;padding:9px 14px;font:500 10.5px/1 var(--bold);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.prof{margin:22px 0 0;font:500 10px/1.6 var(--bold);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--hair);padding-bottom:12px}
+.fxx p{font-size:15.5px}
+.mapcap{font-size:12.4px;color:var(--mut);line-height:1.55;margin:0 0 34px}
+
+.fx{border-left:2px solid var(--blue);padding:24px 0 24px 20px}
+.fx+.fx{border-top:1px solid var(--hair)}
+.fxh{display:flex;align-items:baseline;gap:13px;margin-bottom:15px}
+.fxn{font:500 10px/1 var(--bold);letter-spacing:.16em;color:#c3c5d4;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.fxh b{font:300 20px/1.24 var(--serif);letter-spacing:-.014em;flex:1}
+.fxb{font:500 9.5px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.fxb.ok{color:var(--ok)}.fxb.mid{color:var(--mid)}.fxb.hi{color:var(--hi)}
+
+.fxs{font-size:15.6px;line-height:1.56;margin:16px 0 0}
+.fxd{margin:12px 0 0}
+.fxd summary{font:500 9.5px/1 var(--bold);letter-spacing:.18em;text-transform:uppercase;color:var(--blue);cursor:pointer;list-style:none;padding:4px 0}
+.fxd summary::-webkit-details-marker{display:none}
+.fxd summary:after{content:'  +';letter-spacing:0}
+.fxd[open] summary:after{content:'  −'}
+.fxd p{font-size:13.4px;line-height:1.63;color:var(--mut);margin:9px 0 0}
+.fxa{display:flex;gap:12px;font-size:13.6px;line-height:1.56;margin:16px 0 0;border-top:1px solid var(--hair);padding-top:14px}
+.fxa span{font:500 9.5px/1.75 var(--bold);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);flex:0 0 66px}
+
+.also{border-top:1px solid var(--hair)}
+.al{display:flex;align-items:baseline;gap:12px;padding:13px 0;border-bottom:1px solid var(--hair);font-size:14.6px}
+.al b{margin-left:auto;font:500 9.5px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase}
+.al b.ok{color:var(--ok)}.al b.mid{color:var(--mid)}.al b.hi{color:var(--hi)}
+.al i{font:500 12px/1 var(--bold);font-style:normal;color:#b8bac6;min-width:24px;text-align:right;font-variant-numeric:tabular-nums}
+.obs{padding:16px 0;border-bottom:1px solid var(--hair)}
+.obs>b{display:block;font-size:14.8px;line-height:1.45}
+.track{position:relative;height:3px;background:var(--hair);display:flex;gap:2px}
+.track u{flex:1;height:100%;background:var(--hair);text-decoration:none}
+.track u.lit{background:var(--pale)}
+.track .mk{position:absolute;top:50%;width:11px;height:11px;border-radius:99px;background:var(--blue);border:2.5px solid #fff;box-shadow:0 0 0 1px var(--blue);transform:translate(-50%,-50%);transition:left 1.1s cubic-bezier(.2,.8,.2,1)}
+.bls{display:flex;justify-content:space-between;margin-top:9px}
+.bls span{font:500 8.5px/1 var(--bold);letter-spacing:.14em;text-transform:uppercase;color:#c0c2ce}
+.bls span.now{color:var(--blue)}
+.rd .ex{font-size:13.2px;color:var(--mut);line-height:1.58;margin:13px 0 0}
+
+.find{padding:26px 0;border-bottom:1px solid var(--hair);display:flex;gap:18px}
+.find .fno{flex:0 0 30px;font:500 13px/1.5 var(--bold);letter-spacing:.14em;color:#c3c5d4}
+.find b{display:block;font:300 19px/1.34 var(--serif);margin-bottom:7px;letter-spacing:-.012em}
+.find span{font-size:14.2px;color:var(--mut);line-height:1.66}
+
+.pr{display:flex;gap:17px;padding:20px 22px;border-bottom:1px solid var(--hair);align-items:flex-start}
+.pr:last-of-type{border-bottom:0}
+.pr .ph{flex:0 0 62px;height:80px;background:var(--wash);display:flex;align-items:center;justify-content:center}
+.pr img{width:46px;height:64px;object-fit:contain;display:block}
+.pr .st{font:500 9px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:4px}
+.pr .nm{font-size:14.5px;line-height:1.3;display:block}
+.pr .wy{font-size:13px;color:var(--mut);margin-top:5px;line-height:1.55}
+.pr .wn{font:500 11.5px/1.45 var(--bold);color:var(--ink);margin-top:6px;letter-spacing:.04em}
+.pr .pz{margin-left:auto;font-size:14px;white-space:nowrap}
+.jr{padding:18px 22px;border-top:1px solid var(--hair);background:var(--wash)}
+.jr h4{font:500 9.5px/1 var(--bold);letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin:0 0 13px}
+.mi{display:flex;gap:14px;margin-bottom:10px}
+.mi:last-child{margin-bottom:0}
+.wk{flex:0 0 56px;font:500 10px/1.4 var(--bold);letter-spacing:.1em;color:var(--blue)}
+.mt{font-size:13.2px;line-height:1.5;color:#33353f}
+
+.cta{display:block;width:100%;text-align:center;padding:18px;border:0;border-top:1px solid var(--hair);background:none;font:500 11px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);cursor:pointer;transition:.18s}
+.cta:hover{background:var(--wash)}
+.cta[disabled]{opacity:.55;cursor:default}
+
+.rx .opt3 .cta{background:var(--wash);color:var(--ink);border-top-color:var(--hair)}
+.rx .cta:hover{background:var(--blue-d)}
+
+.lb2{border-left:2px solid var(--blue);padding:4px 0 4px 18px;margin:0 0 22px}
+.lb2>b{display:block;font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:9px}
+.lb2 p{font-size:15.4px;line-height:1.58;margin:0}
+.lb2 .lbnf{font-size:13.6px;color:var(--mut);margin-top:12px;line-height:1.6}
+
+.opt3{border:1px solid var(--hair);margin:0 0 16px}
+.opt3.top{border-color:var(--blue);border-width:1px}
+.opt3.best{border-color:var(--blue)}
+.o3h{padding:20px 22px 18px;border-bottom:1px solid var(--hair)}
+.opt3.top .o3h{background:var(--blue);border-bottom-color:var(--blue)}
+.opt3.top .o3h *{color:#fff}
+.opt3.best .o3h{background:var(--pale);border-bottom-color:var(--hair)}
+.o3tag{font:500 9.5px/1.4 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.opt3.top .o3tag{color:rgba(255,255,255,.75)}
+.opt3.best .o3tag{color:var(--blue)}
+.o3n{font:300 25px/1.16 var(--serif);letter-spacing:-.018em;margin:9px 0 4px}
+.o3l{font-size:13.2px;color:var(--mut);line-height:1.5}
+.opt3.top .o3l{color:rgba(255,255,255,.82)}
+
+.o3cut{padding:15px 22px;border-bottom:1px solid var(--hair);background:var(--wash);font-size:13.2px;line-height:1.58;color:var(--mut)}
+.o3cut b{display:block;font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.o3p{display:flex;align-items:flex-end;gap:16px;padding:19px 22px;border-top:1px solid var(--hair)}
+.o3pz{font:300 28px/1 var(--serif);letter-spacing:-.02em;display:block}
+.o3pu{font-size:11.8px;color:var(--mut);display:block;margin-top:5px}
+.o3pw{margin-left:auto;text-align:right;font:500 20px/1 var(--num);letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.o3pw small{display:block;font:500 9px/1 var(--bold);letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-top:5px}
+.opt3.top .cta{background:var(--gold);color:var(--ink);border-top-color:var(--gold)}
+.opt3.top .cta:hover{background:var(--blue-d)}
+
+.plan{border:1px solid var(--hair);border-left:2px solid var(--blue);background:var(--wash);padding:20px 20px 16px;margin:6px 0 18px}
+.plan>b{display:block;font:300 19px/1.28 var(--serif);letter-spacing:-.012em;margin-bottom:8px}
+.plan p{font-size:13.6px;line-height:1.6;color:var(--mut);margin:0 0 14px}
+.plrow{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--hair);font-size:13.5px;line-height:1.55}
+.plrow i{font:500 9.5px/1.7 var(--bold);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);flex:0 0 42px}
+
+.keep{border:1px solid var(--blue);padding:24px 22px 22px;margin:34px 0 0}
+.r4hero{text-align:center;margin:0 0 34px}
+.r4img{width:100%;max-width:300px;border-radius:14px;display:block;margin:0 auto 22px}
+.r4h1{font:300 30px/1.15 var(--serif);letter-spacing:-.015em;margin:0 0 10px}
+.r4h2{font-size:17px;line-height:1.5;color:var(--ink);margin:0 auto 20px;max-width:340px}
+.r4go{display:inline-block;background:var(--gold);color:var(--ink);padding:16px 30px;border-radius:10px;font:500 12px/1 var(--bold);letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
+.r4sub{color:var(--mut);font-size:14px;margin:-4px 0 14px}
+.r4chips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.r4chip{border:1px solid var(--hair);background:#fff;border-radius:10px;padding:14px 14px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;font:inherit;color:var(--ink);-webkit-tap-highlight-color:transparent}
+.r4chip i{width:10px;height:10px;border-radius:99px;display:block;margin-bottom:5px}
+.r4chip b{font-weight:500;font-size:14.5px}
+.r4chip span{font-size:12.5px;color:var(--mut)}
+.r4chip.is-ok i{background:#8fcf9f}.r4chip.is-mid i{background:#e2b94b}.r4chip.is-hi i{background:#e0785f}
+.r4chip.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.r4detail{border:1px solid var(--hair);border-radius:12px;padding:16px;margin:0 0 10px;display:none;background:#fff}
+.r4detail.on{display:block}
+.r4z{width:100%;border-radius:10px;display:block;margin:0 0 14px}
+.r4dt b{display:block;font-weight:500;font-size:15px;margin:0 0 6px}
+.r4dt b.is-ok{color:#2f7a45}.r4dt b.is-mid{color:#8a6c0e}.r4dt b.is-hi{color:#b3452b}
+.r4dt p{margin:0 0 10px;font-size:15px;line-height:1.55}
+.r4fix span{display:block;font:500 10px/1 var(--bold);letter-spacing:.18em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.r4more summary{font-size:12.5px;color:var(--mut);cursor:pointer}
+.r4more p{font-size:13px;color:var(--mut);margin:8px 0 0;line-height:1.5}
+.r4age{margin:0 0 6px}
+.r4tl{display:grid;gap:12px;margin:0 0 24px}
+.r4ms{display:flex;gap:14px;align-items:flex-start}
+.r4ms i{flex:0 0 66px;font:500 10.5px/1.5 var(--bold);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);font-style:normal;padding-top:2px}
+.r4ms span{font-size:14.5px;line-height:1.5}
+.r4left{border:1px solid var(--hair);border-left:3px solid #e0785f;border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:14px}
+.r4left b{display:block;margin:0 0 6px;font-weight:500}
+.r4left ul{margin:0;padding:0 0 0 18px}
+.r4left li{margin:0 0 4px;line-height:1.5}
+.r4left li b{display:inline;font-weight:500}
+.r4patch{font-size:13px;color:var(--mut);line-height:1.5;margin:0 0 16px}
+.r4human{border:1px solid var(--ink);border-radius:12px;padding:20px 18px;margin:0 0 20px;text-align:center}
+.r4human b{display:block;font:300 22px/1.2 var(--serif);margin:0 0 10px}
+.r4human p{font-size:15px;line-height:1.55;margin:0 0 10px}
+.r4human .r4small{font-size:12.5px;color:var(--mut)}
+.r4human .r4go{margin-top:8px}
+.r4inci{display:inline-block;margin-top:6px;font-size:12px;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
+.r4patch b{font-weight:500;color:var(--ink)}
+.r4ask{border:1px solid var(--hair);border-radius:12px;padding:16px 18px;margin:0 0 18px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.r4ask b{font-weight:500;font-size:15px}
+.r4ask span{font-size:13px;color:var(--mut);flex:1 1 100%}
+.r4askl{display:flex;gap:10px;flex:1 1 100%;margin-top:4px}
+.r4askl a{flex:1;text-align:center;border:1px solid var(--ink);border-radius:10px;padding:12px 10px;font:500 11px/1 var(--bold);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.r4alt{border:1px solid var(--hair);border-radius:10px;margin:0 0 12px}
+.r4alt summary{padding:16px 18px;cursor:pointer;font-size:14.5px;display:flex;justify-content:space-between;list-style:none}
+.r4alt summary::-webkit-details-marker{display:none}
+.r4alt summary em{font-style:normal;color:var(--mut)}
+.r4alt .opt3{border:0;border-top:1px solid var(--hair);margin:0}
+.pr .ph{border-radius:8px;overflow:hidden}
+.pr .st{display:inline-block;border:0;background:none;padding:0;margin:0 0 6px;font:500 9.5px/1 var(--bold);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink)}
+.pr .ph img{width:100%;height:100%;object-fit:contain;display:block}
+.keep h3{font:300 21px/1.26 var(--serif);margin:0 0 8px;letter-spacing:-.014em}
+.keep p{font-size:13.6px;line-height:1.62;color:var(--mut);margin:0 0 6px}
+.keep .opts2{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.keep .opts2 button{flex:1 1 190px;border:1px solid var(--blue);background:#fff;color:var(--blue);
+  border-radius:10px;padding:15px 14px;font:500 11px/1.35 var(--bold);letter-spacing:.14em;
+  text-transform:uppercase;cursor:pointer;transition:.18s}
+.keep .opts2 button.pri{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.keep .opts2 button:hover{opacity:.86}
+.keep .done{display:flex;gap:11px;align-items:flex-start;font-size:13.6px;line-height:1.6}
+.keep .done b{font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:6px}
+
+.cmp{border:1px solid var(--hair);border-left:2px solid var(--blue);padding:18px 20px;margin:0 0 26px;background:var(--wash)}
+.cmp h3{font:300 19px/1.28 var(--serif);margin:0 0 3px;letter-spacing:-.012em}
+.cmp .sub{font:500 9.5px/1 var(--bold);letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin:0 0 14px}
+.cmp .dl{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--hair);font-size:13.6px}
+.cmp .dl .nm3{flex:1}
+.cmp .dl .ch{font:500 12.5px/1 var(--bold);letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cmp .dl .ch.up{color:#1a7f4b}.cmp .dl .ch.dn{color:#b4461f}.cmp .dl .ch.fl{color:var(--mut)}
+.cmp .was{font-size:12.4px;color:var(--mut);margin:12px 0 0;line-height:1.55}
+.dis{font-size:12.4px;color:var(--mut);border-top:1px solid var(--hair);padding-top:18px;margin-top:34px;line-height:1.65}
+.warn{font-size:11.5px;color:var(--mut);border-top:1px solid var(--hair);margin-top:26px;padding-top:14px;line-height:1.5}
+.warn code{font-family:ui-monospace,monospace;font-size:11px}
+</style>
+<script type="module">import{FilesetResolver,FaceLandmarker}from'./vendor/vision_bundle.mjs';window.__flReady=(async()=>{const v=await FilesetResolver.forVisionTasks('./vendor/wasm');const mk=d=>FaceLandmarker.createFromOptions(v,{baseOptions:{modelAssetPath:'./models/face_landmarker.task',delegate:d},runningMode:'VIDEO',numFaces:1});try{return await mk('GPU')}catch(e){return await mk('CPU')}})().catch(e=>{console.warn('face landmarker unavailable',e&&e.message);return null});</script>
+</head>
+<body>
+<div class="wrap">
+<div class="mast"><a class="z" href="/shop/skin-analysis"><img src="emblem.svg" alt="" width="24" height="24">DermLux</a><span class="by">Online skin analysis</span></div>
+<div class="rail" id="rail"></div>
+<div id="app"></div>
+<div class="warn" id="footnote">Everything on this page runs on your phone. No photograph or answer is uploaded or stored by DermLux. A cosmetic analysis, not medical advice. <a href="#" id="privfoot">How your data is handled</a></div>
+</div>
+
+<script>
+
+var ZOP={
+
+"973540":["Daily Skincare Program",160],
+"922900":["Complexion Clearing Program",180],
+"977400":["Redness Relief + Barrier Defense Program",235],
+"975200":["Skin Brightening Program",240],
+"973570":["Anti-Aging Program",270],
+
+"974100":["Exfoliating Cleanser — 60ml",25],
+"974200":["Hydrating Cleanser — 60ml",25],
+"974300":["Gentle Cleanser — 60ml",25],
+"974600":["Calming Toner — 50ml",22],
+"901100":["Exfoliating Polish — 16.2g",27],
+"928100":["Complexion Renewal Pads — 30",35],
+"919500":["Sunscreen + Primer SPF 30 — 15ml",48],
+"973170":["Rozatrol® — 20ml",60],
+"904100":["10% Vitamin C — 20ml",70],
+"915400":["Hydrating Crème — 58g",78],
+"940800":["Brightalive Skin Brightener — 30ml",110],
+"969800":["Daily Power Defense — 30ml",120],
+"967100":["Exfoliating Cleanser Normal to Oily",65],"968600":["Hydrating Cleanser Normal to Dry",65],
+"973600":["Gentle Cleanser All Skin Types",65],"916100":["Balancing Cleansing Emulsion",68],
+"900400":["Exfoliating Polish",94],"974000":["Dual Action Scrub",105],"928200":["Complexion Renewal Pads",74],
+"928400":["Oil Control Pads",87],"928600":["Calming Toner pH Balancer",55],"969700":["Daily Power Defense",190],
+"904400":["Growth Factor Serum",184],"969300":["Wrinkle + Texture 0.5% Retinol",190],
+"904000":["10% Vitamin C Self-Activating",125],"915900":["Exfoliation Accelerator",100],
+"941800":["Instant Pore Refiner",80],"950300":["Retinol Skin Brightener 0.5%",145],
+"940700":["Brightalive Skin Brightener",165],"922700":["Complexion Clarifying Serum",122],
+"973420":["Complexion Clearing Masque",65],"973160":["Rozatrol",114],"950200":["Renewal Creme",140],
+"950100":["Recovery Creme",145],"915300":["Hydrating Creme",140],"924400":["Soothing Hydro Mist",75],
+"907900":["Intense Eye Creme",145],"918300":["Eye Brightening Creme",145],"973130":["Growth Factor Eye Serum",145],
+"941700":["Daily Sheer SPF 50",80],"916900":["Sheer Fluid SPF 50",80],"973400":["Smart Tone SPF 50",80],
+"933300":["Daily Mineral SunShade SPF 45",80],"972400":["Sunscreen + Powder SPF 45",75]};
+var SHOP=null; try{ fetch('products.json',{credentials:'omit'}).then(function(r){ return r.ok?r.json():null }).then(function(j){ SHOP=j||null }).catch(function(){}) }catch(e){}
+var IMG=function(i){ var p=SHOP&&SHOP[i]; return (p&&p.image) ? p.image : '' };
+function syncShop(){ if(!SHOP) return; Object.keys(ZOP).forEach(function(k){ var p=SHOP[k]; if(p&&p.price>0) ZOP[k][1]=p.price }) }
+var PFORG={'950300':'even','940700':'even','904000':'even','915900':'pores','941800':'pores','900400':'pores','974000':'pores','969300':'lines','904400':'lines','922700':'shine','973420':'shine','928400':'shine','973160':'redness','950100':'redness','915300':'redness','924400':'redness','928600':'redness','907900':'shadow','918300':'shadow','973130':'shadow'};
+var STEPOF={};
+[['967100','968600','973600','916100','974100','974200','974300'],['900400','974000','901100'],['928200','928400','928600','928100','974600'],['950200','950100','915300','924400','915400'],['941700','916900','973400','933300','972400','919500']]
+ .forEach(function(g,n){ g.forEach(function(i){ STEPOF[i]=['Cleanse','Exfoliate','Tone','Hydrate','Protect'][n] }) });
+var OUT={
+ '969700':['Strengthens the skin barrier and defends against daily damage.','Healthier-looking from about week 2'],
+ '969800':['Strengthens the skin barrier and defends against daily damage.','Healthier-looking from about week 2'],
+ '904400':['Firmer, smoother, denser-looking skin.','Visible at about 8 weeks; full result by 12'],
+ '969300':['Softens the look of wrinkles and refines texture.','Smoother from about 2 weeks; main change by week 8'],
+ '904000':['Brightens and evens the look of skin tone.','Judge at your 8-week re-check'],
+ '904100':['Brightens and evens the look of skin tone.','Judge at your 8-week re-check'],
+ '973160':['Calms the look of redness and soothes reactive skin.','Give it up to 8 weeks'],
+ '973170':['Calms the look of redness and soothes reactive skin.','Give it up to 8 weeks'],
+ '940700':['Fades the look of dark spots and evens tone, without retinol.','Brighter from about 2 weeks; spots by 12–16 weeks'],
+ '940800':['Fades the look of dark spots and evens tone, without retinol.','Brighter from about 2 weeks; spots by 12–16 weeks'],
+ '950300':['Evens tone and clears the look of marks.','First change about 2 weeks; tone by 12 weeks'],
+ '941800':['Blurs the look of pores and mattes shine.','Works from day one'],
+ '915900':['Lifts dead cells so skin looks smoother and brighter.','Judge at your 8-week re-check'],
+ '922700':['Cuts oil and congestion; calms blotchiness.','Clearer from about 2 weeks'],
+ '973420':['Draws out oil and clears pores, twice a week.','Judge at your 8-week re-check'],
+ '950200':['Light daily hydration for mild dryness and redness.','Healthier-feeling by week 8'],
+ '950100':['Rich repair for dry, fragile skin.','Smoother by week 8'],
+ '915300':['Soothes irritation and calms the look of redness.','Comfort within minutes; less dry by week 8'],
+ '915400':['Soothes irritation and calms the look of redness.','Comfort within minutes; less dry by week 8'],
+ '924400':['Instant hydration; calms visible redness on contact.','Works from day one'],
+ '907900':['Softens eye lines; diffuses dark circles and puffiness.','Judge at your 8-week re-check'],
+ '918300':['Reduces the look of puffiness, dark circles and fine lines.','Judge at your 8-week re-check'],
+ '973130':['Smoother, plumper, more awake-looking eyes.','Cooling on contact; judge at 8 weeks'],
+ '941700':['Shields against UVA, UVB and blue light. Sheer finish.','Protects from day one'],
+ '916900':['Mineral protection with a bare-skin finish.','Protects from day one'],
+ '973400':['Protection with a self-adjusting tint and a glow.','Protects from day one'],
+ '933300':['All-mineral, tinted protection.','Protects from day one'],
+ '972400':['Brush-on protection, over make-up.','Protects from day one'],
+ '919500':['Protects and primes, matte finish.','Protects from day one'],
+ '967100':['Cleanses and exfoliates in one step.','Works from day one'],
+ '974100':['Cleanses and exfoliates in one step.','Works from day one'],
+ '968600':['Lifts oil and make-up while replenishing moisture.','Works from day one'],
+ '974200':['Lifts oil and make-up while replenishing moisture.','Works from day one'],
+ '973600':['Cleans without stripping; never tight.','Works from day one'],
+ '974300':['Cleans without stripping; never tight.','Works from day one'],
+ '916100':['Melts away make-up and sunscreen; calms reactive skin.','Works from day one'],
+ '900400':['Smoother, brighter skin after one use.','Works from day one'],
+ '901100':['Smoother, brighter skin after one use.','Works from day one'],
+ '974000':['Clears dead cells and pore-clogging oil.','Works from day one'],
+ '928200':['Sweeps away oil and dullness every day.','Judge at your 8-week re-check'],
+ '928100':['Sweeps away oil and dullness every day.','Judge at your 8-week re-check'],
+ '928400':['Clears oil and build-up: fewer breakouts, less shine.','Judge at your 8-week re-check'],
+ '928600':['Hydrates and calms; refines the look of pores.','Works from day one'],
+ '974600':['Hydrates and calms; refines the look of pores.','Works from day one'],
+ '973540':['Cleanse, exfoliate, tone, protect — the daily base.','Healthier-looking by week 2; smoother by week 8'],
+ '922900':['Cuts oil, unclogs pores, keeps skin clear.','Clearer from about 2 weeks'],
+ '977400':['Calms redness and rebuilds the barrier.','Give it up to 8 weeks'],
+ '975200':['Evens tone and fades the look of spots.','Brighter from about 2 weeks; spots by 12–16 weeks'],
+ '973570':['The anti-ageing base: cleanse, polish, pads, Daily Power Defense.','Healthier-looking by week 2']
+};
+
+var ACT={
+"973540":["The everyday routine in one box — cleanse, polish, pads and Daily Power Defense.",4],
+"922900":["The congestion routine: slows oil, breaks down what blocks the pore, exfoliates the rest.",6],
+"977400":["Built around Rozatrol for red, reactive skin, with the barrier support that holds it.",4],
+"975200":["Brightens tone without retinol or hydroquinone, so it suits skin that reacts.",8],
+"973570":["The anti-ageing routine, with Growth Factor Serum doing the heavy lifting.",8],
+"974100":["Six weeks of the same cleanser, at a fifth of the commitment.",1],
+"974200":["Six weeks of the same cleanser, at a fifth of the commitment.",1],
+"974300":["Six weeks of the same cleanser, at a fifth of the commitment.",1],
+"974600":["Calms and rebalances after cleansing. Small bottle, same formula.",1],
+"901100":["The polish that lifts the dull surface layer. Enough for about six weeks.",1],
+"928100":["Thirty pads — a month of the exfoliating step, before you commit to sixty.",2],
+"919500":["A 15ml sunscreen that primes as well as protects, for a handbag rather than a shelf.",0],
+"973170":["Rozatrol in the 20ml size — the one thing that changes reactive, ruddy skin.",4],
+"904100":["Vitamin C in the small bottle, so you can see whether brightness is your answer.",6],
+"915400":["Rich hydration without retinol, for skin that is dry rather than ageing.",1],
+"940800":["Brightening with no retinol and no hydroquinone. Gentle enough for daily use.",8],
+"969800":["Daily Power Defense in 30ml — the barrier serum that underwrites everything else.",4],
+
+"967100":["Lifts the oil and debris that keep pores congested, without stripping.",1],
+"968600":["Cleans without taking the water out of skin that is already dry.",1],
+"973600":["Cleans thoroughly and leaves the barrier alone.",1],
+"916100":["An emulsion rather than a foam, so reactive skin is not provoked twice a day.",1],
+"900400":["Magnesium crystals lift the dead surface layer that makes skin look dull and feel rough.",1],
+"974000":["Physical and chemical exfoliation together, for skin that congests quickly.",2],
+"928200":["Keeps the surface renewing between cleanses and lets everything after it absorb.",2],
+"928400":["Holds oil down through the day and keeps pores from re-blocking.",2],
+"928600":["Puts the skin back to its right pH after cleansing, which is what stops the tightness.",1],
+"969700":["The foundation of every ZO routine: it supports the barrier and defends against the daily damage that ages skin.",4],
+"904400":["Growth factors that support repair and firmness, without the irritation of retinol.",8],
+"969300":["High-strength retinol. The most evidenced ingredient there is for the appearance of lines and rough texture.",8],
+"904000":["Vitamin C brightens and defends against the free-radical damage that dulls and marks skin.",4],
+"915900":["Speeds up the renewal cycle so the rough surface turns over faster.",4],
+"941800":["Refines the look of pores and smooths the surface, visibly and quickly.",1],
+"950300":["Three strengths of retinol working on uneven tone and the marks left behind.",8],
+"940700":["Brightens uneven tone without retinol, so it is safe in pregnancy and for reactive skin.",8],
+"922700":["Clears congestion and calms the environment that breakouts grow in.",4],
+"973420":["A sulfur masque once or twice a week to absorb oil and settle active spots.",2],
+"973160":["Normalises red, reactive skin and reduces how visibly it flushes.",4],
+"950200":["Light daily moisture that supports renewal rather than just sitting on top.",1],
+"950100":["Rich repair for skin whose barrier is compromised — the tightness goes first.",1],
+"915300":["Soothing hydration built for a barrier that is struggling.",1],
+"924400":["Instant hydration through the day, and it settles heat and redness.",0],
+"907900":["Targets puffiness, fine lines and loss of firmness around the eye.",8],
+"918300":["Brightens shadowing and evens the skin around the eye.",8],
+"973130":["Growth factors for the thinnest skin on the face, where lines show first.",8],
+"941700":["Dry-touch SPF 50 that will not add shine to skin that is already oily.",0],
+"916900":["Weightless SPF 50 — the single product that decides whether everything else holds.",0],
+"973400":["Tinted SPF 50 that adapts to your tone, so it replaces a step rather than adding one.",0],
+"933300":["100% mineral SPF 50, for skin that reacts to chemical filters.",0],
+"972400":["Brush-on powder SPF, for putting protection back on over make-up at midday.",0]};
+
+var JOURNEY={
+ aging:[['Days 1–7','Skin feels smoother and cleaner. Make-up sits better.'],['Week 4','Skin looks fresher and more even. Fine lines look softer in daylight.'],['Week 8','The appearance of lines and firmness is where most people notice the change.'],['Week 12+','Keeps improving. This is the point others start to comment.']],
+ pigment:[['Days 1–7','Skin looks brighter overall, before any spot has changed.'],['Week 4','The edges of dark spots start to look less defined.'],['Week 8','Tone looks more even. Two full renewal cycles is the honest minimum here.'],['Week 12+','Visibly more even. Daily sunscreen is what keeps it.']],
+ acne:[['Days 1–7','Skin feels less oily and congested by the end of the first week.'],['Weeks 2–3','A short adjustment is normal — skin can look busier before it calms.'],['Week 6','Fewer new breakouts. This is the first real sign it is working.'],['Week 12+','Marks left behind start to fade. Texture keeps refining.']],
+ redness:[['Days 1–7','Skin feels calmer and less tight. Stinging settles.'],['Week 4','Less flushing after the usual triggers — heat, wine, exercise.'],['Week 8','Background redness looks more even and less reactive.'],['Week 12+','Skin holds its calm. Barrier strength is what lasts.']],
+ dullness:[['Days 1–7','Immediate glow — this is the step you feel the same evening.'],['Week 4','The radiance holds through the day instead of fading by lunchtime.'],['Week 8','Tone looks more even and skin reflects light better.'],['Week 12+','A settled, healthy look rather than a one-off glow.']],
+ texture:[['Days 1–7','Smoother to the touch straight away.'],['Week 4','Pores look smaller and make-up stops settling into them.'],['Week 8','Texture looks genuinely refined, not just freshly exfoliated.'],['Week 12+','Smoothness that holds between treatments.']],
+ eyes:[['Days 1–7','The area feels more comfortable and hydrated.'],['Week 4','Puffiness looks reduced, especially in the morning.'],['Week 8','Fine lines around the eye look softer.'],['Week 12+','Firmer-looking. The eye area is the slowest part of the face.']],
+ dehydration:[['Days 1–3','Tightness gone. Skin feels comfortable again.'],['Week 2','Plumper-looking, and make-up stops clinging to dry patches.'],['Week 4','The barrier is stronger, so skin stays hydrated on its own for longer.'],['Week 12+','Less reactive to weather, air conditioning and travel.']]};
+
+var STEPS=[
+ {id:'sex',t:'Who is this analysis for?',hint:'One question we use only to skip what does not apply to you.',single:1,
+  o:[['woman','A woman'],['man','A man'],['na','Prefer not to say']]},
+ {id:'ageBand',t:'How old are you?',hint:'Used only to estimate your skin age. It stays on this phone.',single:1,
+  o:[['u30','18–29'],['30_44','30–44'],['45_59','45–59'],['o60','60 and over']]},
+ {id:'skinType',t:'How would you describe your skin?',single:1,
+  o:[['oily','Oily'],['combination','Combination'],['normal','Normal'],['dry','Dry'],['sensitive','Sensitive']]},
+ {id:'concerns',t:'What would you like to change?',hint:'Choose up to three. The first you pick leads the plan.',max:3,
+  o:[['aging','Lines and firmness'],['pigment','Dark spots and uneven tone'],['acne','Breakouts'],
+     ['redness','Redness and sensitivity'],['dullness','Dullness'],['texture','Texture and pores'],
+     ['eyes','Under-eye area'],['dehydration','Dryness and dehydration']]},
+ {id:'duration',t:'How long have you been noticing it?',single:1,
+  o:[['u6','Less than six months'],['6_12','Six to twelve months'],['1_3','One to three years'],['o3','More than three years']]},
+ {id:'tried',t:'What have you used for it so far?',hint:'Select everything that applies.',max:4,
+  o:[['nothing','Nothing specific'],['pharmacy','Pharmacy or supermarket products'],['highend','Department-store brands'],
+     ['pro','Products from a clinic or doctor'],['treat','In-clinic treatments'],['online','Products found online']]},
+ {id:'worked',t:'How did your skin respond?',single:1,
+  o:[['never','No noticeable change'],['awhile','Improved, then plateaued'],['worse','Reacted badly'],
+     ['gaveup','Did not complete the course'],['some','Partial improvement'],['na','Not applicable']]},
+ {id:'proTx',t:'How often do you have professional treatments?',hint:'Facials, peels, laser — anything performed by a therapist.',single:1,
+  o:[['never','Never'],['rare','Once or twice a year'],['quarter','Every few months'],['monthly','Monthly or more']]},
+ {id:'retinol',t:'Have you used retinol before?',single:1,o:[['never','Never'],['some','Occasionally'],['regular','Regularly']]},
+ {id:'spfUse',t:'How often do you wear sunscreen?',single:1,
+  o:[['daily','Every morning'],['sometimes','Some days'],['never','Rarely or never']]},
+ {id:'spf',t:'Which sunscreen would you actually wear?',hint:'The one you will put on every morning is the right one.',single:1,
+  o:[['invisible','Invisible, no colour'],['tinted','Lightly tinted'],['mineral','Mineral']]},
+ {id:'pregnancy',t:'Pregnant, planning or breastfeeding?',hint:'Optional. Asked only so no retinol is suggested where it should not be. Stays on this phone.',single:1,opt:1,
+  when:function(){ return A.sex!=='man' },
+  o:[['no','No'],['yes','Yes'],['na','Prefer not to say']]}];
+function visibleSteps(){ return STEPS.filter(function(x){ return !x.when || x.when() }) }
+function stepOk(i){ var x=STEPS[i]; return x && (!x.when || x.when()) }
+
+var RETINOL_UNSAFE=['acne_meds','recent_tx'];
+var INCI_STATIC={"900400":["fragrance","retinoid","vitc","soy"],"901100":["fragrance","retinoid","vitc","soy"],"904400":["fragrance"],"905100":["vitc","acids"],"907900":["retinoid","acids","soy"],"912700":["fragrance","retinoid","acids"],"915300":["fragrance","retinoid","vitc"],"915400":["fragrance","retinoid","vitc"],"915900":["retinoid","acids"],"916900":["retinoid","vitc","nutseed"],"917000":["retinoid","vitc"],"918300":["retinoid","soy"],"919300":["retinoid","vitc","soy"],"919500":["retinoid","vitc","soy"],"922700":["fragrance","acids","salicylic"],"924900":["acids"],"928100":["fragrance","acids","soy","salicylic"],"928200":["fragrance","acids","soy","salicylic"],"928400":["fragrance","acids","soy","salicylic"],"928600":["fragrance","acids"],"940700":["fragrance","retinoid","vitc","acids"],"940800":["fragrance","retinoid","vitc","acids"],"941700":["fragrance","retinoid","vitc","nutseed"],"941800":["fragrance","retinoid","vitc"],"950100":["retinoid","acids","soy"],"950200":["retinoid","vitc","acids","soy"],"950300":["fragrance","retinoid","vitc","acids","nutseed","soy"],"967100":["fragrance","acids","salicylic"],"968600":["fragrance"],"969300":["fragrance","retinoid","vitc","nutseed"],"969600":["fragrance","retinoid","vitc"],"969700":["fragrance","retinoid"],"969800":["fragrance","retinoid"],"972400":["retinoid","vitc"],"972500":["retinoid","vitc"],"973130":["acids"],"973160":["fragrance","acids"],"973170":["fragrance","acids"],"973400":["fragrance"],"973600":["fragrance","soy"],"974000":["fragrance","retinoid","vitc","acids","salicylic"],"974100":["fragrance","acids","salicylic"],"974200":["fragrance"],"974300":["fragrance","soy"],"974600":["fragrance","acids"],"979800":["acids"]};
+var GROUP_LABEL={fragrance:'fragrance',retinoid:'retinol (any vitamin A derivative)',vitc:'vitamin C',acids:'exfoliating acids',sulfur:'sulfur',nutseed:'nut or seed oils',soy:'soy',scrub:'scrubs',retinol_active:'retinol treatments',salicylic:'salicylic acid'};
+var RET_ACTIVES=['969300','950300','907900'];
+var SCRUBS=['900400','974000','901100'];
+var COND_RULES={ acne_meds:['retinol_active','acids','scrub'], eczema:['retinol_active','acids','scrub'], rosacea:['retinol_active','acids','scrub'], recent_tx:['retinol_active','acids','scrub'] };
+var COND_LABEL={acne_meds:'acne medication',eczema:'eczema or dermatitis',rosacea:'rosacea',recent_tx:'a peel, laser or needling in the last month'};
+function groupsOf(i){
+ var p=(typeof SHOP!=='undefined'&&SHOP&&SHOP[i])?SHOP[i].groups:undefined;
+ var g = Array.isArray(p) ? p : (INCI_STATIC[i]||null);
+ if((g===null||g===undefined)&&PROGRAM_HAS[i]){ var u={}, bad=false; PROGRAM_HAS[i].forEach(function(c){ var cg=groupsOf(c); if(cg===null) bad=true; else cg.forEach(function(x){ u[x]=1 }) }); g = bad ? null : Object.keys(u) }
+ if(g===null||g===undefined) return null;
+ if(SCRUBS.indexOf(i)>=0) g=g.concat(['scrub']);
+ if(RET_ACTIVES.indexOf(i)>=0) g=g.concat(['retinol_active']);
+ return g;
+}
+function safety(a){
+ var ex={}, why={};
+ (a.allergens||[]).forEach(function(g){ if(g!=='other'&&GROUP_LABEL[g]){ ex[g]=1; why[g]='you said you react to it' } });
+ (a.history||[]).forEach(function(h){ (COND_RULES[h]||[]).forEach(function(g){ if(!ex[g]){ ex[g]=1; why[g]='you noted '+COND_LABEL[h] } }) });
+ if(a.pregnancy==='yes'||a.pregnancy==='na'){ ['retinol_active','salicylic'].forEach(function(g){ if(!ex[g]){ ex[g]=1; why[g]='pregnancy, planning or breastfeeding' } }) }
+ var any=Object.keys(ex).length>0;
+ var known=Object.keys(INCI_STATIC).length>0||(typeof SHOP!=='undefined'&&SHOP&&Object.keys(SHOP).length>0);
+ var human = (any&&!known) || (a.allergens||[]).indexOf('other')>=0 || !!(a.allergens_text||'').trim() || !!(a.history_text||'').trim();
+ var blocked=function(i){ if(!any) return false; var g=groupsOf(i); if(g===null) return true; return g.some(function(x){ return ex[x] }) };
+ var kitOk=function(k){ return !blocked(k) && !(PROGRAM_HAS[k]||[]).some(blocked) };
+ return {ex:ex, why:why, any:any, human:human, blocked:blocked, kitOk:kitOk};
+}
+var RETINOLS=['969300','950300','915900'];
+
+var A={concerns:[]}, SHOTS={}, MEAS={}, consented=false;
+var esc=function(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') };
+
+function build(a){
+ var rec=[]; var add=function(i,s){ if(i&&!rec.some(function(x){return x.i===i})) rec.push({i:i,s:s}) };
+ var has=function(c){ return (a.concerns||[]).indexOf(c)>=0 };
+ var preg=a.pregnancy==='yes'||a.pregnancy==='na', retOk=!preg&&a.skinType!=='sensitive'&&a.retinol!=='never';
+ if(a.skinType==='oily'||(a.skinType==='combination'&&has('acne'))) add('967100','Cleanse');
+ else if(a.skinType==='dry') add('968600','Cleanse');
+ else if(a.skinType==='sensitive') add('916100','Cleanse');
+ else add('973600','Cleanse');
+ if(a.skinType==='oily'||has('acne')) add('974000','Exfoliate');
+ else if(a.skinType!=='sensitive') add('900400','Exfoliate');
+ if(a.skinType==='oily'||has('acne')) add('928400','Tone');
+ else if(a.skinType==='sensitive') add('928600','Tone');
+ else add('928200','Tone');
+ if(has('aging')){ add('969700','Treat');
+   if(retOk&&(a.age==='o45'||a.retinol==='regular')) add('969300','Treat');
+   else if(a.age==='o45') add('904400','Treat'); }
+ if(has('pigment')){ add(retOk?'950300':'940700','Treat'); add('904000','Treat'); }
+ if(has('acne')){ add('922700','Treat'); add('973420','Treat'); }
+ if(has('redness')) add('973160','Treat');
+ if(has('dullness')&&!has('pigment')) add('904000','Treat');
+ if(has('texture')){ add('941800','Treat'); if(retOk&&!has('aging')) add('915900','Treat'); }
+ if(a.skinType==='dry'||has('dehydration')) add('950100','Hydrate');
+ else if(a.skinType==='sensitive') add('915300','Hydrate');
+ else if(a.skinType!=='oily') add('950200','Hydrate');
+ if(has('dehydration')) add('924400','Hydrate');
+ if(has('eyes')){ if(has('aging')||a.age==='o45') add('973130','Eye');
+   else if(has('pigment')||has('dullness')) add('918300','Eye'); else add('907900','Eye'); }
+ if(a.spf==='tinted') add('973400','Protect');
+ else if(a.spf==='mineral'||preg||a.skinType==='sensitive') add('933300','Protect');
+ else if(a.spf==='powder') add('972400','Protect');
+ else if(a.skinType==='oily') add('941700','Protect');
+ else add('916900','Protect');
+ return rec;
+}
+function tiers(a){
+ var S=safety(a);
+ var rec=build(a).filter(function(x){ return !S.blocked(x.i) });
+ var pick=function(s){ return rec.filter(function(x){return x.s===s}) };
+ var hero=pick('Treat')[0]||null;
+ if(!hero&&!S.blocked('969700')){ hero={i:'969700',s:'Treat'}; rec.splice(Math.min(3,rec.length),0,hero) }
+ return {hero:hero, ess:[pick('Cleanse')[0],hero,pick('Protect')[0]].filter(Boolean), all:rec, safety:S};
+}
+var sum=function(l){ return l.reduce(function(s,x){ return s+(ZOP[x.i]?ZOP[x.i][1]:0) },0) };
+var eur=function(n){ return '€'+Math.round(n) };
+function sc(v){ return Math.max(0,Math.min(100,Math.round(v))) }
+function isSkin(r,g,b){ return r>60&&g>28&&b>15&&Math.max(r,g,b)-Math.min(r,g,b)>12&&r>g&&r>b*0.85 }
+
+function acc(){ return {n:0,L:0,L2:0,red:0,shine:0,dx:0,dy:0,eN:0,skin:0,tot:0} }
+function push(o,r,g,b,L){ o.tot++;o.n++;o.L+=L;o.L2+=L*L;
+  if(isSkin(r,g,b)){o.skin++;o.red+=(r-(g+b)/2); if(L>232&&Math.max(r,g,b)-Math.min(r,g,b)<26)o.shine++} }
+function fin(o){ var m=o.L/Math.max(1,o.n); return {mean:m, sd:Math.sqrt(Math.max(0,o.L2/Math.max(1,o.n)-m*m)),
+  red:o.red/Math.max(1,o.skin), shine:o.shine/Math.max(1,o.skin),
+  tex:(o.dx+o.dy)/Math.max(1,2*o.eN), dx:o.dx/Math.max(1,o.eN), dy:o.dy/Math.max(1,o.eN),
+  skinPct:o.skin/Math.max(1,o.tot)} }
+var lum=function(d,i){ return 0.2126*d[i]+0.7152*d[i+1]+0.0722*d[i+2] };
+
+function faceStats(cv){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var cx=W/2, cy=H*0.4625, rx=W*0.3067, ry=H*0.3125;
+ var Z={forehead:acc(),eyes:acc(),cheeks:acc(),nose:acc(),chin:acc()};
+ for(var y=Math.max(0,(cy-ry)|0);y<Math.min(H,cy+ry);y+=2) for(var x=Math.max(0,(cx-rx)|0);x<Math.min(W,cx+rx);x+=2){
+  var nx=(x-cx)/rx, ny=(y-cy)/ry; if(nx*nx+ny*ny>1) continue;
+  var t=(y-(cy-ry))/(2*ry), name;
+  if(t<0.26) name='forehead'; else if(t<0.44) name='eyes';
+  else if(t<0.68) name=(Math.abs(nx)<0.30)?'nose':'cheeks'; else name='chin';
+  var i=(y*W+x)*4, L=lum(d,i), o=Z[name];
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+4<W&&y+4<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+4)*4)); o.dy+=Math.abs(L-lum(d,((y+4)*W+x)*4)); o.eN++ }
+ }
+ var out={}; Object.keys(Z).forEach(function(k){out[k]=fin(Z[k])}); return out;
+}
+
+function closeStats(cv){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var x0=W*0.06,x1=W*0.94,y0=H*0.30,y1=H*0.70, Z={ueL:acc(),nose:acc(),ueR:acc()};
+ for(var y=y0|0;y<y1;y+=2) for(var x=x0|0;x<x1;x+=2){
+  var f=(x-x0)/(x1-x0), name= f<0.33?'ueL' : f>0.67?'ueR' : 'nose';
+  var i=(y*W+x)*4, L=lum(d,i), o=Z[name];
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+3<W&&y+3<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+3)*4)); o.dy+=Math.abs(L-lum(d,((y+3)*W+x)*4)); o.eN++ }
+ }
+ var out={}; Object.keys(Z).forEach(function(k){out[k]=fin(Z[k])}); return out;
+}
+
+function browStats(cv,lm){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var S=lm?lmShapes(lm):null, F=S&&S.forehead, o=acc();
+ var x0=W*0.10,x1=W*0.90,y0=H*0.22,y1=H*0.56;
+ if(F){ x0=Math.max(0,F.cx-F.rx); x1=Math.min(W,F.cx+F.rx); y0=Math.max(0,F.cy-F.ry); y1=Math.min(H,F.cy+F.ry) }
+ for(var y=y0|0;y<y1;y+=2) for(var x=x0|0;x<x1;x+=2){
+  if(F&&!inShape(F,x,y)) continue;
+  var i=(y*W+x)*4, L=lum(d,i);
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+3<W&&y+3<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+3)*4)); o.dy+=Math.abs(L-lum(d,((y+3)*W+x)*4)); o.eN++ }
+ }
+ return {brow:fin(o), shapes:F?{forehead:F}:null, lm:!!F};
+}
+
+var app=document.getElementById('app');
+var RAIL=['Your skin','Consent','Photograph 1','Photograph 2','Photograph 3','Analysis','Your plan'];
+function rail(n){
+ var h='<span class="no">'+('0'+n)+' / 07</span>';
+ for(var i=1;i<=7;i++) h+='<i class="'+(i<=n?'on':'')+'"></i>';
+ h+='<span class="no">'+RAIL[n-1].toUpperCase()+'</span>';
+ document.getElementById('rail').innerHTML=h;
+}
+function camMode(on){ document.body.classList.toggle('cam',!!on) }
+
+var QI=0;
+var AGEMID={u30:24,'30_44':37,'45_59':52,o60:65};
+function screenQuestions(){
+ camMode(false); rail(1);
+ var s=STEPS[QI], multi=!s.single;
+ var chosen = multi ? (A[s.id]||[]) : A[s.id];
+ var can = s.opt ? true : multi ? chosen.length>0 : !!chosen;
+ var pad=function(n){ return n<10?'0'+n:''+n };
+ app.innerHTML='<p class="eyebrow">Question '+pad(visibleSteps().indexOf(s)+1)+' of '+pad(visibleSteps().length)+'</p>'
+  +'<h1>'+s.t+'</h1>'
+  +(s.hint?'<p class="lede">'+s.hint+'</p>':'<p class="lede" style="margin-bottom:22px"></p>')
+    +'<div class="opts big">'+(s.o||[]).map(function(o){
+     var on = multi ? chosen.indexOf(o[0])>=0 : chosen===o[0];
+     return '<div class="opt'+(on?' on':'')+'" data-v="'+o[0]+'">'+o[1]+'</div>' }).join('')+'</div>'
+  +(s.free?'<textarea id="freetext" class="free" rows="4" placeholder="'+s.free+'">'+esc(A[s.id+'_text']||'')+'</textarea>':'')
+  +'<button class="go" id="next"'+(can?'':' disabled')+'>'+(visibleSteps().indexOf(s)===visibleSteps().length-1?'Continue to the photographs':'Continue')+'</button>'
+  +(QI>0?'<button class="gh" id="back">Back</button>':'');
+
+ [].forEach.call(document.querySelectorAll('.opt'),function(o){ o.onclick=function(){
+   var v=o.dataset.v;
+   
+   if(!multi){ A[s.id]=v;
+     if(s.id==='ageBand'){ A.age = v==='u30' ? 'u30' : v==='30_44' ? '30_45' : 'o45'; A.ageYears = AGEMID[v]||0 }
+     screenQuestions(); return }
+   var c=A[s.id]||[];
+   
+   if(s.id==='history'&&v==='none'){ A[s.id]= c.indexOf('none')>=0 ? [] : ['none'] }
+   else { c=c.filter(function(z){return z!=='none'});
+     A[s.id]= c.indexOf(v)>=0 ? c.filter(function(z){return z!==v}) : (c.length>=(s.max||3)?c:c.concat([v])) }
+   screenQuestions() } });
+
+ var ft=document.getElementById('freetext');
+ if(ft) ft.oninput=function(){ A[s.id+'_text']=ft.value.slice(0,600) };
+ var b=document.getElementById('next');
+ if(b) b.onclick=function(){ var n=QI+1; while(n<STEPS.length && !stepOk(n)) n++; if(n<STEPS.length){ QI=n; screenQuestions() } else screenConsent() };
+ var bk=document.getElementById('back');
+ if(bk) bk.onclick=function(){ var n=QI-1; while(n>0 && !stepOk(n)) n--; QI=Math.max(0,n); screenQuestions() };
+}
+
+var DIAG={
+ face:'<svg viewBox="0 0 60 78"><rect x=".5" y=".5" width="59" height="77" fill="none" stroke="#e7e8ee"/><ellipse cx="30" cy="36" rx="18" ry="24" fill="none" stroke="#1a1a1a" stroke-dasharray="3 3"/></svg>',
+ close:'<svg viewBox="0 0 60 78"><rect x=".5" y=".5" width="59" height="77" fill="none" stroke="#e7e8ee"/><rect x="8" y="28" width="44" height="22" rx="11" fill="none" stroke="#1a1a1a" stroke-dasharray="3 3"/></svg>',
+ brow:'<svg viewBox="0 0 60 78"><rect x=".5" y=".5" width="59" height="77" fill="none" stroke="#e7e8ee"/><rect x="7" y="23" width="46" height="26" rx="4" fill="none" stroke="#1a1a1a" stroke-dasharray="3 3"/></svg>'};
+
+var BACK_TO=null;
+function screenPrivacy(back){
+ camMode(false); BACK_TO=back||screenQuestions;
+ app.innerHTML='<p class="eyebrow">Your data</p><h1>How this page handles your data</h1>'
+ +'<div class="consent"><dl>'
+ +'<dt>Who runs it</dt><dd>DermLux Laser &amp; Aesthetics Ltd, Cyprus (hello@dermluxclinics.com). This page is a cosmetic skin analysis tool for adults, 18 and over.</dd>'
+ +'<dt>What happens to your answers and photographs</dt><dd>Everything is processed inside your phone\u2019s browser. Nothing is uploaded, sent, or stored by DermLux. We never see your answers, your photographs or your results.</dd>'
+ +'<dt>The health questions</dt><dd>Pregnancy, medication, allergies and skin history are optional. You can leave them blank. They are used only to leave out an active ingredient that could irritate you, and they stay on your phone like everything else.</dd>'
+ +'<dt>If you choose Keep</dt><dd>Only your readings (numbers) and the date are stored in this phone\u2019s browser, so a later visit can show what changed. No photograph is stored. Delete removes them at once; clearing your browser data does the same.</dd>'
+ +'<dt>What this is not</dt><dd>A cosmetic analysis of how your skin appears in three photographs. It is not a medical examination, a diagnosis or medical advice, and it does not replace seeing a doctor. It suggests ZO\u00ae Skin Health products sold through DermLux; it does not include any treatment, consultation or appointment at our centres.</dd>'
+ +'<dt>Before you use a product</dt><dd>The suggestions are general cosmetic information, not a prescription. If you have a skin condition, an allergy, are pregnant or breastfeeding, or are under a doctor’s care, check with your doctor before starting a new product. Read the label and patch-test anything new. The decision to buy or use a product is yours.</dd>'
+ +'<dt>Accuracy</dt><dd>The readings depend on light, make-up and your camera. Treat them as an estimate, and compare visits taken in the same spot and light.</dd>'
+ +'<dt>Cookies and tracking</dt><dd>None. This page sets no cookies and loads no analytics or advertising scripts.</dd>'
+ +'<dt>Your rights</dt><dd>Because DermLux holds no data from this page, there is nothing for us to access, correct or delete on our side. For anything else about your data, write to hello@dermluxclinics.com.</dd>'
+ +'</dl></div>'
+ +'<button class="go" id="pback">Back</button>';
+ document.getElementById('pback').onclick=function(){ var f=BACK_TO; BACK_TO=null; f() };
+}
+function screenWelcome(){
+ camMode(false); document.getElementById('rail').innerHTML='';
+ app.innerHTML='<p class="eyebrow">Online skin analysis</p><h1>Your skin, analysed. Your protocol, personal.</h1>'
+ +'<p class="lede">Answer the questionnaire, take three photographs, and our AI turns them into an online skin analysis. Behind it is the knowledge and expertise of the DermLux doctors and the ZO® Skin Health guidelines — so what you receive is not a list for everyone, but the best home skincare protocol for your skin.</p>'
+ +'<img class="wl-img" src="/sa-welcome.jpg" alt="">'
+ +'<p class="wl-auth">ZO® is sold only through doctors and skin-health professionals — not in shops. Since 2018 the brand works with physicians only. DermLux is an authorised ZO® retailer in Cyprus.</p>'
+ +'<ul class="wl-steps">'
+ +'<li><span class="n">01</span><div><b>Complete the questionnaire</b><span>Your skin, your goals, and what you use today.</span></div></li>'
+ +'<li><span class="n">02</span><div><b>Take three photographs</b><span>In daylight, on your phone. Measured here, never uploaded.</span></div></li>'
+ +'<li><span class="n">03</span><div><b>Receive your protocol</b><span>Six readings of your skin, and the ZO® home skincare protocol built for them.</span></div></li>'
+ +'</ul>'
+ +'<div class="wl-note"><b>Good to know</b>The health questions — pregnancy, medication, allergies, skin history — are optional. This is a cosmetic analysis, not medical advice, and it does not include a consultation or appointment at our centres. <a href="#" id="wlpriv">How we use your data</a></div>'
+ +'<button class="go" id="begin">Begin</button>'
+ +'<p class="wl-who">For adults, 18 and over. Free, and nothing to install.</p>';
+ document.getElementById('begin').onclick=function(){ QI=0; screenQuestions() };
+ document.getElementById('wlpriv').onclick=function(e){ e.preventDefault(); screenPrivacy(screenWelcome) };
+}
+var CK={age:false,data:false,med:false}; var ACK='';
+function screenConsent(){
+ camMode(false); rail(2);
+ app.innerHTML='<p class="eyebrow">Before we begin</p><h1>Three photographs</h1>'
+ +'<p class="lede">Each one answers something the others cannot. Together they let the page measure how your skin appears rather than guess at it.</p>'
+ +'<div class="shots3">'
+ +'<div>'+DIAG.face+'<span class="n">01</span><span class="t">Your whole face</span></div>'
+ +'<div>'+DIAG.close+'<span class="n">02</span><span class="t">Eyes and nose</span></div>'
+ +'<div>'+DIAG.brow+'<span class="n">03</span><span class="t">Your forehead</span></div></div>'
+ +'<div class="promise"><b>First, find a bright spot</b>'
+ +'<p>Your photographs are measured by their light, so good light gives a true result; poor light gives a poorer one.</p>'
+ +'<div class="pw"><i>Best</i><span>Daytime, facing a window, with the light falling on your face.</span></div>'
+ +'<div class="pw"><i>Avoid</i><span>Evening light, a bathroom ceiling light, a window behind you, direct sun on your skin.</span></div>'
+ +'<p class="sm">No make-up, no glasses, hair back, flash off. Use the same spot and time next visit, so the two results are comparable.</p></div>'
+ +'<div class="consent"><dl>'
+ +'<dt>What each one is for</dt><dd>The full face maps which areas are oily, where redness sits and how even your tone is. The close-up of the eyes and nose is the only way to see pores and under-eye shadow properly. The forehead shows expression lines and is usually the oiliest part of the face.</dd>'
+ +'<dt>Where they go</dt><dd>They never leave your phone. Nothing is uploaded to DermLux and nothing is sent anywhere. <a href="#" id="privlink">How your data is handled</a></dd>'
+ +'<dt>What this is not</dt><dd>A cosmetic skin analysis, not a medical examination or medical advice. It does not replace seeing a doctor, and it does not include any treatment or consultation at our centres.</dd>'
+ +'</dl></div>'
+ +'<div class="promise"><b>You choose what happens to them</b>'
+ +'<p>When the analysis is finished you are asked one question, and nothing is decided before then:</p>'
+ +'<div class="pw"><i>Delete</i><span>The photographs and the readings go immediately. Nothing is kept anywhere.</span></div>'
+ +'<div class="pw"><i>Keep</i><span>Only your readings stay in this phone\u2019s browser, no photograph, so when you photograph yourself again in eight weeks this page can show what changed.</span></div>'
+ +'<p class="sm">Either way nothing is uploaded to DermLux, and deleting is immediate.</p></div>'
+ +'<label class="ck"><input type="checkbox" id="ckage"'+(CK.age?' checked':'')+'><span>I am 18 or over.</span></label>'
+ +'<label class="ck"><input type="checkbox" id="ckdata"'+(CK.data?' checked':'')+'><span>I understand that my three photographs are analysed on my phone only, are never uploaded, and that this is a cosmetic analysis, not medical advice.</span></label>'
+ +'<label class="ck"><input type="checkbox" id="ckmed"'+(CK.med?' checked':'')+'><span>If I am pregnant or breastfeeding, have a skin condition, take medication for my skin, or have allergies, I will check the full ingredient list of any product with my doctor or pharmacist before using it. The analysis does not check this for me.</span></label>'
+ +'<button class="go" id="go" disabled>Take the first photograph</button>'
+ +'<button class="gh" id="skip" disabled>Continue without photographs</button>';
+ var upd=function(){ consented=CK.age&&CK.data&&CK.med; if(consented&&!ACK) ACK=new Date().toISOString(); document.getElementById('go').disabled=!consented; document.getElementById('skip').disabled=!consented };
+ document.getElementById('ckage').onchange=function(e){ CK.age=e.target.checked; upd() };
+ document.getElementById('ckdata').onchange=function(e){ CK.data=e.target.checked; upd() };
+ document.getElementById('ckmed').onchange=function(e){ CK.med=e.target.checked; upd() };
+ upd();
+ document.getElementById('privlink').onclick=function(e){ e.preventDefault(); screenPrivacy(screenConsent) };
+ document.getElementById('go').onclick=function(){ if(consented) screenPhoto('face') };
+ document.getElementById('skip').onclick=function(){ if(consented){ MEAS={}; screenResult(false) } };
+}
+
+var V,work,wx,lastFrame,steady,frozen,stream,lastAll=false,QUAL={},posTick=0,lastPos=true;
+var ORDER=['face','close','brow'];
+var POSE={
+ face:{ n:'01', title:'Your whole face', lede:'Bright daylight works best: face a window, light on your face, not behind you. No make-up, no filter, flash off.',
+   over:'Fill the oval. Chin level, eyes forward.', fill:0.34, rail:3, oval:true,
+   guide:'<ellipse cx="150" cy="185" rx="92" ry="125"/>' },
+ close:{ n:'02', title:'Eyes and nose', lede:'Come a little closer, until your face fills the width of the screen. Keep the same light.',
+   over:'Eyes and nose inside the frame.', fill:0.45, rail:4, oval:false,
+   box:[0.06,0.30,0.94,0.70], guide:'<rect x="18" y="120" width="264" height="160" rx="54"/>' },
+ brow:{ n:'03', title:'Your forehead', lede:'Tilt the phone up a little, so the frame holds your forehead from the brows to the hairline. Your eyes can stay in view below it.',
+   over:'Forehead inside the frame, brows along its lower edge.', fill:0.45, rail:5, oval:false,
+   box:[0.10,0.22,0.90,0.56], guide:'<rect x="30" y="88" width="240" height="136" rx="6"/>' }};
+
+function screenPhoto(pose){
+ var P=POSE[pose]; camMode(true); rail(P.rail);
+ app.innerHTML='<div class="camhead"><p class="eyebrow">Photograph '+P.n+' of 03</p><h1>'+P.title+'</h1><p class="lede">'+P.lede+'</p></div>'
+  +'<div class="stage"><video id="v" playsinline muted autoplay></video>'
+  +'<div class="guide"><svg viewBox="0 0 300 400" preserveAspectRatio="none">'
+  +'<defs><mask id="mk"><rect width="300" height="400" fill="#fff"/><g fill="#000">'+P.guide+'</g></mask></defs>'
+  +'<rect width="300" height="400" fill="rgba(0,0,0,.52)" mask="url(#mk)"/>'
+  +'<g id="gline" fill="none" stroke="#fff" stroke-opacity=".92" stroke-width="1.4" stroke-dasharray="6 6">'+P.guide+'</g></svg></div>'
+  +'<div class="checks"><div class="chk" id="c1"><span class="d"></span>Light</div><div class="chk" id="c2"><span class="d"></span>No glare</div>'
+  +'<div class="chk" id="c3"><span class="d"></span>Focus</div><div class="chk" id="c4"><span class="d"></span>'+(P.oval?'Framing':'Distance')+'</div>'
+  +'<div class="chk" id="c5"><span class="d"></span>Even</div><div class="chk" id="c6"><span class="d"></span>Steady</div></div>'
+  +'<svg class="ring" id="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" id="rfg" cx="23" cy="23" r="19" stroke-dasharray="0 120"/><text x="23" y="27" id="rtx">0</text></svg>'
+  +'<div class="overtip"><div class="hint" id="hint">Starting the camera…</div><div class="hintsub" id="hintsub">'+P.over+'</div></div>'
+  +'<div class="cambtn"><button class="shutter" id="cap" aria-label="Take the photograph"><i></i></button></div></div>'
+  +'<p class="camwhy" id="camwhy">Press when you are ready. The outline turns green when your face is in the right place, but you can take it whenever you like.</p>';
+ V=document.getElementById('v');
+ work=document.createElement('canvas'); wx=work.getContext('2d',{willReadFrequently:true});
+ 
+ lastFrame=null; steady=0; frozen=false; holdP=0; HOLD={}; P.t0=0; LIVE.L=null; LIVE.t=0;
+ navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:1706}},audio:false})
+  .then(function(s){ stream=s; V.srcObject=s; return V.play() }).then(function(){ tick(P) })
+  .catch(function(e){ var h=document.getElementById('hint'); if(h){ h.textContent='Camera unavailable';
+    document.getElementById('hintsub').textContent=e.message+' — the camera only works over https' } });
+ document.getElementById('cap').onclick=function(){
+  frozen=true;
+  var st=V.parentNode, sw=st.clientWidth||300, sh=st.clientHeight||400, vw=V.videoWidth, vh=V.videoHeight;
+  var ar=sw/sh, cw=Math.min(vw, Math.round(vh*ar)), chh=Math.min(vh, Math.round(cw/ar));
+  var c=document.createElement('canvas'); c.width=cw; c.height=chh; var g=c.getContext('2d');
+  g.translate(cw,0); g.scale(-1,1); g.drawImage(V,(vw-cw)/2,(vh-chh)/2,cw,chh,0,0,cw,chh);
+  SHOTS[pose]=c; QUAL[pose]=lastAll;
+  if(stream) stream.getTracks().forEach(function(t){t.stop()});
+  var hint=document.getElementById('hint'); if(hint){ hint.textContent='Measuring…'; hint.classList.add('good') }
+  var finish=function(lm){
+   MEAS[pose]= pose==='face' ? faceStats(c,lm) : pose==='close' ? closeStats(c,lm) : browStats(c,lm);
+   var nx=ORDER[ORDER.indexOf(pose)+1];
+   if(nx) screenPhoto(nx); else screenAnalysing();
+  };
+  detectLM(c).then(finish, function(){ finish(null) });
+ };
+}
+function setChk(id,ok){ var e=document.getElementById(id); if(e){e.classList.toggle('ok',ok);e.classList.toggle('no',!ok)} }
+
+var HOLD={};
+function hyst(k,v,lo,hi){
+ var on=HOLD[k];
+ HOLD[k]= on ? v>lo : v>hi;
+ return HOLD[k];
+}
+var holdP=0;
+var LIVE={t:0,L:null,ms:0,ts:0,hooked:false};
+function lmTs(){ LIVE.ts=Math.max(LIVE.ts+1, Math.round(performance.now())); return LIVE.ts }
+function liveLM(){
+ if(!window.__fl){ if(window.__flReady&&!LIVE.hooked){ LIVE.hooked=true; window.__flReady.then(function(f){ window.__fl=f||null },function(){ window.__fl=null }) } return }
+ var now=performance.now(); if(now-LIVE.t < Math.max(140, 3*LIVE.ms)) return;
+ try{ var r=window.__fl.detectForVideo(work,lmTs()); var L=r&&r.faceLandmarks&&r.faceLandmarks[0];
+  LIVE.L = (L&&L.length>=468) ? L.map(function(q){ return {x:q.x*work.width,y:q.y*work.height} }) : null;
+ }catch(e){ LIVE.L=null }
+ LIVE.ms=performance.now()-now; LIVE.t=performance.now();
+}
+function framing(P,W,H){ var LM_BROWS=LM_RBROW.concat(LM_LBROW);
+ var L=LIVE.L, r={ok:false,score:0,msg:'',why:''};
+ if(!L){ r.msg=P.oval?'Bring your face into the oval':'Bring your face into the frame'; r.why='Look at the camera'; return r }
+ var xs=LM_OVAL.map(function(i){return L[i].x}), ys=LM_OVAL.map(function(i){return L[i].y});
+ var left=Math.min.apply(null,xs), right=Math.max.apply(null,xs), top=Math.min.apply(null,ys), bottom=Math.max.apply(null,ys);
+ var fw=right-left, fcx=(left+right)/2, fcy=(top+bottom)/2, lo,hi,dx,dy,tx,ty;
+ if(P.oval){ var cx=W/2, cy=H*0.4625, rx=W*0.3067, ry=H*0.3125; lo=1.2*rx; hi=2.5*rx; dx=(fcx-cx)/rx; dy=(fcy-cy)/ry; tx=0.35; ty=0.3 }
+ else if(P.n==='02'){ lo=0.66*W; hi=1.2*W; var bx=(P.box[0]+P.box[2])/2*W, by=(P.box[1]+P.box[3])/2*H, bh=(P.box[3]-P.box[1])*H;
+   var eyeY=(L[33].y+L[263].y)/2, noseY=L[2].y; dx=(fcx-bx)/(W/2); dy=((eyeY+noseY)/2-by)/(bh/2); tx=0.3; ty=0.45 }
+ else { lo=0.66*W; hi=1.2*W; var b0=P.box[1]*H, b1=P.box[3]*H;
+   var browY=Math.min.apply(null,LM_BROWS.map(function(i){return L[i].y})), hairY=L[10].y;
+   dx=(fcx-W/2)/(W/2); dy=((hairY+browY)/2-(b0+b1)/2)/((b1-b0)/2); tx=0.35; ty=0.5 }
+ var sErr = fw<lo ? (lo-fw)/lo : fw>hi ? (fw-hi)/hi : 0;
+ var ex=Math.max(0,Math.abs(dx)-tx), ey=Math.max(0,Math.abs(dy)-ty);
+ r.score=Math.max(0,Math.min(1,1-Math.max(sErr*3,ex*1.5,ey*1.5)));
+ if(fw<lo){ r.msg= fw>0.85*lo ? 'Almost \u2014 a little closer' : 'Come closer'; r.why=P.oval?'Fill the oval with your face':'Fill the width of the screen with your face' }
+ else if(fw>hi){ r.msg='Move back a little'; r.why='Too close to the lens' }
+ else if(ex>0){ r.msg= dx>0 ? 'Move the phone to the right' : 'Move the phone to the left'; r.why='Like a mirror \u2014 follow your face' }
+ else if(ey>0){ r.msg= dy>0 ? 'Move the phone down a little' : 'Move the phone up a little'; r.why= P.n==='03' ? 'Forehead inside the frame' : (P.oval?'Face inside the oval':'Eyes and nose inside the frame') }
+ else { r.ok=true; r.score=1; r.msg='Ready'; r.why='' }
+ return r;
+}
+function tick(P){
+ if(frozen||!V) return;
+ if(!V.videoWidth){ requestAnimationFrame(function(){tick(P)}); return }
+ var st=V.parentNode, sw=st.clientWidth||300, sh=st.clientHeight||400;
+ var W=240, H=Math.max(200,Math.min(420,Math.round(W*sh/sw)));
+ if(work.width!==W||work.height!==H){ work.width=W; work.height=H; lastFrame=null }
+ var vw=V.videoWidth, vh=V.videoHeight, sc=Math.max(W/vw,H/vh), cw=W/sc, chh=H/sc;
+ wx.save(); wx.translate(W,0); wx.scale(-1,1); wx.drawImage(V,(vw-cw)/2,(vh-chh)/2,cw,chh,0,0,W,H); wx.restore();
+ var d=wx.getImageData(0,0,W,H).data;
+ var n=0,s=0,skin=0,tot=0,edge=0,eN=0,lS=0,lN=0,rS=0,rN=0;
+ var cx=W/2, cy=H*0.4625, rx=W*0.3067, ry=H*0.3125;
+ var yA,yB,xA,xB;
+ if(P.oval){ yA=Math.max(0,(cy-ry)|0); yB=Math.min(H,cy+ry); xA=Math.max(0,(cx-rx)|0); xB=Math.min(W,cx+rx) }
+ else { xA=(W*P.box[0])|0; yA=(H*P.box[1])|0; xB=W*P.box[2]; yB=H*P.box[3] }
+ for(var y=yA;y<yB;y+=2) for(var x=xA;x<xB;x+=2){
+   if(P.oval){ var ax=(x-cx)/rx, ay=(y-cy)/ry; if(ax*ax+ay*ay>1) continue }
+   var i=(y*W+x)*4, L=lum(d,i);
+   tot++;n++;s+=L; if(x<W/2){lS+=L;lN++}else{rS+=L;rN++}
+   if(isSkin(d[i],d[i+1],d[i+2])) skin++;
+   if(x+4<W){ edge+=Math.abs(L-lum(d,(y*W+x+4)*4)); eN++ }
+ }
+ var mean=s/Math.max(1,n), sharp=edge/Math.max(1,eN), skinPct=skin/Math.max(1,tot),
+     side=Math.abs(lS/Math.max(1,lN)-rS/Math.max(1,rN)), cur=d, diff=0;
+ if(lastFrame&&lastFrame.length===cur.length){ for(var q=0;q<cur.length;q+=64) diff+=Math.abs(cur[q]-lastFrame[q]); diff/=(cur.length/64) }
+ lastFrame=cur;
+ var o1=hyst('lo',mean,66,74), o2=hyst('hi',215-mean,0,10), o3=hyst('sh',sharp,1.8,2.2), o5=hyst('ev',40-side,0,6), o6=hyst('st',11-diff,0,2);
+ liveLM();
+ var FR=window.__fl?framing(P,W,H):null, o7, frac, tooClose=false;
+ if(FR){ o7=FR.ok; frac=FR.score }
+ else{
+  tooClose=skinPct>0.88;
+  var o4=hyst('fi',skinPct,P.fill-0.06,P.fill); o7=o4&&!tooClose;
+  if(P.oval&&o7){ posTick=(posTick+1)%3; if(posTick===0){ try{ var fb=locateFace(work); var fw=fb.right-fb.left, fcx=(fb.left+fb.right)/2, fcy=(fb.top+fb.bottom)/2;
+    lastPos = !!fb.found && Math.abs(fcx-cx)<0.14*W && Math.abs(fcy-cy)<0.14*H && fw>1.3*rx && fw<2.4*rx; }catch(e){ lastPos=true } } o7=lastPos; }
+  frac=Math.max(0,Math.min(1,skinPct/P.fill));
+ }
+ setChk('c1',o1);setChk('c2',o2);setChk('c3',o3);setChk('c4',o7);setChk('c5',o5);setChk('c6',o6);
+ var all=o1&&o2&&o3&&o7&&o6; lastAll=all;
+ var gl=document.getElementById('gline'); if(gl){ gl.setAttribute('stroke', all?'#7ef0b4':'#fff'); gl.setAttribute('stroke-width', all?'2.4':'1.4'); gl.setAttribute('stroke-dasharray', all?'0':'6 6') }
+ var rfg=document.getElementById('rfg'), rtx=document.getElementById('rtx'), rg=document.getElementById('ring');
+ if(rfg){ rfg.setAttribute('stroke-dasharray',(frac*119).toFixed(1)+' 120'); rtx.textContent=Math.round(frac*100); rg.classList.toggle('ok',all) }
+ var hint=document.getElementById('hint'), sub=document.getElementById('hintsub');
+ var msg, why;
+ if(FR&&!o7){ msg=FR.msg; why=FR.why }
+ else if(!FR&&tooClose){ msg='Move back a little'; why='Too close to the lens' }
+ else if(!FR&&!o7){ msg = frac>0.8 ? 'Almost \u2014 a little closer' : 'Bring the phone closer'; why=P.oval?'Fill the oval with your face':'Fill the frame' }
+ else if(!o1){ msg='More light'; why='Turn towards a window' }
+ else if(!o2){ msg='Too bright'; why='Step out of direct sun' }
+ else if(!o3){ msg='Hold steady to focus'; why='Give the lens a moment' }
+ else if(!o6){ msg='Keep still'; why='Almost there' }
+ else { msg='Ready'; why= o5 ? 'Press the shutter when you are' : 'Press the shutter \u2014 or turn a little towards the light' }
+ if(hint){ hint.textContent=msg; hint.classList.toggle('good',all); sub.textContent=why }
+ var b=document.getElementById('cap');
+ if(b) b.classList.toggle('ready', all);
+ requestAnimationFrame(function(){tick(P)});
+}
+
+var STAGE=[
+ ['Validating exposure across all three frames', 3200, function(){ return Math.round(MEAS.face.cheeks.mean)+' lux-eq' }],
+ ['Locating facial landmarks', 3600, function(){ return '5 zones' }],
+ ['Separating skin from background', 2600, function(){ return Math.round(MEAS.face.cheeks.skinPct*100)+'% skin' }],
+ ['Sampling the forehead', 2800, function(){ return Math.round(MEAS.face.forehead.mean)+' avg' }],
+ ['Sampling the cheeks', 2800, function(){ return Math.round(MEAS.face.cheeks.mean)+' avg' }],
+ ['Sampling the nose and chin', 2600, function(){ return Math.round(MEAS.face.nose.mean)+' avg' }],
+ ['Measuring redness, zone by zone', 4200, function(){ return sc((MEAS.face.cheeks.red-8)*3.2)+' / 100' }],
+ ['Measuring tone variance across the face', 4000, function(){ return sc((MEAS.face.cheeks.sd-14)*3.4)+' / 100' }],
+ ['Measuring oil across the T-zone', 3800, function(){ return sc(MEAS.face.nose.shine*580)+' / 100' }],
+ ['Resolving pore texture on the nose', 4400, function(){ return MEAS.close? sc((MEAS.close.nose.tex-4)*6)+' / 100':'—' }],
+ ['Comparing under-eye against cheek brightness', 3800, function(){ if(!MEAS.close) return '—';
+    return sc((MEAS.face.cheeks.mean-(MEAS.close.ueL.mean+MEAS.close.ueR.mean)/2)*3.6)+' / 100' }],
+ ['Testing the forehead for line direction', 4600, function(){ if(!MEAS.brow) return '—';
+    return sc((MEAS.brow.brow.dy/Math.max(0.1,MEAS.brow.brow.dx)-1)*112)+' / 100' }],
+ ['Cross-checking against your answers and history', 3400, function(){
+    var hx=(A.history||[]).filter(function(h){return h!=='none'}).length;
+    return (A.concerns||[]).length+' concerns · '+hx+' noted' }],
+ ['Composing your protocol', 3000, function(){ return tiers(A).all.length+' products' }]];
+
+function screenAnalysing(){
+ camMode(false); rail(6);
+ var img=SHOTS.face.toDataURL('image/jpeg',0.82);
+ var TOTAL=STAGE.reduce(function(s,x){return s+x[1]},0);
+ app.innerHTML='<p class="eyebrow">In progress</p><h1>Analysing your skin</h1>'
+  +'<p class="lede">Every figure is measured from your own three photographs.</p>'
+  +'<div class="dial"><svg viewBox="0 0 100 100">'
+  +'<circle class="tr" cx="50" cy="50" r="46"/>'
+  +'<circle class="pg" id="dpg" cx="50" cy="50" r="46" pathLength="100" stroke-dasharray="0 100"/></svg>'
+  +'<div class="mid"><div class="pc" id="dpc">0<s>%</s></div><div class="ph" id="dph">'+STAGE[0][0]+'</div>'
+  +'<div class="st" id="dst">Step 01 / '+(STAGE.length<10?'0':'')+STAGE.length+'</div></div></div>'
+  +'<div class="scanbox"><img src="'+img+'"><div class="scan"></div>'
+  +'<div class="zone" id="z0" style="left:24%;top:14%;width:52%;height:13%"></div>'
+  +'<div class="zone" id="z1" style="left:16%;top:32%;width:30%;height:16%"></div>'
+  +'<div class="zone" id="z2" style="left:54%;top:32%;width:30%;height:16%"></div>'
+  +'<div class="zone" id="z3" style="left:40%;top:36%;width:20%;height:22%"></div>'
+  +'<div class="zone" id="z4" style="left:30%;top:62%;width:40%;height:16%"></div></div>'
+  +'<p class="bigp">Please keep this screen open</p>';
+ 
+ var t0=Date.now();
+ (function sweep(){
+  var p=Math.min(1,(Date.now()-t0)/TOTAL);
+  var pg=document.getElementById('dpg'), pc=document.getElementById('dpc');
+  if(!pg) return;
+  pg.setAttribute('stroke-dasharray',(p*100).toFixed(2)+' 100');
+  pc.innerHTML=Math.floor(p*100)+'<s>%</s>';
+  if(p<1) requestAnimationFrame(sweep);
+ })();
+ 
+ var i=0, last='';
+ (function run(){
+  if(i>0){ try{ last=STAGE[i-1][2]() }catch(e){ last='' } }
+  if(i>=STAGE.length){ setTimeout(function(){ screenResult(true) },900); return }
+  
+  var ZMAP={1:[0,1,2,3,4],3:[0],4:[1,2],5:[3,4],6:[1,2],7:[0,1,2,3,4],8:[0,3],9:[3],10:[1,2],11:[0]};
+  for(var k=0;k<5;k++){ var zz=document.getElementById('z'+k); if(zz) zz.classList.remove('on') }
+  if(ZMAP[i]) ZMAP[i].forEach(function(n){ var z=document.getElementById('z'+n); if(z) z.classList.add('on') });
+  var ph=document.getElementById('dph'), st=document.getElementById('dst');
+  if(ph) ph.textContent=STAGE[i][0];
+  if(st) st.innerHTML='Step '+(i+1<10?'0':'')+(i+1)+' / '+(STAGE.length<10?'0':'')+STAGE.length
+    +(last?' · <b>'+String(last).replace(/[<>&]/g,'')+'</b>':'');
+  var wait=STAGE[i][1]; i++; setTimeout(run, wait);
+ })();
+}
+
+function browLines(B){ return sc((B.brow.dy/Math.max(0.1,B.brow.dx)-1)*112) }
+function findings(){
+ var F=MEAS.face, C=MEAS.close, B=MEAS.brow, out=[];
+ if(!F) return out;
+ var tzone=(F.nose.shine+F.forehead.shine)/2, shineGap=(tzone-F.cheeks.shine)*580;
+ var redGap=F.cheeks.red-F.forehead.red, even=sc((F.cheeks.sd-14)*3.4);
+ 
+ 
+ var ratio=function(a,b){ return (a/Math.max(0.0001,b)) };
+ var x1=function(n){ return n.toFixed(1).replace(/\.0$/,'') };
+ var tShine=tzone*580, cShine=F.cheeks.shine*580;
+ if(shineGap>9){
+  var r=ratio(Math.max(tShine,1),Math.max(cShine,1));
+  out.push(['Your forehead and nose are '+(r>=1.6?x1(r)+' times':'clearly')+' oilier than your cheeks',
+   'That is combination skin, and it is why one product for your whole face never quite works. Anything strong enough to calm the shine down the middle will leave your cheeks tight, and anything kind enough for your cheeks will do nothing for your nose. The routine below treats the two differently, which is the entire trick.','shine']);
+ }else if(tShine>34) out.push(['Your skin is oily fairly evenly, at '+Math.round(tShine)+' out of 100',
+   'Your forehead, nose and cheeks all measured close together, so this is oily skin throughout rather than an oily middle and dry sides. That is good news. It means one approach works everywhere and you are not managing two different faces.','shine']);
+ else out.push(['There is very little oil anywhere, at '+Math.round(tShine)+' out of 100',
+   'Skin like yours rarely blocks or congests. The thing to watch is the opposite. When it gets too dry it panics and overproduces, and that is when a breakout arrives from nowhere on skin that is never oily. Keeping it comfortable is most of the work.','shine']);
+ if(redGap>3.5) out.push(['The redness sits across your cheeks and nose',
+   'That middle band measured '+x1(redGap)+' points redder than your forehead. It is the part that flushes with heat, sun, exercise and a glass of wine. This is your skin reacting rather than anything fixed in it, which is why it is the quickest thing here to settle.','redness']);
+ else if(F.cheeks.red>13) out.push(['The warmth is spread evenly rather than sitting in one place',
+   'There is no single hot patch to aim at, so the answer is to make your skin less reactive overall. That takes longer than calming one area, but it holds better once you have it.','redness']);
+ if(even>52) out.push(['Your tone varies by '+even+' out of 100 across your face',
+   'Some parts of your skin are brighter than others. This is what you are seeing when your face looks tired or flat in a photograph and you cannot point to anything actually wrong. It is also the first thing to change once you exfoliate regularly, which is why people notice this one first.','even']);
+ else out.push(['Your tone is even, at '+even+' out of 100',
+   'Your skin is one colour across your whole face. That is genuinely good, and it is far easier to keep than to get back, so most of what follows is about protecting it.','even']);
+ if(C){
+  var pore=sc((C.nose.tex-4)*6);
+  if(pore>50) out.push(['Your pores and texture read '+pore+' out of 100 on the nose',
+    'The close-up picked up a lot of fine detail across your nose. Most of that is dead skin sitting over the pores rather than the pores themselves, and dead skin comes off. That is why this is the fastest thing on this page to improve, and usually the first one you will see change.','pores']);
+  var ue=(C.ueL.mean+C.ueR.mean)/2, dpc=Math.round((1-ue/Math.max(1,F.cheeks.mean))*100);
+  if(sc((F.cheeks.mean-ue)*3.6)>45) out.push(['Under your eyes is '+Math.max(1,dpc)+'% darker than your cheek',
+    'Some of that is simply the shape of your face and the way light falls there, and no cream will change it. The rest is the skin, which is much thinner under the eye and shows a bad night before anywhere else does. That part does lift, but slowly, so judge it in months rather than weeks.','shadow']);
+  var asym=Math.abs(C.ueL.mean-C.ueR.mean);
+  if(asym>9) out.push(['One side is darker than the other',
+    'Your left and right measured '+Math.round(asym)+' points apart. Almost no face is symmetrical, so this on its own is normal. A gap this size usually comes from sun on the side that faces the car window, which is worth knowing because it is the side sunscreen keeps missing.','shadow']);
+ }
+ if(B){
+  var bl=browLines(B);
+  
+  if(bl>46) out.push(['Your forehead lines show even when your face is still',
+    'The lines run across your forehead rather than following the grain of your skin, and they are there in a photograph where you are not raising your eyebrows or frowning. That is the difference between lines that appear when you move and lines that have started to stay. They read '+bl+' out of 100.','lines']);
+  if(B.brow.shine*580>44) out.push(['Your forehead is the oiliest part of your face, at '+Math.round(B.brow.shine*580),
+    'That is very common and it explains a forehead that breaks out while your cheeks feel tight. Two different problems on one face. It is exactly why the routine below changes depending on where you are putting it, rather than being the same everywhere.','shine']);
+ }
+ return out;
+}
+
+var READ={
+ redness:{n:'Redness',b:['Calm','Moderate','Reactive'],
+   ex:'How much red sits in your cheeks. Heat, sun, exercise and a tired skin barrier all push it up.'},
+ even:{n:'Tone evenness',b:['Even','Slightly uneven','Uneven'],
+   ex:'Whether your skin is one colour across your face. Uneven is what reads as patchy or tired.'},
+ shine:{n:'Shine across the T-zone',b:['Dry','Balanced','Oily'],
+   ex:'Oil on your nose and forehead. Both ends are worth correcting. Too little and skin gets fragile, too much and pores block.'},
+ pores:{n:'Pore texture on the nose',b:['Refined','Visible','Prominent'],
+   ex:'Fine detail on the surface of your nose. Mostly dead skin sitting over the pores, which is why it is the quickest thing to change.'},
+ shadow:{n:'Under-eye shadow',b:['Bright','Some shadow','Shadowed'],
+   ex:'How much darker the skin under your eyes is than your cheek. Some of it is bone and light, some of it is the skin itself.'},
+ lines:{n:'Forehead lines',b:['Smooth','Early lines','Established'],
+   ex:'Lines running across your forehead that are there when your face is still, not only when you raise your eyebrows.'}};
+function bandOf(v){ return v<34?0:v<67?1:2 }
+
+function sev(k,v){ return k==='shine' ? Math.min(100, Math.abs(v-38)*1.7) : v }
+function sevClass(k,v){ var s=sev(k,v); return s<34?'ok':s<60?'mid':'hi' }
+
+var ACTION={
+ redness:'Repair the barrier, and sunscreen every morning. This settles faster than anything else here.',
+ even:'Exfoliate regularly, then brighten. Usually the first thing you will see change, often within a month.',
+ shine:'Control the oil where it is oily and hydrate where it is not. One product everywhere will over-treat half your face.',
+ pores:'Exfoliate. Most of what is there is dead skin sitting on the surface, and that comes off.',
+ shadow:'An eye product, and patience. Judge this one in months, not weeks.',
+ lines:'Retinol at night, sunscreen every morning. The slowest to move, and the one most worth starting now.'
+};
+
+var L_CONCERN={ aging:'lines and firmness', pigment:'dark spots and uneven tone', acne:'breakouts',
+  redness:'redness and sensitivity', dullness:'dullness', texture:'texture and pores',
+  eyes:'the under-eye area', dehydration:'dryness' };
+var L_DUR={ u6:'for less than six months', '6_12':'for six to twelve months',
+  '1_3':'for one to three years', o3:'for more than three years' };
+var L_TRIED={ nothing:'nothing specific', pharmacy:'pharmacy products', highend:'department-store brands',
+  pro:'products recommended by a clinic', treat:'in-clinic treatments',
+  derm:'products from a doctor or clinic', online:'products found online' };
+var L_WORKED={ never:'no noticeable change', awhile:'an improvement that then plateaued',
+  worse:'a bad reaction', gaveup:'a course you did not complete',
+  some:'partial improvement', na:'' };
+
+var L_MISSING={ redness:'calm a barrier that is already reacting', even:'break down pigment that has already formed',
+  shine:'change how much oil the skin produces', pores:'clear the dead layer sitting over the pores',
+  shadow:'thicken skin that is naturally thin under the eye', lines:'rebuild collagen that has already gone' };
+
+function labelBlock(a,v,RX){
+ var con=(a.concerns||[]).map(function(c){ return L_CONCERN[c] }).filter(Boolean)[0];
+ var dur=L_DUR[a.duration], worked=L_WORKED[a.worked];
+ var tried=(a.tried||[]).map(function(t){ return L_TRIED[t] }).filter(Boolean);
+ var usedNothing=(a.tried||[]).indexOf('nothing')>=0;
+ if(!con&&!tried.length&&!dur) return '';
+ var triedTxt = tried.length>1 ? tried.slice(0,-1).join(', ')+' and '+tried[tried.length-1] : (tried[0]||'');
+ var lead=RX.lead, readName=lead?READ[lead].n.toLowerCase():'';
+ var s1 = con ? 'You asked us to look at '+con+(dur?', which you have been noticing '+dur:'')+'.' : '';
+ var s2 = (triedTxt&&!usedNothing) ? ' You have used '+triedTxt+(worked?', with '+worked:'')+'.' : '';
+ var s3 = (lead&&v) ? ' Your photographs score '+readName+' at '+scoreOf(lead,v[lead])+' out of 100, the lowest of your readings.' : '';
+ var nf = (lead&&L_MISSING[lead]&&tried.length&&!usedNothing)
+   ? '<p class="lbnf">That is not a failure of what you used. Cleansing and hydrating products do what they '
+     +'say, and skin needs both. What they cannot do is '+L_MISSING[lead]+', which is what this reading indicates has to change.</p>'
+   : '';
+ return '<div class="lb2"><b>Your consultation summary</b><p>'+s1+s2+s3+'</p>'+nf+'</div>';
+}
+
+var PROGRAM_FOR={ shine:'922900', pores:'922900', redness:'977400', even:'975200',
+                  lines:'973570', shadow:'973570' };
+
+var PROGRAM_HAS={
+ '973540':['967100','900400','928200','969700'],
+ '922900':['967100','900400','928200','974000'],
+ '977400':['973600','900400','928600','969700','973160'],
+ '975200':['967100','900400','928200','904000','940700'],
+ '973570':['967100','900400','928200','969700','904400'] };
+
+var PRESC_NAME={ shine:['Clearing',8], pores:['Texture',8], redness:['Calm',8],
+                 even:['Tone',12], lines:['Line',12], shadow:['Eye',12] };
+
+var SMALL={ '969700':'969800','904000':'904100','940700':'940800','973160':'973170',
+            '915300':'915400','928200':'928100','900400':'901100','967100':'974100',
+            '968600':'974200','973600':'974300','928600':'974600','916900':'919500' };
+
+function prescribe(v,C,B,a){
+ var lead=null;
+ if(v){
+  var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+  lead=KEYS.slice().sort(function(x,y){ return sev(y,v[y])-sev(x,v[x]) })[0];
+ } else {
+  var map={aging:'lines',pigment:'even',dullness:'even',acne:'shine',texture:'pores',
+           redness:'redness',eyes:'shadow',dehydration:'redness'};
+  lead=map[(a.concerns||[])[0]]||null;
+ }
+ var T=tiers(a), S=T.safety, all=T.all;
+ var prog=(lead&&PROGRAM_FOR[lead])||'973540';
+ if(!S.kitOk(prog)) prog=null;
+ var has=prog?(PROGRAM_HAS[prog]||[]):[];
+ var covered={}; has.forEach(function(i){ var s=STEPOF[i]; if(s) covered[s]=1 });
+ var pool=all.filter(function(x){ return has.indexOf(x.i)<0 && !(STEPOF[x.i]&&covered[STEPOF[x.i]]) });
+ var rank=function(x){ if(x.s==='Treat'&&lead&&PFORG[x.i]===lead) return 0; if(x.s==='Protect') return 1; if(x.s==='Treat'||x.s==='Eye') return 2; if(x.s==='Hydrate') return 3; return 4 };
+ pool.sort(function(p,q){ return rank(p)-rank(q) });
+ var extras, items, full;
+ if(prog){
+  extras=pool.slice(0,2);
+  items=[{i:prog,s:'Routine'}].concat(extras);
+  full=[{i:prog,s:'Routine'}].concat(pool.slice(0,8));
+ }else{
+  var rank2=function(x){ return x.s==='Cleanse'?0 : (x.s==='Treat'&&lead&&PFORG[x.i]===lead)?1 : x.s==='Protect'?2 : (x.s==='Tone'||x.s==='Exfoliate')?3 : x.s==='Hydrate'?4 : 5 };
+  var pool2=all.slice().sort(function(p,q){ return rank2(p)-rank2(q) });
+  items=pool2.slice(0,4); extras=items.slice(); full=pool2.slice(0,8);
+ }
+ var nm=(lead&&PRESC_NAME[lead])||['Skin',8];
+ var weeks=nm[1];
+ var leadItems=all.concat(has.map(function(i){ return {i:i,s:'Treat'} })).filter(function(x){ return lead&&PFORG[x.i]===lead&&ZOP[x.i]&&!STEPOF[x.i]&&!S.blocked(x.i) });
+ var minCands=(leadItems.length?leadItems:(extras.length?extras:(prog?[{i:prog}]:items.slice(0,1))))
+   .map(function(x){ return (SMALL[x.i]&&ZOP[SMALL[x.i]])?SMALL[x.i]:x.i })
+   .filter(function(i){ return ZOP[i]&&!S.blocked(i) })
+   .sort(function(a,b){ return ZOP[a][1]-ZOP[b][1] });
+ var minItem=minCands[0]||prog||(items[0]&&items[0].i);
+ var total=sum(items);
+ return { lead:lead, prog:prog, extras:extras, items:items, total:total, weeks:weeks, safety:S,
+          label:nm[0], perWeek:Math.round(total/weeks),
+          full:full, fullTotal:sum(full),
+          minItem:minItem, minTotal:sum([{i:minItem}]),
+          minIsSmall:Object.keys(SMALL).some(function(k){ return SMALL[k]===minItem }) };
+}
+
+var ZONE_STROKE='#cebd63';
+function zonePath(g,z,W,H){
+ if(z.kind==='face'){
+  var cx=W/2, cy=H*0.4625, rx=W*0.3067, ry=H*0.3125, t0=z.t0, t1=z.t1, side=z.side||'all', pts=[];
+  var N=14, yA=cy-ry+2*ry*t0, yB=cy-ry+2*ry*t1;
+  var hw=function(y){ var ny=(y-cy)/ry; return rx*Math.sqrt(Math.max(0,1-ny*ny)) };
+  var edge=function(y,which){ var h=hw(y); if(side==='all') return which==='L'?cx-h:cx+h;
+    if(side==='nose'){ var n=Math.min(h,0.30*rx); return which==='L'?cx-n:cx+n }
+    if(side==='left'){ return which==='L'?cx-h:cx-Math.min(h,0.30*rx) }
+    return which==='L'?cx+Math.min(h,0.30*rx):cx+h };
+  for(var i=0;i<=N;i++){ var y=yA+(yB-yA)*i/N; pts.push([edge(y,'L'),y]) }
+  for(var j=N;j>=0;j--){ var y2=yA+(yB-yA)*j/N; pts.push([edge(y2,'R'),y2]) }
+  g.moveTo(pts[0][0],pts[0][1]); for(var k=1;k<pts.length;k++) g.lineTo(pts[k][0],pts[k][1]); g.closePath();
+ }else if(z.kind==='close'){
+  var x0=W*0.06, x1=W*0.94, y0=H*0.30, y1=H*0.70, w=(x1-x0)/3;
+  var xs = z.part==='ueL'?x0 : z.part==='nose'?x0+w : x0+2*w;
+  g.rect(xs+3,y0,w-6,y1-y0);
+ }else{ g.rect(W*0.10,H*0.30,W*0.80,H*0.32) }
+}
+function zoneShot(src,zones){
+ try{
+  var c=document.createElement('canvas'), W=Math.min(560,src.width), H=Math.round(src.height*W/src.width);
+  c.width=W; c.height=H; var g=c.getContext('2d'); g.drawImage(src,0,0,W,H);
+  g.save(); g.fillStyle='rgba(10,10,14,.34)'; g.beginPath(); g.rect(0,0,W,H);
+  zones.forEach(function(z){ zonePath(g,z,W,H) }); g.fill('evenodd'); g.restore();
+  g.lineWidth=2.5; g.strokeStyle=ZONE_STROKE; g.setLineDash([]);
+  zones.forEach(function(z){ g.beginPath(); zonePath(g,z,W,H); g.stroke() });
+  return c.toDataURL('image/jpeg',0.82);
+ }catch(e){ return '' }
+}
+var ZONES={
+ redness:{src:'face',zones:[{kind:'face',t0:0.44,t1:0.68,side:'left'},{kind:'face',t0:0.44,t1:0.68,side:'right'}]},
+ even:   {src:'face',zones:[{kind:'face',t0:0.44,t1:0.68,side:'left'},{kind:'face',t0:0.44,t1:0.68,side:'right'}]},
+ shine:  {src:'face',zones:[{kind:'face',t0:0.44,t1:0.68,side:'nose'}]},
+ pores:  {src:'close',zones:[{kind:'close',part:'nose'}]},
+ shadow: {src:'close',zones:[{kind:'close',part:'ueL'},{kind:'close',part:'ueR'}]},
+ lines:  {src:'brow',zones:[{kind:'brow'}]}
+};
+var FACEZ={cheeks:[{kind:'face',t0:0.44,t1:0.68,side:'left'},{kind:'face',t0:0.44,t1:0.68,side:'right'}],
+           nose:[{kind:'face',t0:0.44,t1:0.68,side:'nose'}], forehead:[{kind:'face',t0:0.02,t1:0.26,side:'all'}]};
+function regionTabs(k,F,C){
+ var f={ redness:function(o){return sc((o.red-8)*3.2)}, even:function(o){return sc((o.sd-14)*3.4)}, shine:function(o){return sc(o.shine*580)} }[k];
+ if(f&&F){ return [['cheeks','Cheeks',f(F.cheeks),FACEZ.cheeks],['nose','Nose',f(F.nose),FACEZ.nose],['forehead','Forehead',f(F.forehead),FACEZ.forehead]] }
+ if(k==='shadow'&&C&&F){ var g=function(o){return sc((F.cheeks.mean-o.mean)*3.6)};
+  return [['both','Both eyes',sc((F.cheeks.mean-(C.ueL.mean+C.ueR.mean)/2)*3.6),ZONES.shadow.zones],['l','Left',g(C.ueL),[{kind:'close',part:'ueL'}]],['r','Right',g(C.ueR),[{kind:'close',part:'ueR'}]]] }
+ return null;
+}
+function scoreOf(k,val){ return Math.max(1,Math.min(99,Math.round(100-sev(k,val)))) }
+function scoreWord(k,val){ var c=sevClass(k,val); return c==='ok'?'Good':c==='mid'?'Average':'Needs attention' }
+function rangeBar(k,val){
+ var lo=k==='shine'?24:0, hi=k==='shine'?52:33;
+ return '<div class="rng"><div class="rngb"></div><div class="rngt" style="left:'+lo+'%;width:'+(hi-lo)+'%"></div>'
+  +'<span class="rngk" style="left:'+Math.max(2,Math.min(98,val))+'%"><i>'+Math.round(val)+'</i></span>'
+  +'<span class="rngm" style="position:absolute;top:0;left:83.5%;transform:translateX(-50%)">typical</span><div class="rngl"><span>'+READ[k].b[0]+'</span><span>'+READ[k].b[2]+'</span></div></div>';
+}
+function summaryTiles(v,C,B){
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ return '<p class="eyebrow" style="margin-top:28px">Summary of your skin</p><div class="sum">'+KEYS.map(function(k){
+  return '<div class="st '+sevClass(k,v[k])+'"><span>'+READ[k].n+'</span><b>'+READ[k].b[bandOf(v[k])]+'</b><i>'+scoreOf(k,v[k])+'<small>/100</small></i></div>' }).join('')
+  +'</div><p class="mapcap">'+({3:'Three',4:'Four',5:'Five',6:'Six'}[KEYS.length]||KEYS.length)+' readings from your three photographs. The score is how far each one sits from the typical range, 100 being best. Take the same photographs in eight weeks and these are the numbers to beat.</p>';
+}
+function resultBody(v,C,B){
+ var F=MEAS.face;
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ var ranked=KEYS.slice().sort(function(a,b){ return sev(b,v[b])-sev(a,v[a]) });
+ var top=ranked.filter(function(k){ return sev(k,v[k])>=40 }).slice(0,3);
+ var anyHigh=top.length>0;
+ if(top.length<2) top=ranked.slice(0,2);
+ var rest=ranked.filter(function(k){ return top.indexOf(k)<0 });
+ var FD=findings(), used=[];
+ var cards=top.map(function(k,i){
+  var R=READ[k], bi=bandOf(v[k]), val=Math.round(v[k]), f=null;
+  for(var j=0;j<FD.length;j++){ if(FD[j][2]===k && used.indexOf(FD[j])<0){ f=FD[j]; used.push(f); break } }
+  var Z=ZONES[k], src=SHOTS[Z.src], shot=src?zoneShot(src,Z.zones):'';
+  var tabs=regionTabs(k,F,C), tabH='';
+  if(tabs&&src){
+   tabH='<div class="fxt" data-k="'+k+'">'+tabs.map(function(t,ti){
+     var u=zoneShot(src,t[3]);
+     return '<button type="button" class="'+(ti===0?'on':'')+'" data-v="'+t[2]+'" data-img="'+u+'" data-b="'+R.b[bandOf(t[2])]+'" data-c="'+sevClass(k,t[2])+'">'+t[1]+'</button>' }).join('')+'</div>';
+  }
+  return '<div class="fx fx2" data-k="'+k+'"><div class="fxh"><span class="fxn">'+(i+1<10?'0':'')+(i+1)+'</span>'
+   +'<b>'+R.n+'</b><span class="fxsc"><em>'+scoreOf(k,v[k])+'</em>/100</span></div>'
+   +(shot?'<div class="fxv"><img class="fxz" src="'+shot+'" alt=""><span class="fxb '+sevClass(k,v[k])+'">'+R.b[bi]+'</span></div>':'')
+   +tabH
+   +rangeBar(k,val)
+   +'<div class="fxx"><b>Explanation</b><p>'+(f?f[0]+'.':R.ex)+'</p>'+(f?'<p class="fxw">'+f[1]+'</p>':'')+'</div>'
+   +'<p class="fxa"><span>'+(sev(k,v[k])>=40?'Fix':'Hold')+'</span><span style="flex:1;font:inherit;letter-spacing:0;text-transform:none;color:var(--ink)">'+(ACTION[k]||'')+'</span></p>'
+   +'</div>';
+ }).join('');
+ var allFine=rest.every(function(k){ return sevClass(k,v[k])==='ok' });
+ var also=rest.length ? '<h2>'+(allFine?'The rest measured well':'Also measured')+'</h2><div class="also">'+rest.map(function(k){
+   return '<div class="al"><span>'+READ[k].n+'</span><b class="'+sevClass(k,v[k])+'">'+READ[k].b[bandOf(v[k])]+'</b><i>'+scoreOf(k,v[k])+'<small>/100</small></i></div>' }).join('')+'</div>' : '';
+ var extra=FD.filter(function(f){ return used.indexOf(f)<0 && top.indexOf(f[2])>=0 }).slice(0,2);
+ var obs=extra.length ? '<h2>Also worth knowing</h2>'+extra.map(function(f){
+   return '<div class="obs"><b>'+f[0]+'</b><p class="fxw">'+f[1]+'</p></div>' }).join('') : '';
+ var n=['','One','Two','Three','Four','Five','Six'][KEYS.length]||KEYS.length;
+ var worth=top.length===1?'This is the one worth your attention.':top.length===2?'These are the two worth your attention.':'These are the three worth your attention.';
+ var closest=(top.length===1?'This one is':top.length===2?'These two are':'These three are')+' simply the closest to the edge, and the protocol below is about holding that.';
+ return '<h2>'+(anyHigh?'What matters most':'Nothing measured high')+'</h2>'
+  +'<p class="lede">'+n+' things were measured. '+(anyHigh?worth:'None of them needs correcting. '+closest)+'</p>'+cards+also+obs;
+}
+function closingNote(v,C,B,RX){
+ var F=MEAS.face; if(!F) return '';
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ var ranked=KEYS.slice().sort(function(a,b){ return sev(b,v[b])-sev(a,v[a]) });
+ var hi=ranked.filter(function(k){ return sev(k,v[k])>=40 }), ok=ranked.filter(function(k){ return sevClass(k,v[k])==='ok' });
+ var low=function(k){ var n=READ[k].n; return n.charAt(0).toLowerCase()+n.slice(1) };
+ var list=function(a){ var n=a.map(low); return n.length<2?(n[0]||''):n.slice(0,-1).join(', ')+' and '+n[n.length-1] };
+ var s=[];
+ s.push('Your skin reads as '+(v.shine>60?'oily':v.shine<26?'dry':'balanced')+(ok.length>=3?' and mostly in the typical range':'')+'.');
+ if(hi.length){
+  var where={ redness:F.cheeks.red>F.forehead.red+2?'on the cheeks':'across the face', even:'on the cheeks', shine:F.nose.shine>F.cheeks.shine*1.4?'down the T-zone':'across the face',
+    pores:'on the nose', shadow:(C&&Math.abs(C.ueL.mean-C.ueR.mean)>6?(C.ueL.mean<C.ueR.mean?'more under the left eye':'more under the right eye'):'under both eyes'), lines:'across the forehead' };
+  s.push((hi.length===1?'The one thing worth attention is ':'The things worth attention are ')+list(hi.slice(0,3))+(hi.length===1?', '+where[hi[0]]:'')+'.');
+ }else s.push('Nothing measured high.');
+ if(ok.length) s.push(list(ok.slice(0,3)).replace(/^./,function(c){return c.toUpperCase()})+' measured well and only need holding.');
+ if(RX&&RX.lead&&ACTION[RX.lead]) s.push('Where to start: '+ACTION[RX.lead].split('. ')[0]+'.');
+ return '<div class="cn"><b>In short</b><p>'+s.join(' ')+'</p></div>';
+}
+function feedbackRow(){
+ return '<div class="fb" id="fbrow"><span>Was this result useful?</span><button type="button" data-fb="yes">Yes</button><button type="button" data-fb="no">Not really</button></div>';
+}
+function wireTabs(){
+ [].forEach.call(document.querySelectorAll('.fxt'),function(t){
+  var card=t.closest('.fx'), img=card.querySelector('.fxz'), chip=card.querySelector('.fxb'), k=card.getAttribute('data-k');
+  [].forEach.call(t.querySelectorAll('button'),function(btn){ btn.onclick=function(){
+   [].forEach.call(t.querySelectorAll('button'),function(x){ x.classList.remove('on') }); btn.classList.add('on');
+   var val=parseFloat(btn.getAttribute('data-v'))||0;
+   if(img&&btn.getAttribute('data-img')) img.src=btn.getAttribute('data-img');
+   if(chip){ chip.textContent=btn.getAttribute('data-b'); chip.className='fxb '+btn.getAttribute('data-c') }
+   var rb=card.querySelector('.rng'); if(rb) rb.outerHTML=rangeBar(k,val);
+   var sc2=card.querySelector('.fxsc em'); if(sc2) sc2.textContent=scoreOf(k,val);
+  } });
+ });
+}
+function wireFb(){
+ var row=document.getElementById('fbrow'); if(!row) return;
+ [].forEach.call(row.querySelectorAll('button'),function(btn){ btn.onclick=function(){ row.innerHTML='<span>Thank you.</span>' } });
+}
+
+var EXPL={
+ redness:['Your cheeks are calm, with little redness.','Some redness sits across your cheeks and nose.','Your cheeks and nose read clearly red — the sign of a tired skin barrier.'],
+ even:['Your tone is one colour across your face.','Your tone varies a little, which can read as tired in photographs.','Your tone is patchy, with darker and lighter areas across the cheeks.'],
+ pores:['Pores on your nose are barely visible.','Pores on your nose are visible up close.','Pores on your nose are prominent — mostly dead skin sitting over them.'],
+ shadow:['The skin under your eyes is as bright as your cheek.','Some shadow under your eyes — part the shape of your face, part the skin.','A clear shadow under your eyes; the thin skin there shows tiredness first.'],
+ lines:['Your forehead is smooth at rest.','Early lines on your forehead, there when your face is still.','Established lines across your forehead.']
+};
+function explain(k,val){
+ if(k==='redness'&&A.sex==='man'&&bandOf(val)>=1) return EXPL.redness[bandOf(val)]+' Shaving is often part of it.';
+ if(k==='shine') return val<26?'Very little oil anywhere, so skin can get tight and fragile.':val>60?'Your T-zone shines — where pores block first.':'Oil is balanced down the T-zone.';
+ return EXPL[k][bandOf(val)];
+}
+function fixLine(k){ return (ACTION[k]||'').split('. ')[0].replace(/\.$/,'')+'.' }
+function scoreClass(sc0){ return sc0>=67?'ok':sc0>=34?'mid':'hi' }
+function scoreWord(k,val){ var c=scoreClass(scoreOf(k,val)); return c==='ok'?'Good':c==='mid'?'Average':'Needs attention' }
+function rangeBar(k,val){
+ var sc0=scoreOf(k,val), L=k==='shine'?'Dry or oily':READ[k].b[2], Rr=k==='shine'?'Balanced':READ[k].b[0];
+ return '<div class="rng"><div class="rngb"></div><div class="rngt" style="left:67%;width:33%"></div>'
+  +'<span class="rngk" style="left:'+Math.max(2,Math.min(98,sc0))+'%"><i>'+sc0+'</i></span>'
+  +'<span class="rngm" style="position:absolute;top:0;left:83.5%;transform:translateX(-50%)">typical</span><div class="rngl"><span>'+L+'</span><span>'+Rr+'</span></div></div>';
+}
+function profileStrip(){
+ var age={u30:'18–29',"30_44":'30–44',"45_59":'45–59',o60:'60+'}[A.ageBand]||'';
+ var skin={oily:'Oily skin',combination:'Combination skin',normal:'Normal skin',dry:'Dry skin',sensitive:'Sensitive skin'}[A.skinType]||'';
+ var goals=(A.concerns||[]).map(function(c){return L_CONCERN[c]}).filter(Boolean).slice(0,3).join(', ');
+ var bits=[age?'Age '+age:'',skin,goals?'Goals: '+goals:''].filter(Boolean);
+ return bits.length?'<p class="prof">'+bits.join(' · ')+'</p>':'';
+}
+function summaryTiles(v,C,B){
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ var n={3:'Three',4:'Four',5:'Five',6:'Six'}[KEYS.length]||KEYS.length;
+ return profileStrip()+'<p class="eyebrow" style="margin-top:24px">Summary of your skin</p><div class="sum">'+KEYS.map(function(k){
+  var sc0=scoreOf(k,v[k]);
+  return '<div class="st '+scoreClass(sc0)+'"><span>'+READ[k].n+'</span><b>'+READ[k].b[bandOf(v[k])]+'</b><i>'+sc0+'<small>/100</small></i></div>' }).join('')
+  +'</div><p class="mapcap">'+n+' readings from your three photographs, each scored out of 100. 100 is best; 67 and above is the typical range. Take the same photographs in eight weeks and these are the numbers to beat.</p>';
+}
+function resultBody(v,C,B){
+ var F=MEAS.face;
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ var ranked=KEYS.slice().sort(function(a,b){ return sev(b,v[b])-sev(a,v[a]) });
+ var top=ranked.filter(function(k){ return scoreOf(k,v[k])<67 }).slice(0,3);
+ var anyHigh=top.length>0;
+ if(top.length<2) top=ranked.slice(0,2);
+ var rest=ranked.filter(function(k){ return top.indexOf(k)<0 });
+ var cards=top.map(function(k,i){
+  var R=READ[k], val=Math.round(v[k]), sc0=scoreOf(k,val);
+  var Z=ZONES[k], src=SHOTS[Z.src], shot=src?zoneShot(src,Z.zones):'';
+  var tabs=regionTabs(k,F,C), tabH='';
+  if(tabs&&src){
+   tabH='<div class="fxt" data-k="'+k+'">'+tabs.map(function(t,ti){
+     var u=zoneShot(src,t[3]);
+     return '<button type="button" class="'+(ti===0?'on':'')+'" data-v="'+t[2]+'" data-img="'+u+'" data-b="'+R.b[bandOf(t[2])]+'" data-c="'+scoreClass(scoreOf(k,t[2]))+'">'+t[1]+'</button>' }).join('')+'</div>';
+  }
+  return '<div class="fx fx2" data-k="'+k+'"><div class="fxh"><span class="fxn">'+(i+1<10?'0':'')+(i+1)+'</span>'
+   +'<b>'+R.n+'</b><span class="fxsc"><em>'+sc0+'</em>/100</span></div>'
+   +(shot?'<div class="fxv"><img class="fxz" src="'+shot+'" alt=""><span class="fxb '+scoreClass(sc0)+'">'+R.b[bandOf(val)]+'</span></div>':'')
+   +tabH
+   +rangeBar(k,val)
+   +'<div class="fxx"><b>What it means</b><p>'+explain(k,val)+'</p></div>'
+   +'<p class="fxa"><span>'+(sc0<67?'Fix':'Hold')+'</span><span style="flex:1;font:inherit;letter-spacing:0;text-transform:none;color:var(--ink)">'+fixLine(k)+'</span></p>'
+   +'</div>';
+ }).join('');
+ var allFine=rest.every(function(k){ return scoreOf(k,v[k])>=67 });
+ var also=rest.length ? '<h2>'+(allFine?'The rest measured well':'Also measured')+'</h2><div class="also">'+rest.map(function(k){
+   var sc0=scoreOf(k,v[k]);
+   return '<div class="al"><span>'+READ[k].n+'</span><b class="'+scoreClass(sc0)+'">'+READ[k].b[bandOf(v[k])]+'</b><i>'+sc0+'<small>/100</small></i></div>' }).join('')+'</div>' : '';
+ var n=['','One','Two','Three','Four','Five','Six'][KEYS.length]||KEYS.length;
+ var worth=top.length===1?'This is the one worth your attention.':top.length===2?'These are the two worth your attention.':'These are the three worth your attention.';
+ return '<h2>'+(anyHigh?'What matters most':'Nothing measured low')+'</h2>'
+  +'<p class="lede">'+n+' readings. '+(anyHigh?worth:'All of them are in the typical range; the protocol below is about holding that.')+'</p>'+cards+also;
+}
+function closingNote(v,C,B,RX){
+ var F=MEAS.face; if(!F) return '';
+ var KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ var ranked=KEYS.slice().sort(function(a,b){ return sev(b,v[b])-sev(a,v[a]) });
+ var low=ranked.filter(function(k){ return scoreOf(k,v[k])<67 }), ok=ranked.filter(function(k){ return scoreOf(k,v[k])>=67 });
+ var lc=function(k){ var n=READ[k].n; return n.charAt(0).toLowerCase()+n.slice(1) };
+ var list=function(a){ var n=a.map(lc); return n.length<2?(n[0]||''):n.slice(0,-1).join(', ')+' and '+n[n.length-1] };
+ var s=['Your skin reads as '+(v.shine>60?'oily':v.shine<26?'dry':'balanced')+'.'];
+ if(low.length) s.push((low.length===1?'One reading is below the typical range: ':'Below the typical range: ')+list(low.slice(0,3))+'.');
+ else s.push('Every reading is in the typical range.');
+ if(ok.length&&low.length) s.push(list(ok.slice(0,3)).replace(/^./,function(c){return c.toUpperCase()})+' measured well.');
+ if(A.spfUse==='never') s.push('You said you rarely wear sunscreen: that is the first change, before any product.');
+ if(RX&&RX.lead&&ACTION[RX.lead]) s.push('Start with '+lc(RX.lead)+': '+fixLine(RX.lead).charAt(0).toLowerCase()+fixLine(RX.lead).slice(1));
+ return '<div class="cn"><b>In short</b><p>'+s.join(' ')+'</p></div>';
+}
+function wireTabs(){
+ [].forEach.call(document.querySelectorAll('.fxt'),function(t){
+  var card=t.closest('.fx'), img=card.querySelector('.fxz'), chip=card.querySelector('.fxb'), k=card.getAttribute('data-k');
+  [].forEach.call(t.querySelectorAll('button'),function(btn){ btn.onclick=function(){
+   [].forEach.call(t.querySelectorAll('button'),function(x){ x.classList.remove('on') }); btn.classList.add('on');
+   var val=parseFloat(btn.getAttribute('data-v'))||0, sc0=scoreOf(k,val);
+   if(img&&btn.getAttribute('data-img')) img.src=btn.getAttribute('data-img');
+   if(chip){ chip.textContent=btn.getAttribute('data-b'); chip.className='fxb '+scoreClass(sc0) }
+   var rb=card.querySelector('.rng'); if(rb) rb.outerHTML=rangeBar(k,val);
+   var sc2=card.querySelector('.fxsc em'); if(sc2) sc2.textContent=sc0;
+   var ex=card.querySelector('.fxx p'); if(ex) ex.textContent=explain(k,val);
+  } });
+ });
+}
+
+function locateFace(cv){
+ var W0=cv.width, H0=cv.height, W=160, H=Math.round(H0*W/W0);
+ var gcx=W/2, gcy=H*0.4625, grx=W*0.3067, gry=H*0.3125;
+ var guide={left:gcx-grx, right:gcx+grx, top:gcy-gry, bottom:gcy+gry, found:false};
+ var box=guide;
+ try{
+  var c=document.createElement('canvas'); c.width=W; c.height=H;
+  var g=c.getContext('2d',{willReadFrequently:true}); g.drawImage(cv,0,0,W,H);
+  var d=g.getImageData(0,0,W,H).data, mask=new Uint8Array(W*H);
+  for(var y=0;y<H;y++) for(var x=0;x<W;x++){ var i=(y*W+x)*4; if(isSkin(d[i],d[i+1],d[i+2])) mask[y*W+x]=1 }
+  var y1=Math.max(0,Math.round(gcy-0.15*gry)), y2=Math.min(H,Math.round(gcy+0.35*gry));
+  var colFrac=[]; for(var x2=0;x2<W;x2++){ var cnt=0; for(var yy=y1;yy<y2;yy++) cnt+=mask[yy*W+x2]; colFrac[x2]=cnt/Math.max(1,y2-y1) }
+  var solid=function(x3){ for(var k=0;k<5;k++){ if((colFrac[x3+k]||0)<0.55) return false } return true };
+  var left=-1,right=-1;
+  for(var xa=0;xa<W-5;xa++){ if(solid(xa)){ left=xa; break } }
+  for(var xb=W-6;xb>=0;xb--){ var ok=true; for(var k2=0;k2<5;k2++){ if((colFrac[xb-k2]||0)<0.55){ ok=false; break } } if(ok){ right=xb; break } }
+  var top=-1, cxm=Math.round(W/2);
+  for(var yt=0;yt<Math.round(gcy);yt++){ var hit=0, n=0; for(var xc=cxm-20;xc<=cxm+20;xc++){ n++; hit+=mask[yt*W+xc]||0 }
+    if(hit/n>0.6 && (function(){ for(var r2=1;r2<4;r2++){ var h2=0; for(var xc2=cxm-20;xc2<=cxm+20;xc2++) h2+=mask[(yt+r2)*W+xc2]||0; if(h2/n<0.55) return false } return true })()){ top=yt; break } }
+  if(left>=0 && right>left){
+   var width=right-left, maxW=0, bottom=-1;
+   var rowW=function(yy2){ var c2=0; for(var xx=left;xx<=right;xx++) c2+=mask[yy2*W+xx]||0; return c2 };
+   for(var ym=Math.round(gcy-0.2*gry);ym<Math.min(H,Math.round(gcy+0.4*gry));ym++) maxW=Math.max(maxW,rowW(ym));
+   for(var yb=Math.round(gcy+0.3*gry);yb<H;yb++){ if(rowW(yb)<0.62*maxW){ bottom=yb; break } }
+   if(top<0) top=Math.max(0,Math.round(gcy-gry));
+   var minBottom=top+1.30*width;
+   if(bottom<0 || bottom<minBottom) bottom=Math.min(H-1,Math.round(minBottom));
+   if(bottom>top+1.9*width) bottom=Math.round(top+1.6*width);
+   if(width>=0.30*W && width<=0.95*W && bottom>top+0.9*width){ box={left:left,right:right,top:top,bottom:bottom,found:true} }
+  }
+ }catch(e){ box=guide }
+ var k=W0/W;
+ return {left:box.left*k, right:box.right*k, top:box.top*k, bottom:box.bottom*k, found:box.found};
+}
+var FACE_ZONE={
+ forehead:function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'ell',cx:B.left+w/2, cy:B.top+0.20*h, rx:0.60*w/2, ry:0.10*h} },
+ eyes:    function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'ell',cx:B.left+w/2, cy:B.top+0.40*h, rx:0.80*w/2, ry:0.07*h} },
+ nose:    function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'rect',x:B.left+w/2-0.11*w, y:B.top+0.44*h, w:0.22*w, h:0.26*h, r:0.06*w} },
+ cheekL:  function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'ell',cx:B.left+0.24*w, cy:B.top+0.56*h, rx:0.14*w, ry:0.11*h} },
+ cheekR:  function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'ell',cx:B.left+0.76*w, cy:B.top+0.56*h, rx:0.14*w, ry:0.11*h} },
+ chin:    function(B){ var w=B.right-B.left,h=B.bottom-B.top; return {kind:'ell',cx:B.left+w/2, cy:B.top+0.88*h, rx:0.28*w, ry:0.08*h} }
+};
+function inShape(S,x,y){
+ if(S.kind==='ell'){ var a=(x-S.cx)/S.rx, c=(y-S.cy)/S.ry; return a*a+c*c<=1 }
+ return x>=S.x&&x<=S.x+S.w&&y>=S.y&&y<=S.y+S.h;
+}
+function shapePath(g,S){
+ if(S.kind==='ell'){ g.moveTo(S.cx+S.rx,S.cy); g.ellipse(S.cx,S.cy,S.rx,S.ry,0,0,Math.PI*2); return }
+ var r=Math.min(S.r||0,S.w/2,S.h/2);
+ g.moveTo(S.x+r,S.y); g.arcTo(S.x+S.w,S.y,S.x+S.w,S.y+S.h,r); g.arcTo(S.x+S.w,S.y+S.h,S.x,S.y+S.h,r); g.arcTo(S.x,S.y+S.h,S.x,S.y,r); g.arcTo(S.x,S.y,S.x+S.w,S.y,r); g.closePath();
+}
+function faceStats(cv){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var B=locateFace(cv);
+ var S={forehead:FACE_ZONE.forehead(B),eyes:FACE_ZONE.eyes(B),nose:FACE_ZONE.nose(B),cheekL:FACE_ZONE.cheekL(B),cheekR:FACE_ZONE.cheekR(B),chin:FACE_ZONE.chin(B)};
+ var Z={forehead:acc(),eyes:acc(),cheeks:acc(),nose:acc(),chin:acc()};
+ var y0=Math.max(0,B.top|0), y1=Math.min(H,B.bottom|0), x0=Math.max(0,B.left|0), x1=Math.min(W,B.right|0);
+ for(var y=y0;y<y1;y+=2) for(var x=x0;x<x1;x+=2){
+  var name=null;
+  if(inShape(S.cheekL,x,y)||inShape(S.cheekR,x,y)) name='cheeks';
+  else if(inShape(S.nose,x,y)) name='nose';
+  else if(inShape(S.forehead,x,y)) name='forehead';
+  else if(inShape(S.eyes,x,y)) name='eyes';
+  else if(inShape(S.chin,x,y)) name='chin';
+  if(!name) continue;
+  var i=(y*W+x)*4, L=lum(d,i), o=Z[name];
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+4<W&&y+4<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+4)*4)); o.dy+=Math.abs(L-lum(d,((y+4)*W+x)*4)); o.eN++ }
+ }
+ var out={}; Object.keys(Z).forEach(function(k){out[k]=fin(Z[k])}); out.box=B; return out;
+}
+function faceBoxFor(src){
+ var B=MEAS.face&&MEAS.face.box; if(B) return B;
+ var W=src.width,H=src.height; return {left:W/2-W*0.3067,right:W/2+W*0.3067,top:H*0.4625-H*0.3125,bottom:H*0.4625+H*0.3125,found:false};
+}
+function zonePath(g,z,W,H,src){
+ if(z.kind==='face'){
+  var B0=faceBoxFor(src), k=W/src.width, B={left:B0.left*k,right:B0.right*k,top:B0.top*k,bottom:B0.bottom*k};
+  var S=FACE_ZONE[z.zone](B); shapePath(g,S);
+ }else if(z.kind==='close'){
+  var x0=W*0.06, x1=W*0.94, y0=H*0.30, y1=H*0.70, w=(x1-x0)/3;
+  var xs = z.part==='ueL'?x0 : z.part==='nose'?x0+w : x0+2*w;
+  shapePath(g,{kind:'rect',x:xs+3,y:y0,w:w-6,h:y1-y0,r:Math.min(22,(w-6)/2)});
+ }else{ var BS=MEAS.brow&&MEAS.brow.shapes; if(BS&&BS.forehead){ shapePath(g,scaleShape(BS.forehead,k)); return } shapePath(g,{kind:'rect',x:W*0.10,y:H*0.22,w:W*0.80,h:H*0.34,r:22}) }
+}
+function zoneShot(src,zones){
+ try{
+  var c=document.createElement('canvas'), W=Math.min(560,src.width), H=Math.round(src.height*W/src.width);
+  c.width=W; c.height=H; var g=c.getContext('2d'); g.drawImage(src,0,0,W,H);
+  g.save(); g.fillStyle='rgba(10,10,14,.34)'; g.beginPath(); g.rect(0,0,W,H);
+  zones.forEach(function(z){ zonePath(g,z,W,H,src) }); g.fill('evenodd'); g.restore();
+  g.lineWidth=2.5; g.strokeStyle=ZONE_STROKE;
+  zones.forEach(function(z){ g.beginPath(); zonePath(g,z,W,H,src); g.stroke() });
+  return c.toDataURL('image/jpeg',0.82);
+ }catch(e){ return '' }
+}
+var ZONES={
+ redness:{src:'face',zones:[{kind:'face',zone:'cheekL'},{kind:'face',zone:'cheekR'}]},
+ even:   {src:'face',zones:[{kind:'face',zone:'cheekL'},{kind:'face',zone:'cheekR'}]},
+ shine:  {src:'face',zones:[{kind:'face',zone:'nose'}]},
+ pores:  {src:'close',zones:[{kind:'close',part:'nose'}]},
+ shadow: {src:'close',zones:[{kind:'close',part:'ueL'},{kind:'close',part:'ueR'}]},
+ lines:  {src:'brow',zones:[{kind:'brow'}]}
+};
+var FACEZ={cheeks:[{kind:'face',zone:'cheekL'},{kind:'face',zone:'cheekR'}], nose:[{kind:'face',zone:'nose'}], forehead:[{kind:'face',zone:'forehead'}]};
+
+var LM_OVAL=[10,338,297,332,284,251,389,356,454,323,361,288,397,365,379,378,400,377,152,148,176,149,150,136,172,58,132,93,234,127,162,21,54,103,67,109];
+var LM_REYE=[33,7,163,144,145,153,154,155,133,173,157,158,159,160,161,246], LM_LEYE=[263,249,390,373,374,380,381,382,362,398,384,385,386,387,388,466];
+var LM_RBROW=[46,53,52,65,55,70,63,105,66,107], LM_LBROW=[276,283,282,295,285,300,293,334,296,336];
+var LM_RCHEEK=[50,101,118,123,147,187,205,36,206], LM_LCHEEK=[280,330,347,352,376,411,425,266,426];
+var LM_RLID=[145,153,154,155,133,7,163,144], LM_LLID=[374,380,381,382,362,249,390,373];
+function lmMean(L,idx){ var x=0,y=0; idx.forEach(function(i){ x+=L[i].x; y+=L[i].y }); return {x:x/idx.length,y:y/idx.length} }
+function lmDist(a,b){ var dx=a.x-b.x, dy=a.y-b.y; return Math.sqrt(dx*dx+dy*dy) }
+function lmShapes(L){
+ var faceW=lmDist(L[234],L[454]), faceH=lmDist(L[10],L[152]);
+ if(!(faceW>10&&faceH>10)) return null;
+ var browTop=Math.min.apply(null,LM_RBROW.concat(LM_LBROW).map(function(i){ return L[i].y }));
+ var top=L[10].y, cR=lmMean(L,LM_RCHEEK), cL=lmMean(L,LM_LCHEEK), eyes=lmMean(L,LM_REYE.concat(LM_LEYE));
+ var nx0=Math.min(L[48].x,L[129].x)-0.03*faceW, nx1=Math.max(L[278].x,L[358].x)+0.03*faceW;
+ var S={
+  forehead:{kind:'ell',cx:L[10].x,cy:(top+browTop)/2+0.06*(browTop-top),rx:0.36*faceW,ry:Math.max(10,0.46*(browTop-top))},
+  eyes:{kind:'ell',cx:eyes.x,cy:eyes.y,rx:0.42*faceW,ry:0.06*faceH},
+  nose:{kind:'rect',x:nx0,y:L[6].y+0.02*faceH,w:nx1-nx0,h:(L[2].y+0.01*faceH)-(L[6].y+0.02*faceH),r:0.04*faceW},
+  cheekR:{kind:'ell',cx:cR.x,cy:cR.y,rx:0.18*faceW,ry:0.12*faceH},
+  cheekL:{kind:'ell',cx:cL.x,cy:cL.y,rx:0.18*faceW,ry:0.12*faceH},
+  chin:{kind:'ell',cx:L[152].x,cy:L[152].y-0.07*faceH,rx:0.2*faceW,ry:0.07*faceH}
+ };
+ var xs=LM_OVAL.map(function(i){return L[i].x}), ys=LM_OVAL.map(function(i){return L[i].y});
+ S.box={left:Math.min.apply(null,xs),right:Math.max.apply(null,xs),top:Math.min.apply(null,ys),bottom:Math.max.apply(null,ys),found:true,lm:true};
+ return S;
+}
+function lmCloseShapes(L){
+ var eR=lmDist(L[33],L[133]), eL=lmDist(L[362],L[263]); if(!(eR>4&&eL>4)) return null;
+ var lidR=lmMean(L,LM_RLID), lidL=lmMean(L,LM_LLID);
+ var ueA={kind:'ell',cx:lidR.x,cy:lidR.y+0.45*eR,rx:0.62*eR,ry:0.32*eR}, ueB={kind:'ell',cx:lidL.x,cy:lidL.y+0.45*eL,rx:0.62*eL,ry:0.32*eL};
+ var faceW=lmDist(L[234],L[454])||(eR+eL)*2.4;
+ var nx0=Math.min(L[48].x,L[129].x)-0.03*faceW, nx1=Math.max(L[278].x,L[358].x)+0.03*faceW;
+ var nose={kind:'rect',x:nx0,y:L[6].y+0.02*faceW,w:nx1-nx0,h:(L[2].y+0.01*faceW)-(L[6].y+0.02*faceW),r:0.04*faceW};
+ return { ueL: ueA.cx<ueB.cx?ueA:ueB, ueR: ueA.cx<ueB.cx?ueB:ueA, nose:nose, lm:true };
+}
+function detectLM(cv){
+ var ready=(typeof window!=='undefined'&&window.__flReady)?window.__flReady:Promise.resolve(null);
+ return ready.then(function(fl){
+  if(!fl) return null;
+  try{ var r=fl.detectForVideo(cv,lmTs()); var L=r&&r.faceLandmarks&&r.faceLandmarks[0];
+   if(!L||L.length<468){ r=fl.detectForVideo(cv,lmTs()); L=r&&r.faceLandmarks&&r.faceLandmarks[0] }
+   if(!L||L.length<468) return null;
+   return L.map(function(q){ return {x:q.x*cv.width,y:q.y*cv.height} }) }catch(e){ return null }
+ },function(){ return null });
+}
+function faceStats(cv,lm){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var S=lm?lmShapes(lm):null, B;
+ if(S){ B=S.box } else { B=locateFace(cv); S={forehead:FACE_ZONE.forehead(B),eyes:FACE_ZONE.eyes(B),nose:FACE_ZONE.nose(B),cheekL:FACE_ZONE.cheekL(B),cheekR:FACE_ZONE.cheekR(B),chin:FACE_ZONE.chin(B),box:B} }
+ var Z={forehead:acc(),eyes:acc(),cheeks:acc(),nose:acc(),chin:acc()};
+ var y0=Math.max(0,(B.top-0.05*(B.bottom-B.top))|0), y1=Math.min(H,(B.bottom+2)|0), x0=Math.max(0,(B.left-2)|0), x1=Math.min(W,(B.right+2)|0);
+ for(var y=y0;y<y1;y+=2) for(var x=x0;x<x1;x+=2){
+  var name=null;
+  if(inShape(S.cheekL,x,y)||inShape(S.cheekR,x,y)) name='cheeks';
+  else if(inShape(S.nose,x,y)) name='nose';
+  else if(inShape(S.forehead,x,y)) name='forehead';
+  else if(inShape(S.eyes,x,y)) name='eyes';
+  else if(inShape(S.chin,x,y)) name='chin';
+  if(!name) continue;
+  var i=(y*W+x)*4, L=lum(d,i), o=Z[name];
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+4<W&&y+4<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+4)*4)); o.dy+=Math.abs(L-lum(d,((y+4)*W+x)*4)); o.eN++ }
+ }
+ var out={}; Object.keys(Z).forEach(function(k){out[k]=fin(Z[k])}); out.box=B; out.shapes=S; out.lm=!!(lm&&S.box&&S.box.lm); return out;
+}
+function closeStats(cv,lm){
+ var W=cv.width,H=cv.height,d=cv.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+ var S=lm?lmCloseShapes(lm):null;
+ if(!S){ var x0=W*0.06,x1=W*0.94,y0=H*0.30,y1=H*0.70,w=(x1-x0)/3;
+  S={ueL:{kind:'rect',x:x0,y:y0,w:w,h:y1-y0,r:0},nose:{kind:'rect',x:x0+w,y:y0,w:w,h:y1-y0,r:0},ueR:{kind:'rect',x:x0+2*w,y:y0,w:w,h:y1-y0,r:0},lm:false} }
+ var Z={ueL:acc(),nose:acc(),ueR:acc()};
+ for(var y=0;y<H;y+=2) for(var x=0;x<W;x+=2){
+  var name = inShape(S.ueL,x,y)?'ueL' : inShape(S.ueR,x,y)?'ueR' : inShape(S.nose,x,y)?'nose' : null;
+  if(!name) continue;
+  var i=(y*W+x)*4, L=lum(d,i), o=Z[name];
+  push(o,d[i],d[i+1],d[i+2],L);
+  if(x+3<W&&y+3<H){ o.dx+=Math.abs(L-lum(d,(y*W+x+3)*4)); o.dy+=Math.abs(L-lum(d,((y+3)*W+x)*4)); o.eN++ }
+ }
+ var out={}; Object.keys(Z).forEach(function(k){out[k]=fin(Z[k])}); out.shapes=S; out.lm=!!S.lm; return out;
+}
+function scaleShape(S,k){ if(S.kind==='ell') return {kind:'ell',cx:S.cx*k,cy:S.cy*k,rx:S.rx*k,ry:S.ry*k}; return {kind:'rect',x:S.x*k,y:S.y*k,w:S.w*k,h:S.h*k,r:(S.r||0)*k} }
+function zonePath(g,z,W,H,src){
+ var k=W/src.width;
+ if(z.kind==='face'){
+  var FS=MEAS.face&&MEAS.face.shapes; var S;
+  if(FS&&FS[z.zone]) S=scaleShape(FS[z.zone],k); else { var B0=faceBoxFor(src), B={left:B0.left*k,right:B0.right*k,top:B0.top*k,bottom:B0.bottom*k}; S=FACE_ZONE[z.zone](B) }
+  shapePath(g,S);
+ }else if(z.kind==='close'){
+  var CS=MEAS.close&&MEAS.close.shapes;
+  if(CS&&CS[z.part]&&CS.lm){ shapePath(g,scaleShape(CS[z.part],k)); return }
+  var x0=W*0.06, x1=W*0.94, y0=H*0.30, y1=H*0.70, w=(x1-x0)/3;
+  var xs = z.part==='ueL'?x0 : z.part==='nose'?x0+w : x0+2*w;
+  shapePath(g,{kind:'rect',x:xs+3,y:y0,w:w-6,h:y1-y0,r:Math.min(22,(w-6)/2)});
+ }else{ var BS=MEAS.brow&&MEAS.brow.shapes; if(BS&&BS.forehead){ shapePath(g,scaleShape(BS.forehead,k)); return } shapePath(g,{kind:'rect',x:W*0.10,y:H*0.22,w:W*0.80,h:H*0.34,r:22}) }
+}
+
+function composite(v){
+ var pen=[v.redness,v.even,v.pores,v.shadow,v.lines, Math.min(100,Math.abs(v.shine-38)*1.6)];
+ var avg=pen.reduce(function(s,x){return s+x},0)/pen.length;
+ return Math.max(1,Math.min(99,Math.round(100-avg)));
+}
+
+var SA=null;
+function skinAge(v,C,B,age){
+ if(!(age>=16&&age<=90)) return null;
+ var adj=0;
+ if(B) adj+=(v.lines-35)*0.09;
+ adj+=(v.even-40)*0.04;
+ if(C){ adj+=(v.shadow-40)*0.03; adj+=(v.pores-40)*0.02 }
+ adj+=(v.redness-40)*0.015;
+ if(v.shine<20) adj+=1;
+ adj=Math.max(-8,Math.min(8,adj));
+ var mid=Math.max(18,Math.round(age+adj));
+ return {age:age, mid:mid, lo:mid-1, hi:mid+2};
+}
+function skinAgeBlock(S){
+ if(!S) return '';
+ var rng=S.lo+'–'+S.hi, d=S.mid-S.age, line;
+ 
+ if(d<=-2) line='Younger than your age group. Your routine below is about keeping it that way.';
+ else if(d<=1) line='In line with your age group. Your routine below is about keeping it there.';
+ else line='Your skin shows signs we usually see around '+rng+'. These are exactly the areas a good routine changes most.';
+ return '<div style="margin:22px auto 4px;max-width:420px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px">'
+  +'<p class="cap" style="margin:0 0 6px">Estimated skin age</p>'
+  +'<p style="font:500 44px/1 var(--serif);color:#fff;margin:0">'+rng+'</p>'
+  +'<p class="verdict" style="margin-top:12px">'+line+'</p>'
+  +'<p class="note">An estimate from your three photographs and your age, not a medical measurement. Light changes it, so compare results taken in the same spot.</p></div>';
+}
+function verdictLine(v,A){
+ var bits=[];
+ bits.push(v.shine>60?'oily':v.shine<26?'dry':'balanced');
+ var hi=[['redness',v.redness],['uneven tone',v.even],['pore texture',v.pores],['under-eye shadow',v.shadow],['forehead lines',v.lines]]
+   .filter(function(x){return x[1]>55}).sort(function(a,b){return b[1]-a[1]});
+ if(!hi.length) return 'Skin reading as '+bits[0]+', with nothing measuring high. The protocol below is about holding that.';
+ var names=hi.slice(0,2).map(function(x){return x[0]});
+ return 'Skin reading as '+bits[0]+', with '+(names.length>1?names[0]+' and '+names[1]:names[0])+' measuring highest.';
+}
+
+function faceMap(v){
+ var img=SHOTS.face.toDataURL('image/jpeg',0.84);
+ var P=[
+  {x:50,y:19,side:'r',t:'Forehead',s:READ.lines.b[bandOf(v.lines)]+' · '+READ.shine.b[bandOf(v.shine)]},
+  {x:31,y:38,side:'l',t:'Under-eye',s:READ.shadow.b[bandOf(v.shadow)]},
+  {x:50,y:50,side:'r',t:'Nose',s:READ.pores.b[bandOf(v.pores)]},
+  {x:26,y:56,side:'l',t:'Cheeks',s:READ.redness.b[bandOf(v.redness)]},
+  {x:50,y:75,side:'r',t:'Overall tone',s:READ.even.b[bandOf(v.even)]}];
+ return '<div class="map"><img src="'+img+'">'
+  +P.map(function(p){ return '<span class="pin" style="left:'+p.x+'%;top:'+p.y+'%"></span>'
+    +'<span class="lb" style="top:'+p.y+'%;'+(p.side==='l'?'right:'+(102-p.x)+'%':'left:'+(p.x+4)+'%')+'">'+p.t+'<b>'+p.s+'</b></span>' }).join('')
+  +'</div><p class="mapcap">Your own photograph, with each zone marked against what it measured. Take the same three photographs in eight weeks and this map is the comparison.</p>';
+}
+
+var STORE_KEY='dermlux_skin_analysis_v1';
+function loadSaved(){ try{ var r=localStorage.getItem(STORE_KEY); return r?JSON.parse(r):null }catch(e){ return null } }
+
+var PRIOR=loadSaved();
+function saveAnalysis(v,idx){
+ try{
+  
+  var trail=(PRIOR&&PRIOR.trail?PRIOR.trail:[]).slice(-5);
+  if(PRIOR&&PRIOR.v) trail.push({date:PRIOR.date,v:PRIOR.v,idx:PRIOR.idx});
+  localStorage.setItem(STORE_KEY, JSON.stringify({
+   date:new Date().toISOString(), v:v, idx:idx, sa:SA, trail:trail.slice(-5)
+  }));
+  return true;
+ }catch(e){ return false }
+}
+function clearAnalysis(){ try{ localStorage.removeItem(STORE_KEY); return true }catch(e){ return false } }
+
+function cmpRow(label,then,now,higherBetter,target){
+ var d=now-then, better;
+ if(target!=null) better=Math.abs(now-target)<Math.abs(then-target);
+ else better=higherBetter?d>0:d<0;
+ var cls=Math.abs(d)<1?'fl':(better?'up':'dn');
+ return '<div class="dl"><span class="nm3">'+label+'</span>'
+  +'<span class="ch '+cls+'">'+then+' → '+now+'</span></div>';
+}
+function comparisonBlock(v,idx){
+ if(!PRIOR||!PRIOR.v||PRIOR.idx==null) return '';
+ var d=new Date(PRIOR.date); if(isNaN(d.getTime())) return '';
+ var days=Math.max(0,Math.round((Date.now()-d.getTime())/86400000));
+ var when=d.toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'});
+ var rows='';
+ [['redness'],['even'],['shine',38],['pores'],['shadow'],['lines']].forEach(function(o){
+  var k=o[0];
+  if(!READ[k]||PRIOR.v[k]==null||v[k]==null) return;
+  rows+=cmpRow(READ[k].n,Math.round(PRIOR.v[k]),Math.round(v[k]),false,o[1]!=null?o[1]:null);
+ });
+ return '<div class="cmp"><h3>What changed since last time</h3>'
+  +'<p class="sub">'+when+' · '+days+' day'+(days===1?'':'s')+' ago</p>'
+  +cmpRow('Skin index',Math.round(PRIOR.idx),idx,true,null)
+  
+  +((PRIOR.sa&&SA)?(function(){ var d=SA.mid-PRIOR.sa.mid, cls=Math.abs(d)<1?'fl':(d<0?'up':'dn');
+     return '<div class="dl"><span class="nm3">Estimated skin age</span><span class="ch '+cls+'">'
+      +PRIOR.sa.lo+'–'+PRIOR.sa.hi+' → '+SA.lo+'–'+SA.hi+'</span></div>' })():'')
+  +rows
+  +'<p class="was">Green means the reading moved the way you want it to. Lower is better on every '
+  +'line except shine, where the target is balanced rather than low. Light changes the numbers as '
+  +'well as skin does, so treat a move of one or two as noise.</p></div>';
+}
+
+function lightNote(){
+ var bad=['face','close','brow'].filter(function(k){ return SHOTS[k] && QUAL[k]===false });
+ if(!bad.length) return '';
+ return '<div class="flag"><b>About the light</b>'+(bad.length===3?'All three photographs were':bad.length===1?'One photograph was':'Two photographs were')
+  +' taken before the frame checks turned green, so the readings may be off by more than usual. '
+  +'For a result you can compare against, take them again in daylight, facing a window, with the ring green.</div>';
+}
+function screenResult(withPhotos){
+ camMode(false); rail(7);
+ syncShop();
+ var first=(A.concerns||[])[0]||'aging';
+ var F=MEAS.face, C=MEAS.close, B=MEAS.brow;
+ var v=null, idx=0, KEYS=[];
+ if(withPhotos&&F){
+  v={ redness:sc((F.cheeks.red-8)*3.2), even:sc((F.cheeks.sd-14)*3.4), shine:sc(F.nose.shine*580),
+      pores:C?sc((C.nose.tex-4)*6):0, shadow:C?sc((F.cheeks.mean-(C.ueL.mean+C.ueR.mean)/2)*3.6):0,
+      lines:B?browLines(B):0 };
+  idx=composite(v); SA=skinAge(v,C,B,A.ageYears);
+  KEYS=['redness','even','shine'].concat(C?['pores','shadow']:[]).concat(B?['lines']:[]);
+ }
+ var RX = v ? prescribe(v,C,B,A) : prescribe(null,null,null,A);
+ var NAME={redness:'Redness',even:'Skin tone',shine:'Oil balance',pores:'Pores',shadow:'Under-eyes',lines:'Forehead lines'};
+ var LOW={redness:'redness',even:'uneven tone',shine:'oil balance',pores:'pores',shadow:'under-eye shadow',lines:'forehead lines'};
+ var WORD={ok:'Fine',mid:'Needs care',hi:'Priority'};
+ var state={}, ranked=[];
+ if(v){
+  ranked=KEYS.slice().sort(function(a,b){ return sev(b,v[b])-sev(a,v[a]) });
+  KEYS.forEach(function(k){ state[k]=sevClass(k,v[k]) });
+  var pri=0; ranked.forEach(function(k){ if(state[k]==='hi'){ if(pri<2) pri++; else state[k]='mid' } });
+ }
+ var wordOf=function(k){ return (k==='shine'&&state[k]==='ok')?'Balanced':WORD[state[k]] };
+ var care=ranked.filter(function(k){ return state[k]!=='ok' });
+ var join=function(a){ return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1] };
+ var head1, head2;
+ if(!v){ head1='Your plan, from your answers.'; head2='Without photographs we cannot measure your skin, so this is a sound routine rather than a precise one. You can add the photographs at any time.'; }
+ else if(!care.length){ head1='Your skin is in good shape.'; head2='Nothing needs urgent care. Here is how to keep it that way.'; }
+ else { var top=care.slice(0,2); head1 = (KEYS.length-care.length)>=KEYS.length-2 ? 'Your skin is in good shape overall.' : 'Your skin needs some care.';
+   head2=(top.length===1?'One thing needs care: ':'Two things need care: ')+join(top.map(function(k){ return LOW[k] }))+'.'; }
+ var heroImg='';
+ if(v){ var hz=[]; care.slice(0,2).forEach(function(k){ var Z=ZONES[k]; if(Z&&Z.src==='face') hz=hz.concat(Z.zones) });
+   heroImg = hz.length ? zoneShot(SHOTS.face,hz) : SHOTS.face.toDataURL('image/jpeg',0.82); }
+ var hero='<div class="r4hero">'+(heroImg?'<img class="r4img" src="'+heroImg+'" alt="">':'')
+  +'<p class="eyebrow">Your result</p><h1 class="r4h1">'+head1+'</h1><p class="r4h2">'+head2+'</p>'
+  +(v?'<a class="r4go" href="#plan">See my plan</a>':'')+'</div>';
+ var chips='';
+ if(v){
+  chips='<h2>What we saw</h2><p class="r4sub">Tap a reading to see where, and what helps.</p><div class="r4chips">'
+   +KEYS.map(function(k){ return '<button type="button" class="r4chip is-'+state[k]+'" data-k="'+k+'"><i></i><b>'+NAME[k]+'</b><span>'+wordOf(k)+'</span></button>' }).join('')
+   +'</div><div class="r4detail" id="r4detail"></div>'
+   +(SA?'<details class="r4more r4age"><summary>Estimated skin age</summary><p>'+skinAgeLine(SA)+'</p></details>':'');
+ }
+ var detailFor=function(k){
+  var Z=ZONES[k], shot=(Z&&SHOTS[Z.src])?zoneShot(SHOTS[Z.src],Z.zones):'';
+  var s=state[k];
+  return (shot?'<img class="r4z" src="'+shot+'" alt="">':'')
+   +'<div class="r4dt"><b class="is-'+s+'">'+NAME[k]+' \u00b7 '+wordOf(k)+'</b>'
+   +'<p>'+explain(k,v[k])+'</p>'
+   +(s!=='ok'?'<p class="r4fix"><span>What helps</span>'+fixLine(k)+'</p>':'')
+   +'<details class="r4more"><summary>Detail</summary><p>Measured '+scoreOf(k,v[k])+' out of 100, where 100 is best and 67 and above is the typical range. An estimate from a photograph in this light, not a diagnosis.</p></details></div>';
+ };
+ var cmp=(v)?comparisonBlock(v,idx):'';
+ var jrKey={lines:'aging',even:'pigment',shine:'acne',pores:'texture',shadow:'eyes',redness:'redness'}[RX.lead]||first;
+ var jr=JOURNEY[jrKey]||JOURNEY.aging;
+ var timeline='<div class="r4tl">'+jr.map(function(m){ return '<div class="r4ms"><i>'+m[0]+'</i><span>'+m[1]+'</span></div>' }).join('')+'</div>';
+ var PFOR={'950300':'even','940700':'even','904000':'even','915900':'pores','941800':'pores','900400':'pores','974000':'pores','969300':'lines','904400':'lines','922700':'shine','973420':'shine','928400':'shine','973160':'redness','950100':'redness','915300':'redness','924400':'redness','928600':'redness','907900':'shadow','918300':'shadow','973130':'shadow'};
+ var tagOf=function(x){ var k=PFOR[x.i]; if(x.s==='Protect') return 'Every morning'; if(x.s==='Routine'||x.s==='Cleanse') return 'Every day'; if(k) return 'For '+LOW[k]; if(x.s==='Hydrate') return 'Daily moisture'; return x.s==='Eye'?'For under-eyes':'Targeted' };
+ var whenText=function(n){ return n===0?'Works from day one':n===1?'Noticeable in the first week':n===2?'Noticeable in about two weeks':'Give it about '+n+' weeks' };
+ var prod=function(x){ var p=ZOP[x.i], a=ACT[x.i]||['',4], o=OUT[x.i]||[a[0],a[1]], im=IMG(x.i), pg=productPage(x.i); if(!p) return ''; if(!p) return '';
+  return '<div class="pr"><span class="ph">'+(im?'<img src="'+im+'" alt="">':'')+'</span><div><span class="st">'+tagOf(x)+'</span>'
+   +'<span class="nm">'+p[0]+'</span><div class="wy">'+o[0]+'</div>'
+   +'<div class="wn">'+(typeof o[1]==='string'?o[1]:whenText(o[1]))+'</div>'
+   +(pg?'<a class="r4inci" href="'+pg+'" target="_blank" rel="noopener">Full ingredients</a>':'')+'</div>'
+   +'<div class="pz">'+eur(p[1])+'</div></div>' };
+ var nameOf=function(i){ return ZOP[i]?ZOP[i][0]:'' };
+ var listNames=function(arr){ var n=arr.map(function(x){return nameOf(x.i)}).filter(Boolean); return join(n) };
+ var tierCard=function(o){
+  if(!o.items||!o.items.some(function(x){ return ZOP[x.i] })) return '';
+  return '<div class="opt3'+(o.best?' best':'')+(o.top?' top':'')+'">'
+   +'<div class="o3h"><div class="o3tag">'+o.tag+'</div><div class="o3n">'+o.name+'</div><div class="o3l">'+o.sub+'</div></div>'
+   +(o.cut?'<div class="o3cut"><b>Without</b>'+o.cut+'</div>':'')
+   +o.items.map(prod).join('')
+   +'<div class="o3p"><div><span class="o3pz">'+eur(o.total)+'</span><span class="o3pu">'+o.unit+'</span></div></div>'
+   +'<button class="cta" data-add="'+o.items.map(function(x){return x.i}).join(',')+'">'+o.cta+'</button></div>';
+ };
+ var cutMid=RX.full.filter(function(x){ return !RX.items.some(function(y){ return y.i===x.i }) });
+ var cCore=tierCard({ best:1, tag:'Our recommendation', name:'Your routine', sub:(RX.prog?(RX.extras.length?'The programme, plus '+RX.extras.length+' more':'The programme, complete in one box'):RX.items.length+' products chosen for you'),
+   items:RX.items, total:RX.total, unit:'incl. VAT', cta:'Add my routine' });
+ var cFull=tierCard({ top:1, tag:'For the best result', name:'The complete routine', sub:'Everything the analysis found \u00b7 '+RX.full.length+' products',
+   items:RX.full, total:RX.fullTotal, unit:'incl. VAT', cta:'Add the complete routine' });
+ var cMin=tierCard({ tag:'If that is more than you want to spend', name:'The minimum', sub:'One product \u00b7 '+(RX.lead?'for '+LOW[RX.lead]+' only':'the first step'),
+   cut:cutMid.length||RX.full.length>1 ? listNames(RX.full.filter(function(x){ return x.i!==RX.minItem }))+'.' : '',
+   items:[{i:RX.minItem,s:'Start'}], total:RX.minTotal, unit:RX.minIsSmall?'travel size \u00b7 incl. VAT':'incl. VAT', cta:'Add the minimum' });
+ var S=RX.safety, leftOut='';
+ if(S&&S.any){
+  var lines=Object.keys(S.ex).map(function(g){ return '<li><b>'+(GROUP_LABEL[g]||g).charAt(0).toUpperCase()+(GROUP_LABEL[g]||g).slice(1)+'</b> \u2014 left out because '+S.why[g]+'.</li>' }).join('');
+  leftOut='<div class="r4left"><b>Left out for you</b><ul>'+lines+'</ul></div>';
+ }
+ var plan;
+ if(S&&S.human){
+  var notes=[];
+  if((A.allergens||[]).length) notes.push('allergic or reactive to: '+(A.allergens||[]).map(function(g){ return g==='other'?'something else':GROUP_LABEL[g] }).join(', ')+((A.allergens_text||'').trim()?' ('+String(A.allergens_text).trim().slice(0,160)+')':''));
+  if((A.history||[]).filter(function(h){return h!=='none'&&h!=='allergy'}).length) notes.push('history: '+(A.history||[]).filter(function(h){return h!=='none'&&h!=='allergy'}).map(function(h){ return COND_LABEL[h]||h }).join(', '));
+  if((A.history_text||'').trim()) notes.push('note: '+String(A.history_text).trim().slice(0,200));
+  var readings=v?KEYS.map(function(k){ return NAME[k]+' '+wordOf(k).toLowerCase() }).join(', '):'no photographs';
+  var msg='Hello, I did the online skin analysis on dermluxclinic.com. Readings: '+readings+'. I noted: '+(notes.join('; ')||'\u2014')+'. Could a skin therapist choose my ZO routine?';
+  plan='<h2 id="plan">Your plan</h2>'
+   +'<div class="r4human"><b>A skin therapist should choose your products</b>'
+   +'<p>You told us about something a form cannot check safely. Rather than guess, a DermLux skin therapist will choose your ZO\u00ae routine with you \u2014 free, by message.</p>'
+   +'<p class="r4small">Nothing is sent by this page. The button opens WhatsApp with a message written for you; you decide whether to send it.</p>'
+   +'<a class="r4go" href="https://wa.me/35797718967?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener">Ask a skin therapist</a></div>';
+ }else{
+  plan='<h2 id="plan">Your plan</h2><p class="r4sub">What you should see, week by week.</p>'+timeline+leftOut
+   +'<p class="r4patch"><b>Not medical advice.</b> Pregnant or breastfeeding, a skin condition, medication for your skin, or allergies? Check the full ingredient list of any product \u2014 one tap away on every card \u2014 with your doctor or pharmacist before using it, and patch-test anything new on the inner arm for 24 hours.</p>'
+   +askUs()
+   +cCore+cFull+cMin;
+ }
+ var HXL={allergy:'allergies',eczema:'eczema or dermatitis',rosacea:'diagnosed rosacea',
+   acne_meds:'acne medication',recent_tx:'a peel, laser or needling in the last month',
+   meds:'regular medication',preg_plan:'pregnancy, planning or breastfeeding',
+   sensitive_hx:'a bad reaction to a product before'};
+ var hx=(A.history||[]).filter(function(h){return h!=='none'});
+ var flag='';
+ if(false){
+  var held=RETINOL_UNSAFE.some(function(f){return hx.indexOf(f)>=0});
+  flag='<div class="flag"><b>What you told us</b>'
+   +(hx.length?'You noted '+hx.map(function(h){return HXL[h]||h}).join(', ')+'. ':'')
+   +((A.history_text||'').trim()?'You also wrote: \u201c'+esc(String(A.history_text).trim().slice(0,240))+'\u201d. ':'')
+   +(held
+     ? '<br><br>Because of that, every retinol has been <b class="inl">left out</b>. Starting one on top of acne medication or a recent treatment can irritate the skin badly. If you are under a doctor\u2019s care for your skin, follow their advice first.'
+     : '<br><br>The suggestions take this into account. If you are under a doctor\u2019s care for your skin, follow their advice first.')
+   +'</div>';
+ }
+ var keep=(v)
+  ? '<div class="keep" id="keepbox"><h3>Keep this, or delete it?</h3>'
+    +'<p>Your photographs and readings are on this phone only. Nothing was uploaded.</p>'
+    +'<p>Keep the readings (no photograph) and in about eight weeks this page can show you what changed. Delete, and everything goes now.</p>'
+    +'<div class="opts2"><button class="pri" id="keepyes">Keep the readings on this phone</button>'
+    +'<button id="keepno">Delete it now</button></div></div>'
+  : '';
+ app.innerHTML=hero+chips+cmp+flag+plan
+  +feedbackRow()
+  +(lightNote())
+  +'<div class="dis"><b>About this analysis.</b> It describes how your skin appears in three photographs and reads that against what you told us. A cosmetic skin analysis, not a medical examination, diagnosis or medical advice; it cannot see beneath the surface. The products are ZO\u00ae Skin Health skincare sold through DermLux; nothing here is a prescription, and no treatment, consultation or appointment at our centres is included. If you have a mole, a lesion or a patch that is changing, see a doctor. Photographs measure light as well as skin: treat the readings as an estimate and compare visits taken in the same spot and light. <a href="#" id="privlink2">How your data is handled</a></div>'
+  +keep
+  +'<button class="gh" id="restart">Start again</button>';
+ var wire=function(){
+  wireFb();
+  var det=document.getElementById('r4detail');
+  var open=function(k){
+   [].forEach.call(document.querySelectorAll('.r4chip'),function(c){ c.classList.toggle('on', c.getAttribute('data-k')===k) });
+   if(det){ det.innerHTML=detailFor(k); det.classList.add('on') }
+  };
+  [].forEach.call(document.querySelectorAll('.r4chip'),function(c){ c.onclick=function(){ open(c.getAttribute('data-k')); } });
+  if(v&&ranked.length) open(care[0]||ranked[0]);
+  [].forEach.call(document.querySelectorAll('.pr img'),function(im){ im.addEventListener('error',function(){ im.style.visibility='hidden' }) });
+  [].forEach.call(document.querySelectorAll('.cta'),function(btn){ btn.onclick=function(){
+   var ids=(btn.getAttribute('data-add')||'').replace(/[^0-9,]/g,'');
+   if(!ids){ return }
+   var label=btn.textContent;
+   btn.textContent='Adding to your bag…'; btn.disabled=true;
+   location.href='https://dermlux-site-git-dev-drixzors-projects.vercel.app/shop/add?items='+encodeURIComponent(ids)+'&from=analysis'+(ACK?'&ack='+encodeURIComponent(ACK):'');
+   setTimeout(function(){ btn.disabled=false; btn.textContent=label },1400);
+  }});
+  var kb=document.getElementById('keepbox');
+  if(kb){
+   document.getElementById('keepyes').onclick=function(){
+    var ok=saveAnalysis(v,idx);
+    kb.innerHTML=ok
+     ? '<div class="done"><div><b>Kept on this phone</b>Only your readings are stored in this browser \u2014 no photograph. Nothing was uploaded. Come back in about eight weeks, take the same three photographs, and this page will show you what moved.<br><br>If you clear your browsing data or use a different phone it is gone.</div></div>'
+     : '<div class="done"><div><b>Could not keep it</b>This browser refused to store anything, which usually means private browsing or no space left. Nothing was kept and nothing was uploaded. Screenshot this page if you want a record of it.</div></div>';
+   };
+   document.getElementById('keepno').onclick=function(){
+    clearAnalysis(); PRIOR=null;
+    kb.innerHTML='<div class="done"><div><b>Nothing will be kept</b>Any earlier analysis stored in this browser has been deleted. Your photographs stay in this page only until you close it, and they were never uploaded.</div></div>';
+   };
+  }
+ };
+ wire();
+ var pl2=document.getElementById('privlink2'); if(pl2) pl2.onclick=function(e){ e.preventDefault(); var snap=app.innerHTML; screenPrivacy(function(){ app.innerHTML=snap; wire() }) };
+ document.getElementById('restart').onclick=function(){ A={concerns:[]};SHOTS={};MEAS={};QUAL={};consented=false;CK={age:false,data:false,med:false};ACK='';QI=0;screenQuestions() };
+}
+function askUs(){
+ return '<div class="r4ask"><b>Have a question? Ask us.</b><span>Real people at DermLux, by message.</span>'
+  +'<div class="r4askl"><a href="https://wa.me/35797718967" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.instagram.com/dermluxclinics" target="_blank" rel="noopener">Instagram</a></div></div>';
+}
+function productPage(i){ var p=(typeof SHOP!=='undefined'&&SHOP&&SHOP[i]); return (p&&p.slug) ? 'https://dermlux-site-git-dev-drixzors-projects.vercel.app/product/'+p.slug : '' }
+function skinAgeLine(S){
+ var rng=S.lo+'\u2013'+S.hi, d=S.mid-S.age;
+ if(d<=-2) return 'About '+rng+' \u2014 younger than your age group. Your routine is about keeping it that way.';
+ if(d<=1) return 'About '+rng+' \u2014 in line with your age group. Your routine is about keeping it there.';
+ return 'About '+rng+'. These are the areas a good routine changes most.';
+}
+
+document.getElementById('privfoot').onclick=function(e){ e.preventDefault(); var snap=app.innerHTML, r=document.getElementById('rail').innerHTML; screenPrivacy(function(){ app.innerHTML=snap; document.getElementById('rail').innerHTML=r; if(document.getElementById('restart')) screenResult(!!MEAS.face); else if(document.getElementById('ckage')) screenConsent(); else if(document.getElementById('begin')) screenWelcome(); else screenQuestions() }) };
+screenQuestions();
+</script>
+</body>
+</html>
