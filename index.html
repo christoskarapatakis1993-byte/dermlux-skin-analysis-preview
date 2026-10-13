@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-rqWeujHdNfu44gKQ+iYSlIvf2wfp5EosA+qQS/oLFjE=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-LRvaHdODZbohjFuAbwQZWV9RPcY02s+55OEmYdhQwos=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
@@ -1912,7 +1912,7 @@ function screenResult(withPhotos){
    head2=(top.length===1?'One thing needs care: ':'Two things need care: ')+join(top.map(function(k){ return LOW[k] }))+'.'; }
  var heroImg='';
  if(v){ var hz=[]; care.slice(0,2).forEach(function(k){ var Z=ZONES[k]; if(Z&&Z.src==='face') hz=hz.concat(Z.zones) });
-   heroImg = hz.length ? zoneShot(SHOTS.face,hz) : SHOTS.face.toDataURL('image/jpeg',0.82); }
+   heroImg = (hz.length ? zoneShot(SHOTS.face,hz) : '') || SHOTS.face.toDataURL('image/jpeg',0.82); }
  var hero='<div class="r4hero">'+(heroImg?'<img class="r4img" src="'+heroImg+'" alt="">':'')
   +'<p class="eyebrow">Your result</p><h1 class="r4h1">'+head1+'</h1><p class="r4h2">'+head2+'</p>'
   +(v?'<a class="r4go" href="#plan">See my plan</a>':'')+'</div>';
@@ -2052,6 +2052,121 @@ function screenResult(withPhotos){
  wire();
  var pl2=document.getElementById('privlink2'); if(pl2) pl2.onclick=function(e){ e.preventDefault(); var snap=app.innerHTML; screenPrivacy(function(){ app.innerHTML=snap; wire() }) };
  document.getElementById('restart').onclick=function(){ A={concerns:[]};SHOTS={};MEAS={};QUAL={};consented=false;CK={age:false,data:false,med:false};ACK='';QI=0;screenBefore() };
+}
+var LMP={
+ cheekR:[116,117,118,119,120,100,36,205,187,147,123],
+ cheekL:[345,346,347,348,349,329,266,425,411,376,352],
+ nose:[168,6,197,195,5,4,1,2,98,327,64,294,48,278,219,439,115,344,174,399,188,412,217,437,114,343,122,351,196,419,3,248,236,456,131,360,49,279,129,358],
+ forehead:[54,103,67,109,10,338,297,332,284,70,63,105,66,107,9,336,296,334,293,300],
+ ueR:[33,7,163,144,145,153,154,155,133,233,232,231,230,229,228,31,226],
+ ueL:[263,249,390,373,374,380,381,382,362,453,452,451,450,449,448,261,446]
+};
+function lmHull(P){
+ var p=P.slice().sort(function(a,b){ return a.x-b.x||a.y-b.y });
+ var cr=function(o,a,b){ return (a.x-o.x)*(b.y-o.y)-(a.y-o.y)*(b.x-o.x) };
+ var lo=[],up=[];
+ p.forEach(function(q){ while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],q)<=0) lo.pop(); lo.push(q) });
+ p.slice().reverse().forEach(function(q){ while(up.length>=2&&cr(up[up.length-2],up[up.length-1],q)<=0) up.pop(); up.push(q) });
+ return lo.slice(0,-1).concat(up.slice(0,-1));
+}
+function polyShape(pts){
+ var xs=pts.map(function(q){return q.x}), ys=pts.map(function(q){return q.y});
+ var x0=Math.min.apply(null,xs),x1=Math.max.apply(null,xs),y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys);
+ return {kind:'poly',pts:pts,x:x0,y:y0,w:x1-x0,h:y1-y0,cx:(x0+x1)/2,cy:(y0+y1)/2,rx:(x1-x0)/2,ry:(y1-y0)/2};
+}
+function lmPoly(L,key,ordered){ var P=LMP[key].map(function(i){ return {x:L[i].x,y:L[i].y} }); return polyShape(ordered?P:lmHull(P)) }
+/* forehead: the brow points are lifted clear of the brows so the outline never sits on hair */
+function lmForehead(L){
+ var BROW={70:1,63:1,105:1,66:1,107:1,9:1,336:1,296:1,334:1,293:1,300:1};
+ var browY=Math.min(L[105].y,L[334].y), lift=0.22*Math.max(8,browY-L[10].y);
+ return polyShape(lmHull(LMP.forehead.map(function(i){ return {x:L[i].x,y:L[i].y-(BROW[i]?lift:0)} })));
+}
+/* sanity: brows above eyes above nose tip above mouth above chin, and a face of real size */
+function lmSane(L){
+ if(!L||L.length<468) return false;
+ var faceW=lmDist(L[234],L[454]), faceH=lmDist(L[10],L[152]);
+ if(!(faceW>40&&faceH>50)) return false;
+ var browY=(L[105].y+L[334].y)/2, eyeY=(L[159].y+L[386].y)/2, tipY=L[1].y, mouthY=L[13].y, chinY=L[152].y;
+ return browY<eyeY&&eyeY<tipY&&tipY<mouthY&&mouthY<chinY&&L[33].x!==L[263].x;
+}
+function inShape(S,x,y){
+ if(S.kind==='poly'){
+  if(x<S.x||x>S.x+S.w||y<S.y||y>S.y+S.h) return false;
+  var P=S.pts, inside=false;
+  for(var i=0,j=P.length-1;i<P.length;j=i++){
+   if(((P[i].y>y)!==(P[j].y>y))&&(x<(P[j].x-P[i].x)*(y-P[i].y)/(P[j].y-P[i].y)+P[i].x)) inside=!inside;
+  }
+  return inside;
+ }
+ if(S.kind==='ell'){ var a=(x-S.cx)/S.rx, c=(y-S.cy)/S.ry; return a*a+c*c<=1 }
+ return x>=S.x&&x<=S.x+S.w&&y>=S.y&&y<=S.y+S.h;
+}
+function shapePath(g,S){
+ if(S.kind==='poly'){
+  var P=S.pts, n=P.length; if(n<3) return;
+  var mid=function(a,b){ return {x:(a.x+b.x)/2,y:(a.y+b.y)/2} };
+  var m0=mid(P[n-1],P[0]); g.moveTo(m0.x,m0.y);
+  for(var i=0;i<n;i++){ var m=mid(P[i],P[(i+1)%n]); g.quadraticCurveTo(P[i].x,P[i].y,m.x,m.y) }
+  g.closePath(); return;
+ }
+ if(S.kind==='ell'){ g.moveTo(S.cx+S.rx,S.cy); g.ellipse(S.cx,S.cy,S.rx,S.ry,0,0,Math.PI*2); return }
+ var r=Math.min(S.r||0,S.w/2,S.h/2);
+ g.moveTo(S.x+r,S.y); g.arcTo(S.x+S.w,S.y,S.x+S.w,S.y+S.h,r); g.arcTo(S.x+S.w,S.y+S.h,S.x,S.y+S.h,r); g.arcTo(S.x,S.y+S.h,S.x,S.y,r); g.arcTo(S.x,S.y,S.x+S.w,S.y,r); g.closePath();
+}
+function scaleShape(S,k){
+ if(S.kind==='poly') return polyShape(S.pts.map(function(q){ return {x:q.x*k,y:q.y*k} }));
+ if(S.kind==='ell') return {kind:'ell',cx:S.cx*k,cy:S.cy*k,rx:S.rx*k,ry:S.ry*k};
+ return {kind:'rect',x:S.x*k,y:S.y*k,w:S.w*k,h:S.h*k,r:(S.r||0)*k};
+}
+function lmShapes(L){
+ if(!lmSane(L)) return null;
+ var faceW=lmDist(L[234],L[454]), faceH=lmDist(L[10],L[152]);
+ var eyes=lmMean(L,LM_REYE.concat(LM_LEYE));
+ var S={
+  forehead:lmForehead(L),
+  eyes:{kind:'ell',cx:eyes.x,cy:eyes.y,rx:0.42*faceW,ry:0.06*faceH},
+  nose:lmPoly(L,'nose'),
+  cheekR:lmPoly(L,'cheekR'),
+  cheekL:lmPoly(L,'cheekL'),
+  chin:{kind:'ell',cx:L[152].x,cy:L[152].y-0.07*faceH,rx:0.2*faceW,ry:0.07*faceH}
+ };
+ var xs=LM_OVAL.map(function(i){return L[i].x}), ys=LM_OVAL.map(function(i){return L[i].y});
+ S.box={left:Math.min.apply(null,xs),right:Math.max.apply(null,xs),top:Math.min.apply(null,ys),bottom:Math.max.apply(null,ys),found:true,lm:true};
+ return S;
+}
+function lmCloseShapes(L){
+ if(!lmSane(L)) return null;
+ var a=lmPoly(L,'ueR',true), b=lmPoly(L,'ueL',true);
+ return { ueL: a.cx<b.cx?a:b, ueR: a.cx<b.cx?b:a, nose:lmPoly(L,'nose'), lm:true };
+}
+/* draw only what the landmarks located; report whether every zone was drawn */
+function zonePathLM(g,z,k){
+ var S=null;
+ if(z.kind==='face'){ var FS=MEAS.face&&MEAS.face.lm&&MEAS.face.shapes; S=FS&&FS[z.zone] }
+ else if(z.kind==='close'){ var CS=MEAS.close&&MEAS.close.shapes; S=CS&&CS.lm&&CS[z.part] }
+ else { var BS=MEAS.brow&&MEAS.brow.lm&&MEAS.brow.shapes; S=BS&&BS.forehead }
+ if(!S) return false;
+ shapePath(g,scaleShape(S,k)); return true;
+}
+function zonePath(g,z,W,H,src){ return zonePathLM(g,z,W/src.width) }
+function zoneShot(src,zones){
+ try{
+  /* zoom to the face (whole-face photo only): the regions are drawn large enough to read */
+  var fb=(src===SHOTS.face&&MEAS.face&&MEAS.face.lm&&MEAS.face.box)?MEAS.face.box:null, ox=0, oy=0, sw=src.width, sh=src.height;
+  if(fb){ var bw=fb.right-fb.left, bh=fb.bottom-fb.top, cx=(fb.left+fb.right)/2, cy=(fb.top+fb.bottom)/2;
+   sh=Math.min(src.height,bh*1.45); sw=Math.min(src.width,sh*0.8); if(sw<bw*1.2){ sw=Math.min(src.width,bw*1.2); sh=Math.min(src.height,sw/0.8) }
+   ox=Math.max(0,Math.min(src.width-sw,cx-sw/2)); oy=Math.max(0,Math.min(src.height-sh,cy-sh/2)) }
+  var W=Math.min(560,sw), k=W/sw, H=Math.round(sh*k);
+  var probe=document.createElement('canvas').getContext('2d');
+  if(!zones.every(function(z){ probe.beginPath(); return zonePathLM(probe,z,k) })) return '';
+  var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d'); g.drawImage(src,ox,oy,sw,sh,0,0,W,H); g.translate(-ox*k,-oy*k);
+  g.save(); g.fillStyle='rgba(20,18,14,.38)'; g.beginPath(); g.rect(ox*k,oy*k,W,H);
+  zones.forEach(function(z){ zonePathLM(g,z,k) }); g.fill('evenodd'); g.restore();
+  g.save(); g.lineJoin='round'; g.shadowColor='rgba(0,0,0,.35)'; g.shadowBlur=4;
+  g.lineWidth=2; g.strokeStyle='rgba(255,255,255,.95)';
+  zones.forEach(function(z){ g.beginPath(); zonePathLM(g,z,k); g.stroke() }); g.restore();
+  return c.toDataURL('image/jpeg',0.84);
+ }catch(e){ return '' }
 }
 function askUs(){
  return '<div class="r4ask"><b>Have a question? Ask us.</b><span>Real people at DermLux, by message.</span>'
