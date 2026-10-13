@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-XHAiBGvZPaM3CkUPiifZ2O2b9wpQriBJV2Dug1pHNQk=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-kgdevaUUFnyOUrg8+s90ACDDykbfCSO/xbyqqXaZ8f8=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
@@ -442,6 +442,39 @@ video{width:100%;height:100%;object-fit:cover;display:block}
 .cl2{border:1px solid var(--hair)!important;border-radius:18px!important;padding:20px!important}
 .cl2z{background:#1a1a1a!important;color:#f4f2ed}.cl2z>b{color:#cebd63!important}.cl2z li{color:#d9d3c6}.cl2z li b{color:#fff}
 .o3n{font:300 26px/1.15 var(--disp)!important}
+
+.pmsum{padding:18px 0 4px;display:grid;gap:10px}.pmsum h3{margin:0;font:300 21px/1.25 var(--disp)}
+.pmchips{display:flex;flex-wrap:wrap;gap:8px}.pmchip{border:1px solid var(--hair);border-radius:99px;padding:8px 12px;font-size:13px;display:inline-flex;gap:7px;align-items:center;line-height:1.3}
+.pmchip i,.qtab i{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.d-hi{background:#c8664b}.d-mid{background:#d1a83a}.d-ok{background:#6f9f7d}
+.qttl span{color:#b6afa2}
+.qtabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:6px;margin:0 0 14px}
+.qtab{border:1px solid var(--hair);border-radius:99px;padding:9px 4px;font:inherit;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;color:#4a463f;background:#fff;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.qtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qpanel{display:none}.qpanel.on{display:block}
+.qpic{border-radius:18px;overflow:hidden;position:relative}.qpic img{display:block;width:100%;height:auto}
+.qpic span{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.93);border-radius:99px;padding:6px 11px;font-size:11.5px;color:var(--ink)}
+.qnoimg{font-size:13px;color:var(--mut);background:var(--wash);border-radius:12px;padding:12px 14px;margin:0}
+.qcards{display:grid;gap:10px;margin-top:12px}
+.qcard{border:1px solid var(--hair);border-radius:18px;padding:16px;display:grid;gap:10px;background:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:left}
+.qcard:focus-visible{outline:2px solid #ad9d49;outline-offset:2px}
+.qch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.qch b{font-weight:500;font-size:16px;display:block}
+.qsc{font:300 26px/1 var(--disp);white-space:nowrap}.qsc small{font:400 11px var(--sans);color:#8a857b}
+.qpill{display:inline-block;border-radius:99px;padding:3px 9px;font-size:11.5px;font-weight:500;margin-top:6px}
+.q-hi{background:#f8e7e1;color:#9c3f27}.q-mid{background:#f6efd8;color:#7d6216}.q-ok{background:#e6f0e8;color:#3e6b4b}
+.qseg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.qseg i{height:5px;border-radius:9px;background:#eee8dc;display:block}
+.qseg i.f-hi{background:#c8664b}.qseg i.f-mid{background:#d1a83a}.qseg i.f-ok{background:#6f9f7d}
+.qsegl{display:grid;grid-template-columns:repeat(3,1fr);font-size:10.5px;color:#9a948a;margin-top:-4px}.qsegl span:nth-child(2){text-align:center}.qsegl span:last-child{text-align:right}
+.qfind{margin:0;font-size:14.5px;line-height:1.5;color:#3d3a34}
+.qdet{display:none;gap:12px}.qcard.open .qdet{display:grid}
+.qdet div{display:grid;gap:3px}.qdet b{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink,#85762d);font-weight:400}
+.qdet p{margin:0;font-size:14px;line-height:1.55;color:#3d3a34}
+.qlim{background:var(--wash);border-radius:12px;padding:10px 12px}.qlim b{letter-spacing:.12em}
+.qmore{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f0ebe1;padding-top:11px;font-size:13.5px;font-weight:500}
+.qmore svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.6;transition:transform .2s}
+.qmh{display:none}.qcard.open .qms{display:none}.qcard.open .qmh{display:inline}.qcard.open .qmore svg{transform:rotate(180deg)}
+.qnote{background:var(--wash);border-radius:18px;padding:16px;margin:14px 0 26px}.qnote b{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink,#85762d);font-weight:400}.qnote p{margin:6px 0 0;font-size:13.5px;line-height:1.55;color:#4a463f}
+@media (prefers-reduced-motion:reduce){.qmore svg{transition:none}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400&display=swap" rel="stylesheet">
 <script type="module">import{FilesetResolver,FaceLandmarker}from'./vendor/vision_bundle.mjs';window.__flReady=(async()=>{const v=await FilesetResolver.forVisionTasks('./vendor/wasm');const mk=d=>FaceLandmarker.createFromOptions(v,{baseOptions:{modelAssetPath:'./models/face_landmarker.task',delegate:d},runningMode:'VIDEO',numFaces:1});try{return await mk('GPU')}catch(e){return await mk('CPU')}})().catch(e=>{console.warn('face landmarker unavailable',e&&e.message);return null});</script>
@@ -1948,7 +1981,7 @@ function screenResult(withPhotos){
  if(!v){ head1='Your plan, from your answers.'; head2='Without photographs we cannot measure your skin, so this is a sound routine rather than a precise one. You can add the photographs at any time.'; }
  else if(!care.length){ head1='Your skin is in good shape.'; head2='Nothing needs urgent care. Here is how to keep it that way.'; }
  else { var top=care.slice(0,2); head1 = (KEYS.length-care.length)>=KEYS.length-2 ? 'Your skin is in good shape overall.' : 'Your skin needs some care.';
-   head2=(top.length===1?'One thing needs care: ':'Two things need care: ')+join(top.map(function(k){ return LOW[k] }))+'.'; }
+   head2=(care.length===1?'One thing needs care: ':care.length===2?'Two things need care: ':({3:'Three',4:'Four',5:'Five',6:'Six'}[care.length]||care.length)+' things need care, led by ')+join(top.map(function(k){ return LOW[k] }))+'.'; }
  var heroImg='';
  if(v){ var hz=[]; care.slice(0,2).forEach(function(k){ var Z=ZONES[k]; if(Z&&Z.src==='face') hz=hz.concat(Z.zones) });
    heroImg = (hz.length ? zoneShot(SHOTS.face,hz) : '') || SHOTS.face.toDataURL('image/jpeg',0.82); }
@@ -1960,6 +1993,11 @@ function screenResult(withPhotos){
  var hero='<div class="pmhero'+(heroImg?'':' noimg')+'">'+(heroImg?'<img src="'+heroImg+'" alt="">':'')
   +'<div class="pmov"><p class="eyebrow">Your skin analysis</p><h1 class="pmh1">'+head1+'</h1><p class="pmh2">'+head2+'</p></div></div>'
   +((ring||ageB)?'<div class="pmstats'+(ring&&ageB?'':' one')+'">'+ring+ageB+'</div><p class="pmdisc">Estimates from your photographs, in this light. Not a diagnosis.</p>':'')
+  +(v?(function(){ var good=KEYS.filter(function(k){ return state[k]==='ok' }), pri=KEYS.filter(function(k){ return state[k]!=='ok' });
+      return '<div class="pmsum"><h3>'+(pri.length?pri.length+' to focus on \u00b7 ':'')+good.length+' looking good</h3><div class="pmchips">'
+       +(good.length?'<span class="pmchip"><i class="d-ok"></i>Strengths: '+good.map(function(k){ return ({redness:'calm skin',even:'even tone',shine:'oil balance',pores:'smooth pores',shadow:'bright under-eyes',lines:'smooth forehead'})[k]||LOW[k] }).join(', ')+'</span>':'')
+       +(pri.length?'<span class="pmchip"><i class="d-hi"></i>Priorities: '+pri.map(function(k){ return LOW[k] }).join(', ')+'</span>':'')
+       +'</div></div>' })():'')
   +(v?'<a class="r4go pmgo" href="#plan">See my plan</a>':'');
  var chips='';
  if(v){
@@ -1968,6 +2006,68 @@ function screenResult(withPhotos){
    +'</div><div class="r4detail" id="r4detail"></div>'
    ;
  }
+ if(v) chips=(function(){
+  var x1=function(n){ return (Math.round(n*10)/10).toString() };
+  var Fm=MEAS.face||{}, Cm=MEAS.close, Bm=MEAS.brow;
+  var redGap=(Fm.cheeks&&Fm.forehead)?Fm.cheeks.red-Fm.forehead.red:0;
+  var tz=(Fm.nose&&Fm.forehead)?(Fm.nose.shine+Fm.forehead.shine)/2*580:0, chS=Fm.cheeks?Fm.cheeks.shine*580:0;
+  var ue=Cm?(Cm.ueL.mean+Cm.ueR.mean)/2:0, dpc=Cm&&Fm.cheeks?Math.max(0,Math.round((1-ue/Math.max(1,Fm.cheeks.mean))*100)):0, asym=Cm?Math.abs(Cm.ueL.mean-Cm.ueR.mean):0;
+  /* the word, the three steps and the tab dot come from THIS reading's own score band — never from the
+     ranking cap (which keeps at most two readings as Priority), so word and number always agree */
+  var lvl=function(k){ return sevClass(k,v[k]) };
+  var WORD3={hi:'Needs attention',mid:'Average',ok:'Good'};
+  var LIGHT='Light, a recent wash, exercise or make-up can change this reading. Compare photos taken in the same light.';
+  var R3={
+   redness:{find: redGap>1.5?'Your cheeks read redder than your forehead.':redGap<-1.5?'Your cheeks read less red than your forehead.':(lvl('redness')==='ok'?'Redness reads low, and about the same on your cheeks and forehead.':'Redness reads high on your cheeks, and about as high on your forehead.'),
+    measured:'In photo 1, inside the two outlined areas, how strongly red stands out from green and blue in your skin.'+(Math.abs(redGap)>=1?' Your cheeks read '+x1(Math.abs(redGap))+' points '+(redGap>0?'more':'less')+' red than your forehead, measured the same way.':''),
+    means: lvl('redness')==='ok'?'Your cheeks show no more redness than the rest of your skin in this photo.':'Redness on the cheeks often comes with skin that reacts easily, to heat, sun or a product. It can also be temporary.',
+    limits:LIGHT},
+   even:{find: lvl('even')==='ok'?'Brightness is even across both cheeks.':lvl('even')==='mid'?'Brightness varies a little across your cheeks.':'Brightness varies clearly across your cheeks.',
+    measured:'In photo 1, how much the brightness changes from point to point across the outlined cheek areas. Dark spots, patches and uneven light all raise it.',
+    means: lvl('even')==='ok'?'An even tone is easier to keep than to get back, which is why daily sunscreen matters.':'Uneven brightness often comes from dark spots, past marks or sun exposure.',
+    limits:LIGHT},
+   shine:{find: tz>chS+9?'Your nose and forehead shine more than your cheeks.':tz>34?'Shine is spread evenly across your face.':'Very little shine anywhere on your face.',
+    measured:'In photo 1, the share of skin inside the outlined area that shows bright highlights. Nose and forehead read '+Math.round(tz)+', cheeks '+Math.round(chS)+', on the same scale.',
+    means: tz>chS+9?'More shine down the middle than on the cheeks is typical of combination skin.':tz>34?'Shine across the whole face suggests oilier skin overall.':lvl('shine')==='ok'?'Oil looks balanced in this photo.':'Very little shine can mean drier skin.',
+    limits:LIGHT},
+   pores:{find: lvl('pores')==='ok'?'The close-up shows little fine texture on your nose.':lvl('pores')==='mid'?'The close-up shows some fine texture on your nose.':'The close-up shows a lot of fine texture on your nose.',
+    measured:'In photo 2, how much fine detail there is between neighbouring points on your nose. Pores, flakes and small bumps all raise it.',
+    means: lvl('pores')==='ok'?'Your nose reads smooth in this close-up.':'Visible texture on the nose is common and often comes from pores and dead skin on the surface.',
+    limits:'Focus, distance and light change how much detail a close-up shows.'},
+   shadow:{find:'Under your eyes reads '+dpc+'% darker than your cheek.'+(asym>9?' One side reads darker than the other.':' Left and right are close.'),
+    measured:'The average brightness of the outlined area under each eye in photo 2, compared with your cheek in photo 1. Left and right differ by '+Math.round(asym)+' points.',
+    means: lvl('shadow')==='ok'?'The area under your eyes reads close to your cheek.':'Part of under-eye darkness is the shape of the face and how light falls there; part is the skin itself, which is thinner there.',
+    limits:'This compares two photos. Overhead light makes shadows look deeper.'},
+   lines:{find: lvl('lines')==='ok'?'Few lines run across your forehead in photo 3.':lvl('lines')==='mid'?'Some lines run across your forehead in photo 3.':'Clear lines run across your forehead in photo 3.',
+    measured:'In photo 3, inside the outlined forehead, how much more detail runs across your forehead than up and down. Horizontal lines raise it.',
+    means: lvl('lines')==='ok'?'Your forehead reads smooth while your face is still.':'Lines that show while your face is still are lines that stay when you are not moving your brows.',
+    limits:'Raising your brows, or light from above, changes this reading.'}
+  };
+  var AREAS=[
+   {id:'cheeks',n:'Cheeks',keys:['redness','even'],src:'face',zones:[{kind:'face',zone:'cheekL'},{kind:'face',zone:'cheekR'}],ph:'Photo 1 \u00b7 whole face'},
+   {id:'nose',n:'Nose',keys:['shine'].concat(Cm?['pores']:[]),src:Cm?'close':'face',zones:Cm?[{kind:'close',part:'nose'}]:[{kind:'face',zone:'nose'}],ph:Cm?'Photo 2 \u00b7 close-up':'Photo 1 \u00b7 whole face'},
+   {id:'eyes',n:'Under-eyes',keys:Cm?['shadow']:[],src:'close',zones:[{kind:'close',part:'ueL'},{kind:'close',part:'ueR'}],ph:'Photo 2 \u00b7 close-up'},
+   {id:'brow',n:'Forehead',keys:Bm?['lines']:[],src:'brow',zones:[{kind:'brow'}],ph:'Photo 3 \u00b7 forehead'}
+  ].filter(function(a){ return a.keys.length });
+  var worst=function(a){ var o={hi:3,mid:2,ok:1}, w='ok'; a.keys.forEach(function(k){ if(o[lvl(k)]>o[w]) w=lvl(k) }); return w };
+  var first=AREAS.filter(function(a){ return worst(a)==='hi' })[0]||AREAS.filter(function(a){ return worst(a)==='mid' })[0]||AREAS[0];
+  var chev='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  var card=function(k){ var s=lvl(k), t=R3[k], sc0=scoreOf(k,v[k]);
+   return '<div class="qcard" role="button" tabindex="0" aria-expanded="false"><div class="qch"><div><b>'+NAME[k]+'</b><span class="qpill q-'+s+'">'+(k==='shine'&&s==='ok'?'Balanced':WORD3[s])+'</span></div><div class="qsc">'+sc0+'<small> /100</small></div></div>'
+    +'<div class="qseg"><i class="'+(s==='hi'?'f-hi':'')+'"></i><i class="'+(s==='mid'?'f-mid':'')+'"></i><i class="'+(s==='ok'?'f-ok':'')+'"></i></div><div class="qsegl"><span>Needs attention</span><span>Average</span><span>Good</span></div>'
+    +'<p class="qfind">'+t.find+'</p>'
+    +'<div class="qdet"><div><b>What we measured</b><p>'+t.measured+'</p></div><div><b>What this means</b><p>'+t.means+'</p></div>'
+    +'<div><b>What can help</b><p>'+fixLine(k)+' Your plan below includes it.</p></div><p class="qlim"><b>Limits</b> \u00b7 '+t.limits+'</p></div>'
+    +'<div class="qmore"><span class="qms">See details</span><span class="qmh">Hide details</span>'+chev+'</div></div>' };
+  var panel=function(a){ var src=SHOTS[a.src], img=src?zoneShot(src,a.zones):'';
+   return '<div class="qpanel'+(a===first?' on':'')+'" data-a="'+a.id+'">'
+    +(img?'<div class="qpic"><img src="'+img+'" alt=""><span>'+a.ph+'</span></div>':'<p class="qnoimg">'+a.ph+' \u2014 we could not outline this area confidently, so it is not marked.</p>')
+    +'<div class="qcards">'+a.keys.map(card).join('')+'</div></div>' };
+  return '<h2 class="pmh2s qttl">An overview of your <span>skin</span></h2><p class="r4sub">Your three photos, area by area. Tap an area, then tap a reading to see how we measured it.</p>'
+   +'<div class="qtabs" role="tablist">'+AREAS.map(function(a){ return '<button type="button" role="tab" class="qtab'+(a===first?' on':'')+'" data-a="'+a.id+'"><i class="d-'+worst(a)+'"></i>'+a.n+'</button>' }).join('')+'</div>'
+   +AREAS.map(panel).join('')
+   +'<div class="qnote"><b>What a photo can\u2019t tell you</b><p>How hydrated or sensitive your skin feels, or what is causing a reading. For anything that persists, ask us: real people at DermLux.</p></div>';
+ })();
  var detailFor=function(k){
   var Z=ZONES[k], shot=(Z&&SHOTS[Z.src])?zoneShot(SHOTS[Z.src],Z.zones):'';
   var s=state[k];
@@ -2064,6 +2164,11 @@ function screenResult(withPhotos){
   +'<button class="gh" id="restart">Start again</button>';
  var wire=function(){
   wireFb();
+  [].forEach.call(document.querySelectorAll('.qtab'),function(t){ t.onclick=function(){ var a=t.getAttribute('data-a');
+   [].forEach.call(document.querySelectorAll('.qtab'),function(x){ x.classList.toggle('on',x===t) });
+   [].forEach.call(document.querySelectorAll('.qpanel'),function(p){ p.classList.toggle('on',p.getAttribute('data-a')===a) }) } });
+  [].forEach.call(document.querySelectorAll('.qcard'),function(c){ var tg=function(){ var o=c.classList.toggle('open'); c.setAttribute('aria-expanded',o?'true':'false') };
+   c.onclick=tg; c.onkeydown=function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tg() } } });
   var det=document.getElementById('r4detail');
   var open=function(k){
    [].forEach.call(document.querySelectorAll('.r4chip'),function(c){ c.classList.toggle('on', c.getAttribute('data-k')===k) });
