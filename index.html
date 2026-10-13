@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-LRvaHdODZbohjFuAbwQZWV9RPcY02s+55OEmYdhQwos=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-XHAiBGvZPaM3CkUPiifZ2O2b9wpQriBJV2Dug1pHNQk=' 'sha256-0ub65SriUuUoG4O9ctE93ty7x4olb4SOqHHXUW8TZKI=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
@@ -404,7 +404,46 @@ video{width:100%;height:100%;object-fit:cover;display:block}
 .dis{font-size:12.4px;color:var(--mut);border-top:1px solid var(--hair);padding-top:18px;margin-top:34px;line-height:1.65}
 .warn{font-size:11.5px;color:var(--mut);border-top:1px solid var(--hair);margin-top:26px;padding-top:14px;line-height:1.5}
 .warn code{font-family:ui-monospace,monospace;font-size:11px}
+
+:root{--disp:'Noto Serif Display',Georgia,'Times New Roman',serif}
+.pmhero{position:relative;margin:0 -20px 0;overflow:hidden;background:#1a1a1a}
+.pmhero img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.pmov{position:absolute;left:0;right:0;bottom:0;padding:110px 22px 24px;background:linear-gradient(rgba(16,14,11,0),rgba(16,14,11,.86));color:#fff}
+.pmhero.noimg .pmov{position:static;background:none;padding:28px 22px 22px}
+.pmov .eyebrow{color:#cebd63;margin:0 0 10px}
+.pmh1{font:300 34px/1.12 var(--disp);letter-spacing:-.01em;margin:0 0 10px;text-wrap:balance}
+.pmh2{font-size:15px;line-height:1.55;margin:0;color:#ece6da;font-weight:300}
+.pmstats{display:grid;grid-template-columns:1fr 1fr;background:#fff;margin:0 -20px;border-bottom:1px solid var(--hair)}
+.pmstats.one{grid-template-columns:1fr}
+.pmst{display:grid;justify-items:center;text-align:center;gap:12px;padding:24px 12px 20px}
+.pmst+.pmst{border-left:1px solid var(--hair)}
+.pmrw{position:relative;width:108px;height:108px}
+.pmrg{width:108px;height:108px;transform:rotate(-90deg);display:block}
+.pmrg circle{fill:none;stroke-width:5}.pmrg .tr{stroke:#efe9dc}.pmrg .fl{stroke:#c5b25a;stroke-linecap:round}
+.pmsv{position:absolute;inset:0;display:grid;place-content:center;justify-items:center}
+.pmsv b,.pmage b{font:300 36px/1 var(--disp);color:var(--ink)}
+.pmsv span,.pmage span{font-size:11px;color:#8a857b;letter-spacing:.04em;margin-top:4px}
+.pmage{height:108px;display:grid;place-content:center;justify-items:center}.pmage b{font-size:34px}
+.pmst p{margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink,#85762d);line-height:1.6;display:grid;gap:3px}
+.pmst p em{font-style:normal;letter-spacing:0;text-transform:none;font-size:13.5px;color:#4a463f;line-height:1.4}
+.pmdisc{margin:0 -20px 26px;background:#fff;padding:12px 22px 18px;text-align:center;font-size:12px;color:#8a857b}
+.pmgo{display:block!important;width:fit-content;margin:0 auto 38px!important}
+.pmh2s,#plan,.r4 h2{font:300 28px/1.2 var(--disp)!important;letter-spacing:-.01em}
+.r4chips{grid-template-columns:1fr!important;gap:0!important;border-top:1px solid var(--hair)}
+.r4chip{display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 10px!important;border:0!important;border-bottom:1px solid var(--hair)!important;border-radius:0!important;padding:14px 4px!important;background:transparent!important;box-shadow:none!important}
+.r4chip i{margin:0!important}
+.r4chip span{font-size:11.5px!important;letter-spacing:.12em;text-transform:uppercase}
+.r4chip.is-hi span{color:#b2543a}.r4chip.is-mid span{color:#9a7b1c}.r4chip.is-ok span{color:#5c8a68}
+.r4chip.on{background:#fbf9f4!important}
+.pmbar{grid-column:1/-1;height:6px;border-radius:9px;background:linear-gradient(90deg,#e7c9bf,#efe2b8 48%,#cfe1d2);position:relative;margin-top:6px;display:block}
+.pmbar s{position:absolute;top:-4px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--ink);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.28)}
+.lb2{border:1px solid var(--hair)!important;background:#fff;border-radius:18px;padding:20px!important;margin:0 0 14px!important}
+.lb2>b,.cl2>b{font:400 11px/1.4 var(--bold)!important;letter-spacing:.18em!important;color:var(--gold-ink,#85762d)!important}
+.cl2{border:1px solid var(--hair)!important;border-radius:18px!important;padding:20px!important}
+.cl2z{background:#1a1a1a!important;color:#f4f2ed}.cl2z>b{color:#cebd63!important}.cl2z li{color:#d9d3c6}.cl2z li b{color:#fff}
+.o3n{font:300 26px/1.15 var(--disp)!important}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400&display=swap" rel="stylesheet">
 <script type="module">import{FilesetResolver,FaceLandmarker}from'./vendor/vision_bundle.mjs';window.__flReady=(async()=>{const v=await FilesetResolver.forVisionTasks('./vendor/wasm');const mk=d=>FaceLandmarker.createFromOptions(v,{baseOptions:{modelAssetPath:'./models/face_landmarker.task',delegate:d},runningMode:'VIDEO',numFaces:1});try{return await mk('GPU')}catch(e){return await mk('CPU')}})().catch(e=>{console.warn('face landmarker unavailable',e&&e.message);return null});</script>
 </head>
 <body>
@@ -1238,7 +1277,7 @@ function closerNotes(a,v,RX){
   : 'Keep the rhythm you already have, morning and evening, and add the step'+(noSpf?'s':'')+' that work'+(noSpf?'':'s')+' on '+(C_LOW[lead]||readLow)+'. Your plan below shows exactly which, in order.';
  out+='<div class="cl2"><b>'+head+'</b><p>'+why+'</p></div>'
   +'<div class="cl2"><b>What we would change</b><p>'+change+'</p></div>'
-  +'<div class="cl2"><b>Why we use ZO\u00ae for this</b><ul class="clz">'
+  +'<div class="cl2 cl2z"><b>Why we use ZO\u00ae for this</b><ul class="clz">'
   +'<li><b>Made to treat, not only to care.</b> Each product in your plan has one job, chosen from your readings.</li>'
   +'<li><b>Physician-dispensed.</b> ZO\u00ae Skin Health is available only through skin-health professionals, not in pharmacies or supermarkets.</li>'
   +'<li><b>A routine, not a single product.</b> The steps are designed to work together, in the right order.</li>'
@@ -1913,15 +1952,21 @@ function screenResult(withPhotos){
  var heroImg='';
  if(v){ var hz=[]; care.slice(0,2).forEach(function(k){ var Z=ZONES[k]; if(Z&&Z.src==='face') hz=hz.concat(Z.zones) });
    heroImg = (hz.length ? zoneShot(SHOTS.face,hz) : '') || SHOTS.face.toDataURL('image/jpeg',0.82); }
- var hero='<div class="r4hero">'+(heroImg?'<img class="r4img" src="'+heroImg+'" alt="">':'')
-  +'<p class="eyebrow">Your result</p><h1 class="r4h1">'+head1+'</h1><p class="r4h2">'+head2+'</p>'
-  +(v?'<a class="r4go" href="#plan">See my plan</a>':'')+'</div>';
+ var scoreWord=function(n){ return n>=80?'Very good':n>=65?'Good, with room to improve':n>=50?'Some areas need care':'Several areas need care' };
+ var ageWord=function(S){ var d=S.mid-S.age; return d<=-2?'Younger than your age band':d<=1?'In line with your age band':'Your plan focuses on what changes it most' };
+ var ring=(v&&idx)?'<div class="pmst"><div class="pmrw"><svg viewBox="0 0 120 120" class="pmrg" aria-hidden="true"><circle cx="60" cy="60" r="52" class="tr"/><circle cx="60" cy="60" r="52" class="fl" style="stroke-dasharray:'+(2*Math.PI*52*idx/100).toFixed(1)+' 400"/></svg>'
+   +'<div class="pmsv"><b>'+idx+'</b><span>out of 100</span></div></div><p>Skin score<em>'+scoreWord(idx)+'</em></p></div>':'';
+ var ageB=(v&&SA)?'<div class="pmst"><div class="pmage"><b>'+SA.lo+'\u2013'+SA.hi+'</b><span>years</span></div><p>Estimated skin age<em>'+ageWord(SA)+'</em></p></div>':'';
+ var hero='<div class="pmhero'+(heroImg?'':' noimg')+'">'+(heroImg?'<img src="'+heroImg+'" alt="">':'')
+  +'<div class="pmov"><p class="eyebrow">Your skin analysis</p><h1 class="pmh1">'+head1+'</h1><p class="pmh2">'+head2+'</p></div></div>'
+  +((ring||ageB)?'<div class="pmstats'+(ring&&ageB?'':' one')+'">'+ring+ageB+'</div><p class="pmdisc">Estimates from your photographs, in this light. Not a diagnosis.</p>':'')
+  +(v?'<a class="r4go pmgo" href="#plan">See my plan</a>':'');
  var chips='';
  if(v){
-  chips='<h2>What we saw</h2><p class="r4sub">Tap a reading to see where, and what helps.</p><div class="r4chips">'
-   +KEYS.map(function(k){ return '<button type="button" class="r4chip is-'+state[k]+'" data-k="'+k+'"><i></i><b>'+NAME[k]+'</b><span>'+wordOf(k)+'</span></button>' }).join('')
+  chips='<h2 class="pmh2s">What we saw</h2><p class="r4sub">Each reading on its own scale. Tap one to see where, and what helps.</p><div class="r4chips">'
+   +KEYS.map(function(k){ return '<button type="button" class="r4chip is-'+state[k]+'" data-k="'+k+'"><i></i><b>'+NAME[k]+'</b><span>'+wordOf(k)+'</span><em class="pmbar"><s style="left:'+Math.max(3,Math.min(97,scoreOf(k,v[k])))+'%"></s></em></button>' }).join('')
    +'</div><div class="r4detail" id="r4detail"></div>'
-   +(SA?'<details class="r4more r4age"><summary>Estimated skin age</summary><p>'+skinAgeLine(SA)+'</p></details>':'');
+   ;
  }
  var detailFor=function(k){
   var Z=ZONES[k], shot=(Z&&SHOTS[Z.src])?zoneShot(SHOTS[Z.src],Z.zones):'';
