@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-r1UluLu1VBfzYIc1MASpMUCiVaKjKBSCQcFP2ygYJiQ=' 'sha256-igdVnMzXbduVpzdi9YYLgNu1fOq00NgtmDR/4drETIk=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-jikfZfVoxlrD5R5TU9TKyefpSJ/LZcr2QG7LorTed7w=' 'sha256-igdVnMzXbduVpzdi9YYLgNu1fOq00NgtmDR/4drETIk=' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: mediastream:; connect-src 'self'; worker-src 'self' blob:; child-src 'self' blob:; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
@@ -474,6 +474,43 @@ video{width:100%;height:100%;object-fit:cover;display:block}
 .qmh{display:none}.qcard.open .qms{display:none}.qcard.open .qmh{display:inline}.qcard.open .qmore svg{transform:rotate(180deg)}
 .qnote{background:var(--wash);border-radius:18px;padding:16px;margin:14px 0 26px}.qnote b{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink,#85762d);font-weight:400}.qnote p{margin:6px 0 0;font-size:13.5px;line-height:1.55;color:#4a463f}
 @media (prefers-reduced-motion:reduce){.qmore svg{transition:none}}
+
+.slsum{padding:20px 0 6px;display:grid;gap:12px}
+.slsum>p{margin:0;font-size:17px;line-height:1.55}.slsum>p b{font-weight:500}
+.slask{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:#4a463f}
+.slask button{border:1px solid var(--ink);border-radius:99px;padding:8px 16px;font:inherit;font-size:13.5px;background:#fff;color:var(--ink);cursor:pointer}
+.slask button.on{background:var(--ink);color:#fff}
+.slnot{margin:0;font-size:13.5px;line-height:1.55;color:#4a463f;background:var(--wash);border-radius:12px;padding:12px 14px}
+.slh2{margin-top:26px!important}
+.slcard{border:1px solid var(--hair);border-radius:20px;overflow:hidden;margin:0 0 14px;background:#fff}
+.slt{padding:16px 16px 14px;display:grid;gap:12px}
+.slh{display:flex;justify-content:space-between;align-items:center;gap:10px}.slh b{font-weight:500;font-size:18px}
+.slmay{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink)}
+.slmay i{display:block;font-style:normal;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink,#85762d);margin-bottom:4px}
+.slsaw{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;background:var(--wash);border-radius:12px;padding:8px}
+.slsaw img{width:64px;height:64px;object-fit:cover;border-radius:9px;display:block}
+.slsaw p{margin:0;font-size:13.5px;line-height:1.45;color:#4a463f}.slsaw b{font-weight:500;color:var(--ink)}
+.slfix{background:#1a1a1a;color:#fff;padding:14px 16px;display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
+.slim{width:56px;height:56px;border-radius:10px;background:#fff;display:grid;place-items:center;overflow:hidden}.slim img{width:100%;height:100%;object-fit:contain}
+.slfix i{display:block;font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#cebd63}
+.slfix b{display:block;font-weight:500;font-size:15px;margin:3px 0}.slfix span{font-size:13px;color:#d9d3c6;line-height:1.45}
+.slall{border:1px solid var(--hair);border-radius:16px;margin:4px 0 26px;padding:0 16px;background:#fff}
+.slall>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0}
+.slall>summary::-webkit-details-marker{display:none}
+.slall>summary span{display:grid;gap:3px}.slall>summary b{font-weight:500;font-size:14.5px}.slall>summary em{font-style:normal;font-size:12.5px;color:var(--mut)}
+.slall>summary i{width:9px;height:9px;border-right:1.6px solid var(--ink);border-bottom:1.6px solid var(--ink);transform:rotate(45deg);margin-right:4px;flex:none;transition:transform .2s}
+.slall[open]>summary i{transform:rotate(-135deg)}
+.slall[open]{padding-bottom:6px}
+.slcov{display:flex;flex-wrap:wrap;gap:6px;padding:10px 18px 4px;align-items:center}
+.slcov span{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink,#85762d);width:100%}
+.slcov em{font-style:normal;font-size:12.5px;border-radius:99px;padding:4px 10px}
+.slcov em.y{background:#e6f0e8;color:#3e6b4b}.slcov em.n{background:#f2efe8;color:#8a857b}
+.slfix .slcta{margin-top:10px;width:auto;min-height:0;padding:9px 16px;border-radius:99px;font-size:12px;letter-spacing:.1em;background:#cebd63;color:#1a1a1a;border:0}
+.slbar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#1a1a1a;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;
+ padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));font-size:14px;box-shadow:0 -6px 20px rgba(0,0,0,.18)}
+.slbar[hidden]{display:none}.slbar b{font-weight:500}
+.slbar button{border:0;border-radius:99px;background:#cebd63;color:#1a1a1a;font:inherit;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:9px 18px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.slall>summary i{transition:none}}
 </style>
 <script type="module">import{FilesetResolver,FaceLandmarker}from'./vendor/vision_bundle.mjs';window.__flLoad=()=>window.__flReady||(window.__flReady=(async()=>{const v=await FilesetResolver.forVisionTasks('./vendor/wasm');const mk=d=>FaceLandmarker.createFromOptions(v,{baseOptions:{modelAssetPath:'./models/face_landmarker.task',delegate:d},runningMode:'VIDEO',numFaces:1});try{return await mk('GPU')}catch(e){return await mk('CPU')}})().catch(e=>{console.warn('face landmarker unavailable',e&&e.message);return null}));</script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1983,6 +2020,7 @@ function screenResult(withPhotos){
  else if(!care.length){ head1='Your skin is in good shape.'; head2='Nothing needs urgent care. Here is how to keep it that way.'; }
  else { var top=care.slice(0,2); head1 = (KEYS.length-care.length)>=KEYS.length-2 ? 'Your skin is in good shape overall.' : 'Your skin needs some care.';
    head2=(care.length===1?'One thing needs care: ':care.length===2?'Two things need care: ':({3:'Three',4:'Four',5:'Five',6:'Six'}[care.length]||care.length)+' things need care, led by ')+join(top.map(function(k){ return LOW[k] }))+'.'; }
+ if(v&&care.length){ head1='Here is what we see'; head2=''; }
  var heroImg='';
  if(v){ var hz=[]; care.slice(0,2).forEach(function(k){ var Z=ZONES[k]; if(Z&&Z.src==='face') hz=hz.concat(Z.zones) });
    heroImg = (hz.length ? zoneShot(SHOTS.face,hz) : '') || SHOTS.face.toDataURL('image/jpeg',0.82); }
@@ -1994,12 +2032,18 @@ function screenResult(withPhotos){
  var hero='<div class="pmhero'+(heroImg?'':' noimg')+'">'+(heroImg?'<img src="'+heroImg+'" alt="">':'')
   +'<div class="pmov"><p class="eyebrow">Your skin analysis</p><h1 class="pmh1">'+head1+'</h1><p class="pmh2">'+head2+'</p></div></div>'
   +((ring||ageB)?'<div class="pmstats'+(ring&&ageB?'':' one')+'">'+ring+ageB+'</div><p class="pmdisc">Estimates from your photographs, in this light. Not a diagnosis.</p>':'')
-  +(v?(function(){ var good=KEYS.filter(function(k){ return state[k]==='ok' }), pri=KEYS.filter(function(k){ return state[k]!=='ok' });
-      return '<div class="pmsum"><h3>'+(pri.length?pri.length+' to focus on \u00b7 ':'')+good.length+' looking good</h3><div class="pmchips">'
-       +(good.length?'<span class="pmchip"><i class="d-ok"></i>Strengths: '+good.map(function(k){ return ({redness:'calm skin',even:'even tone',shine:'oil balance',pores:'smooth pores',shadow:'bright under-eyes',lines:'smooth forehead'})[k]||LOW[k] }).join(', ')+'</span>':'')
-       +(pri.length?'<span class="pmchip"><i class="d-hi"></i>Priorities: '+pri.map(function(k){ return LOW[k] }).join(', ')+'</span>':'')
-       +'</div></div>' })():'')
-  +(v?'<a class="r4go pmgo" href="#plan">See my plan</a>':'');
+  +(v?(function(){
+    var pri=ranked.filter(function(k){ return sevClass(k,v[k])!=='ok' }), good=KEYS.filter(function(k){ return sevClass(k,v[k])==='ok' });
+    var dry=v.shine<26;
+    var P={redness:'redness on the cheeks',even:'uneven tone on the cheeks',shine:dry?'very little natural oil':'shine on the forehead and nose',pores:'visible texture on the nose',shadow:'darker under-eyes',lines:'lines across the forehead'};
+    var G={redness:'calm skin',even:'tone',shine:'oil balance',pores:'pores',shadow:'under-eyes',lines:'forehead'};
+    var b=function(a){ return a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1] };
+    var top=pri.slice(0,3), gd=good.slice(0,3).map(function(k){ return G[k] });
+    var s1=top.length?'Your skin shows '+b(top.map(function(k){ return '<b>'+P[k]+'</b>' }))+'.':'Your skin reads well in every area we measured.';
+    var s2=(gd.length&&top.length)?' Your '+b(gd)+' '+((gd.length===1&&gd[0]!=='pores'&&gd[0]!=='under-eyes')?'looks':'look')+' good.':'';
+    return '<div class="slsum"><p>'+s1+s2+'</p><div class="slask"><span>Does that sound like your skin?</span><button type="button" class="slyes">Yes</button><button type="button" class="slno">Not quite</button></div>'
+     +'<p class="slnot" hidden>Thank you for telling us. Photos can miss things, so tell us what feels different and we will look again with you: <a href="https://wa.me/35797718967" target="_blank" rel="noopener">WhatsApp</a> or <a href="https://www.instagram.com/dermluxclinics" target="_blank" rel="noopener">Instagram</a>.</p></div>' })():'')
+  ;
  var chips='';
  if(v){
   chips='<h2 class="pmh2s">What we saw</h2><p class="r4sub">Each reading on its own scale. Tap one to see where, and what helps.</p><div class="r4chips">'
@@ -2018,7 +2062,7 @@ function screenResult(withPhotos){
   var lvl=function(k){ return sevClass(k,v[k]) };
   var WORD3={hi:'Needs attention',mid:'Average',ok:'Good'};
   var LIGHT='Light, a recent wash, exercise or make-up can change this reading. Compare photos taken in the same light.';
-  var R3={
+  var R3=window.__R3={
    redness:{find: redGap>1.5?'Your cheeks read redder than your forehead.':redGap<-1.5?'Your cheeks read less red than your forehead.':(lvl('redness')==='ok'?'Redness reads low, and about the same on your cheeks and forehead.':'Redness reads high on your cheeks, and about as high on your forehead.'),
     measured:'In photo 1, inside the two outlined areas, how strongly red stands out from green and blue in your skin.'+(Math.abs(redGap)>=1?' Your cheeks read '+x1(Math.abs(redGap))+' points '+(redGap>0?'more':'less')+' red than your forehead, measured the same way.':''),
     means: lvl('redness')==='ok'?'Your cheeks show no more redness than the rest of your skin in this photo.':'Redness on the cheeks often comes with skin that reacts easily, to heat, sun or a product. It can also be temporary.',
@@ -2093,10 +2137,43 @@ function screenResult(withPhotos){
    +'<div class="pz">'+eur(p[1])+'</div></div>' };
  var nameOf=function(i){ return ZOP[i]?ZOP[i][0]:'' };
  var listNames=function(arr){ var n=arr.map(function(x){return nameOf(x.i)}).filter(Boolean); return join(n) };
+ var SL_DRY=v&&v.shine<26;
+ var SL_TOP=v?ranked.filter(function(k){ return sevClass(k,v[k])!=='ok' }).slice(0,3):[];
+ var SL_PN={redness:'Redness',even:'Uneven tone',shine:SL_DRY?'Dryness':'Shine',pores:'Visible pores',shadow:'Under-eyes',lines:'Forehead lines'};
+ var slCovers=function(k,items){ return items.some(function(x){ return PFOR[x.i]===k || (x.s==='Routine'&&PROGRAM_FOR[k]===x.i) || ((k==='redness'||k==='even')&&x.s==='Protect') }) };
+ /* the product that addresses THIS reading, from the complete routine (core first). No generic fallback: if
+    nothing in the plans targets it, the card shows no solution box rather than the wrong product. */
+ var slSolution=function(k){ var pick=function(it){ return it.filter(function(x){ return PFOR[x.i]===k })[0] || it.filter(function(x){ return x.s==='Routine'&&PROGRAM_FOR[k]===x.i })[0]
+     || ((k==='redness'||k==='even')?it.filter(function(x){ return x.s==='Protect' })[0]:null) || null };
+   var p=pick(RX.items)||pick(RX.full||[]); if(p) return p;
+   /* not in any plan: the ZO product made for this reading, offered as an add-on */
+   var add=Object.keys(PFOR).filter(function(i){ return PFOR[i]===k && ZOP[i] })[0];
+   return add?{i:add,s:'Treat',addon:true}:null };
+ var priorities=function(){
+  if(!v||!SL_TOP.length) return '';
+  var R3=window.__R3||{};
+  var MAY={redness:'Cheeks that flush easily, or stay pink after washing or a warm shower.',
+   even:'Patches or marks that make your skin look less even, especially in daylight photos.',
+   shine:SL_DRY?'Skin that can feel tight after washing.':'A shine on your forehead and nose by midday.',
+   pores:'Pores on your nose you can see in the mirror, or make-up that settles into them.',
+   shadow:'Looking tired in photos, even after a good night\u2019s sleep.',
+   lines:'Lines across your forehead that stay when your face is relaxed.'};
+  var lf=function(t){ t=String(t||''); return t.charAt(0).toLowerCase()+t.slice(1) };
+  var card=function(k){ var lv=sevClass(k,v[k]), Z=ZONES[k], th=(Z&&SHOTS[Z.src])?zoneShot(SHOTS[Z.src],Z.zones):'', it=slSolution(k), p=it&&ZOP[it.i];
+   var ben=it?((OUT[it.i]&&OUT[it.i][0])||(ACT[it.i]&&ACT[it.i][0])||''):'';
+   return '<div class="slcard"><div class="slt"><div class="slh"><b>'+SL_PN[k]+'</b><span class="qpill q-'+lv+'">'+(lv==='hi'?'Noticeable':'Mild')+'</span></div>'
+    +'<p class="slmay"><i>You may notice</i>'+MAY[k]+'</p>'
+    +((R3[k]&&R3[k].find)?'<div class="slsaw">'+(th?'<img src="'+th+'" alt="">':'')+'<p><b>What we saw:</b> '+lf(R3[k].find)+'</p></div>':'')+'</div>'
+    +(p?'<div class="slfix'+(it.addon?' sladd':'')+'"><span class="slim">'+(IMG(it.i)?'<img src="'+IMG(it.i)+'" alt="">':'')+'</span><div><i>Your solution'+(it.addon?' · add-on':'')+'</i><b>'+p[0]+'</b><span>'+ben+'</span>'+(it.addon?'<button type="button" class="cta slcta" data-add="'+it.i+'">Add · '+eur(p[1])+'</button>':'')+'</div></div>':'')+'</div>' };
+  var n=SL_TOP.length;
+  return '<h2 class="pmh2s slh2">Your '+(n===1?'priority':({2:'two',3:'three'}[n])+' priorities')+'</h2><p class="r4sub">In plain words: what we saw, and your solution for it.</p>'
+   +SL_TOP.map(card).join('');
+ };
  var tierCard=function(o){
   if(!o.items||!o.items.some(function(x){ return ZOP[x.i] })) return '';
   return '<div class="opt3'+(o.best?' best':'')+(o.top?' top':'')+'">'
    +'<div class="o3h"><div class="o3tag">'+o.tag+'</div><div class="o3n">'+o.name+'</div><div class="o3l">'+o.sub+'</div></div>'
+   +(SL_TOP.length?'<div class="slcov"><span>For your priorities</span>'+SL_TOP.map(function(k){ var c=slCovers(k,o.items); return '<em class="'+(c?'y':'n')+'">'+(c?'\u2713 ':'\u2013 ')+SL_PN[k]+'</em>' }).join('')+'</div>':'')
    +(o.cut?'<div class="o3cut"><b>Without</b>'+o.cut+'</div>':'')
    +o.items.map(prod).join('')
    +'<div class="o3p"><div><span class="o3pz">'+eur(o.total)+'</span><span class="o3pu">'+o.unit+'</span></div></div>'
@@ -2157,7 +2234,9 @@ function screenResult(withPhotos){
     +'<div class="opts2"><button class="pri" id="keepyes">Keep the readings on this phone</button>'
     +'<button id="keepno">Delete it now</button></div></div>'
   : '';
- app.innerHTML=hero+chips+cmp+flag+closerNotes(A,v,RX)+plan
+ var okList=v?KEYS.filter(function(k){ return sevClass(k,v[k])==='ok' }).map(function(k){ return ({redness:'redness',even:'tone',shine:'oil',pores:'pores',shadow:'under-eyes',lines:'forehead'})[k] }):[];
+ var fold=chips?'<details class="slall"><summary><span><b>'+(okList.length?'Also checked: '+okList.join(' \u00b7 ')+' \u2014 all good':'Every reading, area by area')+'</b><em>See the full breakdown, area by area</em></span><i></i></summary>'+chips+'</details>':'';
+ app.innerHTML=hero+priorities()+fold+cmp+flag+closerNotes(A,v,RX)+plan+(v?'<div class="slbar" id="slbar" hidden><span><b>Your routine</b> \u00b7 '+eur(RX.total)+'</span><button type="button" id="slbuy">Add</button></div>':'')
   +feedbackRow()
   +(lightNote())
   +'<div class="dis"><b>About this analysis.</b> It describes how your skin appears in three photographs and reads that against what you told us. A cosmetic skin analysis, not a medical examination, diagnosis or medical advice; it cannot see beneath the surface. The products are ZO\u00ae Skin Health skincare sold through DermLux; nothing here is a prescription, and no treatment, consultation or appointment at our centres is included. If you have a mole, a lesion or a patch that is changing, see a doctor. Photographs measure light as well as skin: treat the readings as an estimate and compare visits taken in the same spot and light. <a href="#" id="privlink2">How your data is handled</a></div>'
@@ -2165,6 +2244,15 @@ function screenResult(withPhotos){
   +'<button class="gh" id="restart">Start again</button>';
  var wire=function(){
   wireFb();
+  [].forEach.call(document.querySelectorAll('.slyes,.slno'),function(b){ b.onclick=function(){
+   [].forEach.call(document.querySelectorAll('.slyes,.slno'),function(x){ x.classList.toggle('on',x===b) });
+   var nt=document.querySelector('.slnot'); if(nt) nt.hidden=!b.classList.contains('slno') } });
+  (function(){ var bar=document.getElementById('slbar'), plan=document.getElementById('plan'), best=document.querySelector('.opt3.best .cta');
+   if(!bar||!plan||!best||!('IntersectionObserver' in window)) return;
+   var inPlan=false, ctaSeen=false, upd=function(){ bar.hidden=!(inPlan&&!ctaSeen) };
+   new IntersectionObserver(function(es){ es.forEach(function(e){ inPlan=e.isIntersecting||e.boundingClientRect.top<0 }); upd() },{threshold:0}).observe(plan);
+   new IntersectionObserver(function(es){ es.forEach(function(e){ ctaSeen=e.isIntersecting }); upd() },{threshold:0.5}).observe(best);
+   document.getElementById('slbuy').onclick=function(){ best.click() }; })();
   [].forEach.call(document.querySelectorAll('.qtab'),function(t){ t.onclick=function(){ var a=t.getAttribute('data-a');
    [].forEach.call(document.querySelectorAll('.qtab'),function(x){ x.classList.toggle('on',x===t) });
    [].forEach.call(document.querySelectorAll('.qpanel'),function(p){ p.classList.toggle('on',p.getAttribute('data-a')===a) }) } });
